@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:background="@color/grey_bg"
+xmlns:app="http://schemas.android.com/apk/res-auto">
+<androidx.appcompat.widget.Toolbar
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@color/next"
+    android:theme="@style/ThemeOverlay.AppCompat.Light"
+    app:layout_scrollFlags="scroll|enterAlways">
+
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:tint="@color/white"
+        android:src="@drawable/ic_chevron_left_black_24dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/poppins_semibold"
+        android:gravity="center"
+        android:text="Permohonan Layanan Jasa"
+        android:textColor="@android:color/white"
+        android:textSize="17sp" />
+</androidx.appcompat.widget.Toolbar>
+
+<LinearLayout
+    android:layout_below="@id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <com.stepstone.stepper.StepperLayout
+        android:id="@+id/stepperLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:ms_stepperType="tabs"
+        app:ms_stepperFeedbackType="tabs|disabled_bottom_navigation"
+        app:ms_activeStepColor="@color/next"
+        app:ms_inactiveStepColor="#44000000"
+        app:ms_backButtonColor="#FFFFFF"
+        app:ms_nextButtonColor="#FFFFFF"
+        app:ms_completeButtonColor="#FFFFFF"
+        app:ms_bottomNavigationBackground="@color/next"
+        app:ms_tabStepDividerWidth="35dp"
+        tools:theme="@style/AppTheme" />
+</LinearLayout>
+
+</RelativeLayout>
