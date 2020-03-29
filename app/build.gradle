@@ -33,4 +33,16 @@ dependencies {
 
     implementation 'com.stepstone.stepper:material-stepper:4.3.1'
     implementation 'br.com.simplepass:loading-button-android:1.14.0'
+
+    //retrofit
+    implementation 'org.glassfish:javax.annotation:10.0-b28'
+    implementation 'com.squareup.retrofit2:retrofit:2.1.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.0'
+
+    //SearchDialog
+    implementation 'com.github.mirrajabi:search-dialog:1.2.4'
+
+    //SweetAlert
+    implementation 'com.github.f0ris.sweetalert:library:1.5.1'
 }
