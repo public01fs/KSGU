@@ -19,6 +19,10 @@ import com.stepstone.stepper.VerificationError;
 
 public class UploadDokumenFragment extends Fragment implements BlockingStep {
 
+    public static UploadDokumenFragment newInstance() {
+        return new UploadDokumenFragment();
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

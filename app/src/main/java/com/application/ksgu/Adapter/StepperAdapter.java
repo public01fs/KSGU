@@ -32,19 +32,29 @@ public class StepperAdapter extends AbstractFragmentStepAdapter {
 
     @Override
     public Step createStep(int position) {
-        Step step = null;
-        switch (position){
+//        Step step = null;
+//        switch (position){
+//            case 0:
+//                step = new DataPemohonFragment();
+//                break;
+//            case 1:
+//                step = new DataLayananFragment();
+//                break;
+//            case 2:
+//                step = new UploadDokumenFragment();
+//                break;
+//        }
+//        return step;
+        switch (position) {
             case 0:
-                step = new DataPemohonFragment();
-                break;
+                return DataPemohonFragment.newInstance();
             case 1:
-                step = new DataLayananFragment();
-                break;
+                return DataLayananFragment.newInstance();
             case 2:
-                step = new UploadDokumenFragment();
-                break;
+                return UploadDokumenFragment.newInstance();
+            default:
+                throw new IllegalArgumentException("Unsupported position: " + position);
         }
-        return step;
     }
     @Override
     public int getCount() {

@@ -1,6 +1,7 @@
 package com.application.ksgu.Fragment;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -11,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +20,14 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.application.ksgu.DataManager;
 import com.application.ksgu.Library.CustomSearchDialogCompat;
+import com.application.ksgu.Model.DataKirim;
 import com.application.ksgu.Model.Layanan;
 import com.application.ksgu.R;
 import com.application.ksgu.Retrofit.ApiInterface;
 import com.application.ksgu.Retrofit.ServiceGenerator;
+import com.google.gson.Gson;
 import com.stepstone.stepper.BlockingStep;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
@@ -41,6 +46,10 @@ import retrofit2.Response;
 
 public class DataPemohonFragment extends Fragment implements BlockingStep {
 
+    public static DataPemohonFragment newInstance() {
+        return new DataPemohonFragment();
+    }
+
     View view;
     EditText et_layanan,et_tanggal;
     int layanan_id;
@@ -48,6 +57,11 @@ public class DataPemohonFragment extends Fragment implements BlockingStep {
     SweetAlertDialog sweetAlertDialog;
     private int mYear,mMonth,mDay;
     private SimpleDateFormat dateFormatter;
+    DataKirim dataKirim = new DataKirim();
+
+    private DataManager dataManager;
+    Layanan layanan;
+    Gson gson = new Gson();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,6 +73,7 @@ public class DataPemohonFragment extends Fragment implements BlockingStep {
                              Bundle savedInstanceState) {
         view                = inflater.inflate(R.layout.fragment_data_pemohon, container, false);
         et_layanan          = view.findViewById(R.id.et_layanan);
+        et_tanggal          = view.findViewById(R.id.et_tanggal);
 
         sweetAlertDialog    = new SweetAlertDialog(getContext(), SweetAlertDialog.PROGRESS_TYPE);
         sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#000080"));
@@ -79,7 +94,7 @@ public class DataPemohonFragment extends Fragment implements BlockingStep {
                                         BaseSearchDialogCompat dialog,
                                         Layanan item, int position1
                                 ) {
-                                    layanan_id       = item.getJENISID();
+                                    layanan = item;
                                     et_layanan.setText(item.getJENISNAME());
                                     dialog.dismiss();
                                 }
@@ -111,14 +126,8 @@ public class DataPemohonFragment extends Fragment implements BlockingStep {
 
     @Override
     public void onNextClicked(final StepperLayout.OnNextClickedCallback callback) {
-//        callback.getStepperLayout().showProgress("Operation in progress, please wait...");
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                callback.goToNextStep();
-//                callback.getStepperLayout().hideProgress();
-//            }
-//        }, 2000L);
+        dataKirim.setLayanan(layanan);
+        dataManager.saveData(gson.toJson(dataKirim));
         callback.goToNextStep();
     }
 
@@ -148,13 +157,13 @@ public class DataPemohonFragment extends Fragment implements BlockingStep {
     }
 
     private void getLayanan(){
-        sweetAlertDialog.show();
+        showpDialog();
         ApiInterface apiInterface   = ServiceGenerator.createService(ApiInterface.class);
         Call<List<Layanan>> call    = apiInterface.getLayanan();
         call.enqueue(new Callback<List<Layanan>>() {
             @Override
             public void onResponse(Call<List<Layanan>> call, Response<List<Layanan>> response) {
-                sweetAlertDialog.hide();
+                hidepDialog();
                 if (response.isSuccessful()){
                     layanans    = response.body();
 
@@ -166,7 +175,7 @@ public class DataPemohonFragment extends Fragment implements BlockingStep {
                                         BaseSearchDialogCompat dialog,
                                         Layanan item, int position1
                                 ) {
-                                    layanan_id       = item.getJENISID();
+                                    layanan       = item;
                                     et_layanan.setText(item.getJENISNAME());
                                     dialog.dismiss();
                                 }
@@ -183,7 +192,8 @@ public class DataPemohonFragment extends Fragment implements BlockingStep {
 
             @Override
             public void onFailure(Call<List<Layanan>> call, Throwable t) {
-                sweetAlertDialog.hide();
+                showpDialog();
+                Log.d("error",t.toString());
                 Toast.makeText(getContext(), "Terjadi Kesalahan Jaringan", Toast.LENGTH_SHORT).show();
             }
         });
@@ -225,5 +235,25 @@ public class DataPemohonFragment extends Fragment implements BlockingStep {
 
         datePickerDialog.setCancelable(false);
         datePickerDialog.show();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof DataManager) {
+            dataManager = (DataManager) context;
+        } else {
+            throw new IllegalStateException("Activity must implement DataManager interface!");
+        }
+    }
+
+    private void showpDialog() {
+        if (!sweetAlertDialog.isShowing())
+            sweetAlertDialog.show();
+    }
+
+    private void hidepDialog() {
+        if (sweetAlertDialog.isShowing())
+            sweetAlertDialog.dismiss();
     }
 }

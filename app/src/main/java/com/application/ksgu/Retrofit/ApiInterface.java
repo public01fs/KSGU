@@ -1,6 +1,7 @@
 package com.application.ksgu.Retrofit;
 
 import com.application.ksgu.Cons;
+import com.application.ksgu.Model.DataNota;
 import com.application.ksgu.Model.Layanan;
 
 import java.util.List;
@@ -22,4 +23,7 @@ public interface ApiInterface {
 
     @GET(API + "data-layanan")
     Call<List<Layanan>> getLayanan();
+
+    @GET(API + "data-nota/{id}")
+    Call<List<DataNota>> getDataNota(@Path("id") int id);
 }
