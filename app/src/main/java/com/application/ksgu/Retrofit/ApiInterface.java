@@ -1,6 +1,7 @@
 package com.application.ksgu.Retrofit;
 
 import com.application.ksgu.Cons;
+import com.application.ksgu.Model.Checklist;
 import com.application.ksgu.Model.DataNota;
 import com.application.ksgu.Model.Layanan;
 
@@ -26,4 +27,7 @@ public interface ApiInterface {
 
     @GET(API + "data-nota/{id}")
     Call<List<DataNota>> getDataNota(@Path("id") int id);
+
+    @GET(API + "data-checklist/{id}")
+    Call<List<Checklist>> getCheckList(@Path("id") int id);
 }

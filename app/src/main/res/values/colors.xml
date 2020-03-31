@@ -30,4 +30,9 @@
     <color name="primaryTextColor">#11CFC5</color>
     <color name="whiteTextColor">#fff</color>
     <color name="lightgrey">#FFE0E0E0</color>
+    <color name="md_blue_800">#1565c0</color>
+    <color name="md_grey_400">#bdbdbd</color>
+    <color name="md_grey_200">#eeeeee</color>
+    <color name="md_grey_700">#616161</color>
+
 </resources>

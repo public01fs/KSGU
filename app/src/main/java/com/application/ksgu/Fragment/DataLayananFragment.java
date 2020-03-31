@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -18,6 +19,7 @@ import retrofit2.Response;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.application.ksgu.Adapter.ItemCheckAdapter;
@@ -48,6 +50,11 @@ public class DataLayananFragment extends Fragment implements BlockingStep {
     RecyclerView rv_check;
     ItemCheckAdapter itemCheckAdapter;
 
+    CardView cv_kapal,cv_layanan,cv_perusahaan;
+
+    EditText et_pendaftaran,et_posisi,et_kapal,et_gt,et_callsign,et_bendera,et_pendaftaran1,et_pemilik;
+    EditText et_perusahaan,et_alamatp,et_noidentitas,et_jmlkapal,et_totalgt;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +66,7 @@ public class DataLayananFragment extends Fragment implements BlockingStep {
 
         view                = inflater.inflate(R.layout.fragment_data_layanan, container, false);
         rv_check            = view.findViewById(R.id.rv_check);
+        cv_layanan          = view.findViewById(R.id.cv_layanan);
         sweetAlertDialog    = new SweetAlertDialog(getContext(), SweetAlertDialog.PROGRESS_TYPE);
         sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#000080"));
         sweetAlertDialog.setTitleText("Loading");
@@ -69,6 +77,7 @@ public class DataLayananFragment extends Fragment implements BlockingStep {
 
     @Override
     public void onNextClicked(StepperLayout.OnNextClickedCallback callback) {
+        dataManager.saveData(gson.toJson(dataKirim));
         callback.goToNextStep();
     }
 
@@ -92,6 +101,13 @@ public class DataLayananFragment extends Fragment implements BlockingStep {
     public void onSelected() {
         dataKirim       = gson.fromJson(dataManager.getData(),DataKirim.class);
         getCheck(dataKirim.getLayanan().getJENISID());
+
+        if (dataKirim.getLayanan().getREQUIRECHECK().toLowerCase().equals("kapal")){
+            updateKapal(view);
+        } else if (dataKirim.getLayanan().getREQUIRECHECK().toLowerCase().equals("perusahaan")){
+            updatePerusahaan(view);
+        }
+
     }
 
     @Override
@@ -119,14 +135,17 @@ public class DataLayananFragment extends Fragment implements BlockingStep {
                 hidepDialog();
                 if (response.isSuccessful()){
                     if (response.body().size() > 0){
+                        cv_layanan.setVisibility(View.VISIBLE);
                         itemCheckAdapter        = new ItemCheckAdapter(response.body());
                         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 1);
-//                        rv_check.addItemDecoration(new GridSpacingItemDecoration(1, tools.dpToPx(0), true));
                         rv_check.setLayoutManager(mLayoutManager);
                         rv_check.setItemAnimator(new DefaultItemAnimator());
                         rv_check.setAdapter(itemCheckAdapter);
+                    } else {
+                        cv_layanan.setVisibility(View.GONE);
                     }
                 } else {
+                    cv_layanan.setVisibility(View.GONE);
                     Toast.makeText(getContext(), "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -134,6 +153,7 @@ public class DataLayananFragment extends Fragment implements BlockingStep {
             @Override
             public void onFailure(Call<List<DataNota>> call, Throwable t) {
                 hidepDialog();
+                cv_layanan.setVisibility(View.GONE);
                 Toast.makeText(getContext(), "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
             }
         });
@@ -148,5 +168,30 @@ public class DataLayananFragment extends Fragment implements BlockingStep {
     private void hidepDialog() {
         if (sweetAlertDialog.isShowing())
             sweetAlertDialog.dismiss();
+    }
+
+    private void updateKapal(View view){
+        cv_kapal            = view.findViewById(R.id.cv_kapal);
+        et_pendaftaran      = view.findViewById(R.id.et_pendaftaran);
+        et_posisi           = view.findViewById(R.id.et_posisi);
+        et_kapal            = view.findViewById(R.id.et_kapal);
+        et_gt               = view.findViewById(R.id.et_gt);
+        et_callsign         = view.findViewById(R.id.et_callsign);
+        et_bendera          = view.findViewById(R.id.et_bendera);
+        et_pendaftaran1     = view.findViewById(R.id.et_pendaftaran1);
+        et_pemilik          = view.findViewById(R.id.et_pemilik);
+
+        cv_kapal.setVisibility(View.VISIBLE);
+    }
+
+    private void updatePerusahaan(View view){
+        cv_perusahaan       = view.findViewById(R.id.cv_perusahaan);
+        et_perusahaan       = view.findViewById(R.id.et_perusahaan);
+        et_alamatp          = view.findViewById(R.id.et_alamatp);
+        et_noidentitas      = view.findViewById(R.id.et_noidentitas);
+        et_jmlkapal         = view.findViewById(R.id.et_jmlkapal);
+        et_totalgt          = view.findViewById(R.id.et_totalgt);
+
+        cv_perusahaan.setVisibility(View.VISIBLE);
     }
 }

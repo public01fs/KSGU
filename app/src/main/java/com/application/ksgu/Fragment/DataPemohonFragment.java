@@ -192,7 +192,7 @@ public class DataPemohonFragment extends Fragment implements BlockingStep {
 
             @Override
             public void onFailure(Call<List<Layanan>> call, Throwable t) {
-                showpDialog();
+                hidepDialog();
                 Log.d("error",t.toString());
                 Toast.makeText(getContext(), "Terjadi Kesalahan Jaringan", Toast.LENGTH_SHORT).show();
             }
