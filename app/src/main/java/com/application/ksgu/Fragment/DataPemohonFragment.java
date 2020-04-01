@@ -20,9 +20,11 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.application.ksgu.Adapter.ItemCheckAdapter;
 import com.application.ksgu.DataManager;
 import com.application.ksgu.Library.CustomSearchDialogCompat;
 import com.application.ksgu.Model.DataKirim;
+import com.application.ksgu.Model.DataNota;
 import com.application.ksgu.Model.Layanan;
 import com.application.ksgu.R;
 import com.application.ksgu.Retrofit.ApiInterface;
@@ -37,6 +39,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import ir.mirrajabi.searchdialog.core.BaseSearchDialogCompat;
 import ir.mirrajabi.searchdialog.core.SearchResultListener;
@@ -112,12 +117,7 @@ public class DataPemohonFragment extends Fragment implements BlockingStep {
         et_tanggal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                et_tanggal.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        showDialog();
-                    }
-                });
+                showDialog();
             }
         });
 
@@ -126,9 +126,35 @@ public class DataPemohonFragment extends Fragment implements BlockingStep {
 
     @Override
     public void onNextClicked(final StepperLayout.OnNextClickedCallback callback) {
-        dataKirim.setLayanan(layanan);
-        dataManager.saveData(gson.toJson(dataKirim));
-        callback.goToNextStep();
+        callback.getStepperLayout().showProgress("Mohon Tunggu...");
+        ApiInterface apiInterface       = ServiceGenerator.createService(ApiInterface.class);
+        Call<List<DataNota>> call       = apiInterface.getDataNota(layanan.getJENISID());
+        call.enqueue(new Callback<List<DataNota>>() {
+            @Override
+            public void onResponse(Call<List<DataNota>> call, Response<List<DataNota>> response) {
+                callback.getStepperLayout().hideProgress();
+                if (response.isSuccessful()){
+                    if (response.body().size() > 0){
+                        dataKirim.setDataNotas(response.body());
+                    } else {
+                        List<DataNota> dataNotas = new ArrayList<>();
+                        dataKirim.setDataNotas(dataNotas);
+                    }
+                    dataKirim.setLayanan(layanan);
+                    dataManager.saveData(gson.toJson(dataKirim));
+                    callback.goToNextStep();
+                } else {
+                    Toast.makeText(getContext(), "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<DataNota>> call, Throwable t) {
+                callback.getStepperLayout().hideProgress();
+                Toast.makeText(getContext(), "Terjadi Kesalahan Jaringan", Toast.LENGTH_SHORT).show();
+            }
+        });
+//        callback.goToNextStep();
     }
 
     @Override
@@ -143,7 +169,11 @@ public class DataPemohonFragment extends Fragment implements BlockingStep {
     @Nullable
     @Override
     public VerificationError verifyStep() {
-        return null;
+        if (layanan == null){
+            return new VerificationError("Pilih layanan terlebih dahulu");
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -153,7 +183,7 @@ public class DataPemohonFragment extends Fragment implements BlockingStep {
 
     @Override
     public void onError(@NonNull VerificationError error) {
-
+        Toast.makeText(getContext(), error.getErrorMessage(), Toast.LENGTH_SHORT).show();
     }
 
     private void getLayanan(){

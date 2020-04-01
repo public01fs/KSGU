@@ -73,7 +73,7 @@ public class UploadDokumenFragment extends Fragment implements BlockingStep {
 
     @Override
     public void onCompleteClicked(StepperLayout.OnCompleteClickedCallback callback) {
-//        callback.complete();
+        getActivity().finish();
     }
 
     @Override
@@ -90,13 +90,18 @@ public class UploadDokumenFragment extends Fragment implements BlockingStep {
     @Override
     public void onSelected() {
         dataKirim       = gson.fromJson(dataManager.getData(), DataKirim.class);
-        setRecycleView(dataKirim.getLayanan().getJENISID());
+        if (dataKirim.getChecklists().size() > 0){
+            for (int i = 0; i < dataKirim.getChecklists().size(); i++) {
+                menuList.add(new UploadFotoModel(dataKirim.getChecklists().get(i).getCEKLISTNAME()));
+            }
 
-//        if (dataKirim.getLayanan().getREQUIRECHECK().toLowerCase().equals("kapal")){
-//            updateKapal(view);
-//        } else if (dataKirim.getLayanan().getREQUIRECHECK().toLowerCase().equals("perusahaan")){
-//            updatePerusahaan(view);
-//        }
+            uploadFotoAdapter = new UploadFotoAdapter(menuList);
+            RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 2);
+//                        rv_upload.addItemDecoration(new GridSpacingItemDecoration(2, tools.dpToPx(8), true));
+            rv_upload.setLayoutManager(mLayoutManager);
+            rv_upload.setItemAnimator(new DefaultItemAnimator());
+            rv_upload.setAdapter(uploadFotoAdapter);
+        }
     }
 
     @Override

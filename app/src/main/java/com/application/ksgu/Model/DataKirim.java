@@ -1,5 +1,7 @@
 package com.application.ksgu.Model;
 
+import java.util.List;
+
 public class DataKirim {
 
     //Data Pemohon
@@ -10,6 +12,8 @@ public class DataKirim {
     private String npwp;
     private String alamat;
     private Layanan layanan;
+    private List<DataNota> dataNotas;
+    private List<Checklist> checklists;
 
     public String getNomor() {
         return nomor;
@@ -65,5 +69,21 @@ public class DataKirim {
 
     public void setLayanan(Layanan layanan) {
         this.layanan = layanan;
+    }
+
+    public List<DataNota> getDataNotas() {
+        return dataNotas;
+    }
+
+    public void setDataNotas(List<DataNota> dataNotas) {
+        this.dataNotas = dataNotas;
+    }
+
+    public List<Checklist> getChecklists() {
+        return checklists;
+    }
+
+    public void setChecklists(List<Checklist> checklists) {
+        this.checklists = checklists;
     }
 }
