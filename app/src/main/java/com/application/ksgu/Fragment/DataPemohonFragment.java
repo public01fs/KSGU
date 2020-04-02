@@ -26,6 +26,7 @@ import com.application.ksgu.Library.CustomSearchDialogCompat;
 import com.application.ksgu.Model.DataKirim;
 import com.application.ksgu.Model.DataNota;
 import com.application.ksgu.Model.Layanan;
+import com.application.ksgu.OnNavigationBarListener;
 import com.application.ksgu.R;
 import com.application.ksgu.Retrofit.ApiInterface;
 import com.application.ksgu.Retrofit.ServiceGenerator;
@@ -67,6 +68,10 @@ public class DataPemohonFragment extends Fragment implements BlockingStep {
     private DataManager dataManager;
     Layanan layanan;
     Gson gson = new Gson();
+    Boolean check = false;
+
+    @Nullable
+    private OnNavigationBarListener onNavigationBarListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,10 +87,16 @@ public class DataPemohonFragment extends Fragment implements BlockingStep {
 
         sweetAlertDialog    = new SweetAlertDialog(getContext(), SweetAlertDialog.PROGRESS_TYPE);
         sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#000080"));
-        sweetAlertDialog.setTitleText("Loading");
+        sweetAlertDialog.setTitleText("Mohon Tunggu...");
         sweetAlertDialog.setCancelable(false);
 
         dateFormatter       = new SimpleDateFormat("dd-MM-yyyy");
+
+        if (savedInstanceState != null) {
+            check = savedInstanceState.getBoolean("check");
+        }
+
+        updateNavigationBar(check);
 
         et_layanan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,6 +112,8 @@ public class DataPemohonFragment extends Fragment implements BlockingStep {
                                 ) {
                                     layanan = item;
                                     et_layanan.setText(item.getJENISNAME());
+                                    check   = true;
+                                    updateNavigationBar(check);
                                     dialog.dismiss();
                                 }
                             }
@@ -205,8 +218,10 @@ public class DataPemohonFragment extends Fragment implements BlockingStep {
                                         BaseSearchDialogCompat dialog,
                                         Layanan item, int position1
                                 ) {
-                                    layanan       = item;
+                                    layanan = item;
                                     et_layanan.setText(item.getJENISNAME());
+                                    check   = true;
+                                    updateNavigationBar(check);
                                     dialog.dismiss();
                                 }
                             }
@@ -275,6 +290,10 @@ public class DataPemohonFragment extends Fragment implements BlockingStep {
         } else {
             throw new IllegalStateException("Activity must implement DataManager interface!");
         }
+
+        if (context instanceof OnNavigationBarListener) {
+            onNavigationBarListener = (OnNavigationBarListener) context;
+        }
     }
 
     private void showpDialog() {
@@ -285,5 +304,17 @@ public class DataPemohonFragment extends Fragment implements BlockingStep {
     private void hidepDialog() {
         if (sweetAlertDialog.isShowing())
             sweetAlertDialog.dismiss();
+    }
+
+    private void updateNavigationBar(Boolean check) {
+        if (onNavigationBarListener != null) {
+            onNavigationBarListener.onChangeEndButtonsEnabled(check);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putBoolean("check", check);
+        super.onSaveInstanceState(outState);
     }
 }

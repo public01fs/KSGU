@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="170dp"
+        android:layout_height="190dp"
         app:cardCornerRadius="2dp"
         android:elevation="4dp"
         android:layout_margin="6dp"
@@ -16,6 +16,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             <RelativeLayout
+                android:id="@+id/rl_foto"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:background="@color/md_grey_200">
@@ -56,7 +57,7 @@
                 android:textStyle="bold"
                 android:textColor="@color/md_grey_700"
                 app:autoSizeTextType="uniform"
-                app:autoSizeMinTextSize="9sp"
+                app:autoSizeMinTextSize="12sp"
                 app:autoSizeMaxTextSize="14sp"
                 app:autoSizeStepGranularity="2sp"/>
         </LinearLayout>

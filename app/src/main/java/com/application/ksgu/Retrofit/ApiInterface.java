@@ -2,6 +2,7 @@ package com.application.ksgu.Retrofit;
 
 import com.application.ksgu.Cons;
 import com.application.ksgu.Model.Checklist;
+import com.application.ksgu.Model.DataDaerah;
 import com.application.ksgu.Model.DataNota;
 import com.application.ksgu.Model.Layanan;
 
@@ -30,4 +31,23 @@ public interface ApiInterface {
 
     @GET(API + "data-checklist/{id}")
     Call<List<Checklist>> getCheckList(@Path("id") int id);
+
+    @GET(API + "data-daerah")
+    Call<List<DataDaerah>> getDaerah();
+
+    @FormUrlEncoded
+    @POST("https://www.google.com/recaptcha/api/siteverify")
+    Call<ResponseBody> verifiy(@Field("secret") String secret,
+                               @Field("response") String response);
+
+    @Multipart
+    @POST(API + "register/save")
+    Call<ResponseBody> saveRegister(@Part("name") RequestBody name,
+                                    @Part("email") RequestBody email,
+                                    @Part("password") RequestBody password,
+                                    @Part("password_confirmation") RequestBody password_confirm,
+                                    @Part("alamat") RequestBody alamat,
+                                    @Part("daerah_id") RequestBody daerah_id,
+                                    @Part("telepon") RequestBody telepon,
+                                    @Part MultipartBody.Part ktp);
 }

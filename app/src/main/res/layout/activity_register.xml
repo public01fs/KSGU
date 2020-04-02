@@ -15,11 +15,11 @@
         android:layout_height="match_parent"
         android:layout_alignParentTop="true">
         <LinearLayout
-            android:layout_gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp">
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         style="@style/parent"
-                        android:layout_marginTop="@dimen/loginViewsMargin">
+                        android:layout_marginTop="10dp">
                         <EditText
                             android:id="@+id/et_nama"
                             style="@style/modifiedEditText"
@@ -51,7 +51,7 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         style="@style/parent"
-                        android:layout_marginTop="@dimen/loginViewsMargin">
+                        android:layout_marginTop="10dp">
                         <EditText
                             android:id="@+id/et_alamat"
                             style="@style/modifiedEditText"
@@ -61,7 +61,7 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputMobile"
                         style="@style/parent"
-                        android:layout_marginTop="@dimen/loginViewsMargin">
+                        android:layout_marginTop="10dp">
                         <EditText
                             android:id="@+id/et_kota"
                             style="@style/modifiedEditText"
@@ -71,7 +71,7 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         style="@style/parent"
-                        android:layout_marginTop="@dimen/loginViewsMargin">
+                        android:layout_marginTop="10dp">
                         <EditText
                             android:id="@+id/et_email"
                             style="@style/modifiedEditText"
@@ -80,12 +80,22 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
+                        style="@style/parent"
+                        android:layout_marginTop="10dp">
+                        <EditText
+                            android:id="@+id/et_telepon"
+                            style="@style/modifiedEditText"
+                            android:inputType="phone"
+                            android:hint="Telepon / HP"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputPassword"
                         style="@style/parent"
-                        android:layout_marginTop="@dimen/loginViewsMargin"
+                        android:layout_marginTop="10dp"
                         app:passwordToggleEnabled="true">
                         <EditText
-                            android:id="@+id/editTextPassword"
+                            android:id="@+id/et_password"
                             style="@style/modifiedEditText"
                             android:hint="Password"
                             android:maxLines="1"
@@ -93,6 +103,7 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <LinearLayout
+                        android:id="@+id/ll_photo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/activity_horizontal_margin"
@@ -117,6 +128,7 @@
                             android:background="@color/lightgrey"/>
 
                         <TextView
+                            android:id="@+id/tv_ktp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="12dp"
@@ -126,6 +138,38 @@
                             android:textSize="15sp" />
 
                     </LinearLayout>
+
+                    <TextView
+                        android:visibility="gone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Google Recaptcha"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.436"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.017" />
+
+                    <Button
+                        android:visibility="gone"
+                        android:id="@+id/button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="52dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:text="Verify captcha"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
 
                     <Button
                         android:id="@+id/btn_register"

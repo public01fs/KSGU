@@ -12,7 +12,7 @@ import com.stepstone.stepper.VerificationError;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-public class PermohonanActivity extends AppCompatActivity implements StepperLayout.StepperListener,DataManager {
+public class PermohonanActivity extends AppCompatActivity implements StepperLayout.StepperListener,DataManager,OnNavigationBarListener {
 
     StepperLayout stepperLayout;
     StepperAdapter stepperAdapter;
@@ -48,6 +48,16 @@ public class PermohonanActivity extends AppCompatActivity implements StepperLayo
     }
 
     @Override
+    public void onBackPressed() {
+        final int currentStepPosition = stepperLayout.getCurrentStepPosition();
+        if (currentStepPosition > 0) {
+            stepperLayout.onBackClicked();
+        } else {
+            finish();
+        }
+    }
+
+    @Override
     public void onCompleted(View completeButton) {
 
     }
@@ -74,5 +84,11 @@ public class PermohonanActivity extends AppCompatActivity implements StepperLayo
 
     public String getData() {
         return mData;
+    }
+
+    @Override
+    public void onChangeEndButtonsEnabled(boolean enabled) {
+        stepperLayout.setNextButtonVerificationFailed(!enabled);
+        stepperLayout.setCompleteButtonVerificationFailed(!enabled);
     }
 }

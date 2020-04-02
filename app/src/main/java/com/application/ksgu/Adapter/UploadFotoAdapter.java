@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.application.ksgu.Model.UploadFotoModel;
@@ -20,6 +21,16 @@ public class UploadFotoAdapter extends RecyclerView.Adapter<UploadFotoAdapter.My
     List<UploadFotoModel> menuModels;
     Context context;
 
+    private OnItemClickListener mOnItemClickListener;
+
+    public interface OnItemClickListener {
+        void onItemClick(View view, UploadFotoModel obj, int position);
+    }
+
+    public void setOnItemClickListener(final OnItemClickListener mItemClickListener) {
+        this.mOnItemClickListener = mItemClickListener;
+    }
+
     public UploadFotoAdapter(List<UploadFotoModel> menuModels) {
         this.menuModels = menuModels;
     }
@@ -33,9 +44,19 @@ public class UploadFotoAdapter extends RecyclerView.Adapter<UploadFotoAdapter.My
     }
 
     @Override
-    public void onBindViewHolder(UploadFotoAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(UploadFotoAdapter.MyViewHolder holder, final int position) {
         UploadFotoModel menuModel = menuModels.get(position);
         holder.tv_title.setText(menuModel.getTitle());
+
+        holder.rl_foto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mOnItemClickListener != null){
+                    mOnItemClickListener.onItemClick(view,menuModels.get(position),position);
+                }
+            }
+        });
+
         if (menuModel.getmUri()!=null){
             Glide.with(context).load(menuModel.getmUri().get(0)).fitCenter().into(holder.iv_preview);
             holder.ll_unggah.setVisibility(View.GONE);
@@ -55,11 +76,13 @@ public class UploadFotoAdapter extends RecyclerView.Adapter<UploadFotoAdapter.My
         ImageView iv_preview;
         TextView tv_title;
         LinearLayout ll_unggah;
+        RelativeLayout rl_foto;
         public MyViewHolder(View itemView) {
             super(itemView);
-            tv_title = itemView.findViewById(R.id.tv_title);
-            iv_preview = itemView.findViewById(R.id.iv_preview);
-            ll_unggah = itemView.findViewById(R.id.ll_unggah);
+            tv_title    = itemView.findViewById(R.id.tv_title);
+            iv_preview  = itemView.findViewById(R.id.iv_preview);
+            ll_unggah   = itemView.findViewById(R.id.ll_unggah);
+            rl_foto     = itemView.findViewById(R.id.rl_foto);
         }
     }
 }

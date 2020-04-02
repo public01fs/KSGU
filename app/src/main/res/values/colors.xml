@@ -35,4 +35,5 @@
     <color name="md_grey_200">#eeeeee</color>
     <color name="md_grey_700">#616161</color>
 
+    <color name="verification_failed_color">#30BDBDBD</color>
 </resources>
