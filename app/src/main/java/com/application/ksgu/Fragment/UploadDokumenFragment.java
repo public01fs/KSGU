@@ -36,6 +36,7 @@ import com.application.ksgu.Adapter.UploadFotoAdapter;
 import com.application.ksgu.DataManager;
 import com.application.ksgu.Model.Checklist;
 import com.application.ksgu.Model.DataKirim;
+import com.application.ksgu.Model.Layanan;
 import com.application.ksgu.Model.UploadFotoModel;
 import com.application.ksgu.R;
 import com.application.ksgu.Retrofit.ApiInterface;
@@ -70,6 +71,7 @@ public class UploadDokumenFragment extends Fragment implements BlockingStep {
     List<UploadFotoModel> menuList = new ArrayList<>();
     List<Checklist> checklists;
     int currentFile;
+    Layanan layanan;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,6 +83,11 @@ public class UploadDokumenFragment extends Fragment implements BlockingStep {
                              Bundle savedInstanceState) {
         view            = inflater.inflate(R.layout.fragment_upload_dokumen, container, false);
         rv_upload       = view.findViewById(R.id.rv_upload);
+
+//        if (savedInstanceState != null) {
+//            check = savedInstanceState.getBoolean("check");
+//        }
+
         return view;
     }
 
@@ -108,9 +115,9 @@ public class UploadDokumenFragment extends Fragment implements BlockingStep {
     public void onSelected() {
         dataKirim       = gson.fromJson(dataManager.getData(), DataKirim.class);
         if (dataKirim.getChecklists().size() > 0){
-            if (menuList != null){
-                menuList.clear();
-            }
+//            if (menuList != null){
+//                menuList.clear();
+//            }
             for (int i = 0; i < dataKirim.getChecklists().size(); i++) {
                 menuList.add(new UploadFotoModel(dataKirim.getChecklists().get(i).getCEKLISTNAME()));
             }
@@ -327,4 +334,10 @@ public class UploadDokumenFragment extends Fragment implements BlockingStep {
         }
         startActivityForResult(Intent.createChooser(intent,"ChooseFile"), 1);
     }
+
+//    @Override
+//    public void onSaveInstanceState(Bundle outState) {
+//        outState.putBoolean("layanan", check);
+//        super.onSaveInstanceState(outState);
+//    }
 }

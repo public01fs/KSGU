@@ -17,6 +17,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -33,7 +35,9 @@ import android.os.Bundle;
 import android.provider.OpenableColumns;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -82,6 +86,7 @@ public class RegisterActivity extends AppCompatActivity {
     LinearLayout ll_foto;
     TextView tv_foto;
     Uri ktp;
+    AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,10 +112,37 @@ public class RegisterActivity extends AppCompatActivity {
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(RegisterActivity.this,PermohonanActivity.class));
+//                startActivity(new Intent(RegisterActivity.this,PermohonanActivity.class));
 //                if (isValid()){
 //                    kirimRegister();
 //                }
+
+//                final Dialog dialog = new Dialog(RegisterActivity.this);
+//                dialog.setContentView(R.layout.dialog_verifikasi);
+//                dialog.setTitle("Kode Verifikasi");
+//                dialog.setCanceledOnTouchOutside(false);
+//
+//                dialog.show();
+
+                final AlertDialog.Builder builder   = new AlertDialog.Builder(RegisterActivity.this);
+                LayoutInflater inflater             = getLayoutInflater();
+                View mView                          = inflater.inflate(R.layout.dialog_verifikasi, null);
+
+                builder.setView(mView);
+
+                dialog = builder.create();
+
+                WindowManager.LayoutParams wmlp = dialog.getWindow()
+                        .getAttributes();
+                wmlp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                wmlp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+
+                dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+
+                dialog.setCanceledOnTouchOutside(false);
+
+                dialog.show();
+
             }
         });
 
@@ -550,7 +582,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(SweetAlertDialog sweetAlertDialog) {
                                     sweetAlertDialog.dismissWithAnimation();
-                                    finish();
+
                                 }
                             })
                             .show();

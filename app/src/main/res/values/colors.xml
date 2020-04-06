@@ -36,4 +36,6 @@
     <color name="md_grey_700">#616161</color>
 
     <color name="verification_failed_color">#30BDBDBD</color>
+    <color name="textcardColor">#3f3f3f</color>
+    <color name="cardColor">#ffffff</color>
 </resources>
