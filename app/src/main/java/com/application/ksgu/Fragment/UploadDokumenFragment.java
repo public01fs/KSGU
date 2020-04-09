@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -71,6 +72,8 @@ public class UploadDokumenFragment extends Fragment implements BlockingStep {
     List<UploadFotoModel> menuList = new ArrayList<>();
     List<Checklist> checklists;
     int currentFile;
+    SharedPreferences prefs;
+    SharedPreferences.Editor editor;
     Layanan layanan;
 
     @Override
@@ -83,10 +86,8 @@ public class UploadDokumenFragment extends Fragment implements BlockingStep {
                              Bundle savedInstanceState) {
         view            = inflater.inflate(R.layout.fragment_upload_dokumen, container, false);
         rv_upload       = view.findViewById(R.id.rv_upload);
-
-//        if (savedInstanceState != null) {
-//            check = savedInstanceState.getBoolean("check");
-//        }
+        prefs           = getActivity().getSharedPreferences("layanan",Context.MODE_PRIVATE);
+        editor          = prefs.edit();
 
         return view;
     }
@@ -114,12 +115,25 @@ public class UploadDokumenFragment extends Fragment implements BlockingStep {
     @Override
     public void onSelected() {
         dataKirim       = gson.fromJson(dataManager.getData(), DataKirim.class);
+        if (TextUtils.isEmpty(prefs.getString("pelayanan",""))){
+            editor.putString("pelayanan",gson.toJson(dataKirim.getLayanan()));
+            editor.apply();
+        } else {
+            layanan = gson.fromJson(prefs.getString("pelayanan",""),Layanan.class);
+
+            if (layanan.getJENISID() != dataKirim.getLayanan().getJENISID()){
+                if (menuList != null){
+                    menuList.clear();
+                }
+                editor.putString("pelayanan",gson.toJson(dataKirim.getLayanan()));
+                editor.apply();
+            }
+        }
         if (dataKirim.getChecklists().size() > 0){
-//            if (menuList != null){
-//                menuList.clear();
-//            }
-            for (int i = 0; i < dataKirim.getChecklists().size(); i++) {
-                menuList.add(new UploadFotoModel(dataKirim.getChecklists().get(i).getCEKLISTNAME()));
+            if (menuList.size() == 0){
+                for (int i = 0; i < dataKirim.getChecklists().size(); i++) {
+                    menuList.add(new UploadFotoModel(dataKirim.getChecklists().get(i).getCEKLISTNAME()));
+                }
             }
 
             uploadFotoAdapter = new UploadFotoAdapter(menuList);
@@ -337,7 +351,7 @@ public class UploadDokumenFragment extends Fragment implements BlockingStep {
 
 //    @Override
 //    public void onSaveInstanceState(Bundle outState) {
-//        outState.putBoolean("layanan", check);
+//        outState.putString("layanan", gson.toJson(dataKirim.getLayanan()));
 //        super.onSaveInstanceState(outState);
 //    }
 }

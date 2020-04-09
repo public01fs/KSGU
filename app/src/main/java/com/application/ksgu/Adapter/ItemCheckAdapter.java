@@ -38,7 +38,8 @@ public class ItemCheckAdapter extends RecyclerView.Adapter<ItemCheckAdapter.MyVi
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         DataNota model = daftarpaket.get(position);
-        holder.tv_nama.setText(model.getNOTANAME());
+//        holder.tv_nama.setText(model.getNOTANAME());
+        holder.checkBox.setText(model.getNOTANAME());
 
 //        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 //            @Override

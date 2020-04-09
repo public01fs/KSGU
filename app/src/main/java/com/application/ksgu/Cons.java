@@ -1,5 +1,10 @@
 package com.application.ksgu;
 
+import android.content.Context;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Cons {
     public static final String SERVER_URL 		  		= "http://35.231.34.16/api/";
     public static final String URL                      = "https://sslog.apps.samudera.id:9500/apibooking/Api/";
@@ -12,4 +17,13 @@ public class Cons {
     public static final String KEY_TIPE = "vendor";
     public static final String KEY_NIP_NIM = "branch_id";
     public static final String KEY_TOKEN = "depo_code";
+
+    public static List<String> getDetailProfile(Context ctx) {
+        List<String> items = new ArrayList<>();
+        String name_arr[] = ctx.getResources().getStringArray(R.array.detail_tabs);
+        for (int i = 0; i < name_arr.length; i++) {
+            items.add(name_arr[i]);
+        }
+        return items;
+    }
 }

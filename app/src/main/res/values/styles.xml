@@ -56,4 +56,11 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="tab_text" parent="TextAppearance.Design.Tab">
+        <item name="android:fontFamily">@font/mo_re</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <color name="bg_light">#FAFAFA</color>
+
 </resources>

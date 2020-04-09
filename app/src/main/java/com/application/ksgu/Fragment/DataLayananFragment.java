@@ -56,14 +56,15 @@ public class DataLayananFragment extends Fragment implements BlockingStep {
     RecyclerView rv_check;
     ItemCheckAdapter itemCheckAdapter;
 
-    CardView cv_kapal,cv_layanan,cv_perusahaan;
+    CardView cv_kapal,cv_layanan,cv_perusahaan,cv_laut;
 
     EditText et_pendaftaran,et_posisi,et_kapal,et_gt,et_callsign,et_bendera,et_pendaftaran1,et_pemilik;
     EditText et_perusahaan,et_alamatp,et_noidentitas,et_jmlkapal,et_totalgt;
+    EditText et_kode,et_pelaut,et_tempat,et_tgllhr,et_umur,et_kelamin,et_status,et_sertifikat;
 
-    Button btn_daftar;
+    Button btn_daftar,btn_daftarlaut;
 
-    LinearLayout ll_data;
+    LinearLayout ll_data,ll_datalaut;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -94,6 +95,18 @@ public class DataLayananFragment extends Fragment implements BlockingStep {
         et_noidentitas      = view.findViewById(R.id.et_noidentitas);
         et_jmlkapal         = view.findViewById(R.id.et_jmlkapal);
         et_totalgt          = view.findViewById(R.id.et_totalgt);
+        cv_laut             = view.findViewById(R.id.cv_laut);
+        et_kode             = view.findViewById(R.id.et_kode);
+        et_pelaut           = view.findViewById(R.id.et_pelaut);
+        et_tempat           = view.findViewById(R.id.et_tempat);
+        et_tgllhr           = view.findViewById(R.id.et_tgllhr);
+        et_umur             = view.findViewById(R.id.et_umur);
+        et_kelamin          = view.findViewById(R.id.et_kelamin);
+        et_status           = view.findViewById(R.id.et_status);
+        et_sertifikat       = view.findViewById(R.id.et_sertifikat);
+        btn_daftarlaut      = view.findViewById(R.id.btn_daftarlaut);
+        ll_datalaut         = view.findViewById(R.id.ll_datalaut);
+
         sweetAlertDialog    = new SweetAlertDialog(getContext(), SweetAlertDialog.PROGRESS_TYPE);
         sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#000080"));
         sweetAlertDialog.setTitleText("Loading");
@@ -167,6 +180,8 @@ public class DataLayananFragment extends Fragment implements BlockingStep {
             updateKapal();
         } else if (dataKirim.getLayanan().getREQUIRECHECK().toLowerCase().equals("perusahaan")){
             updatePerusahaan();
+        } else if (dataKirim.getLayanan().getREQUIRECHECK().toLowerCase().equals("pelaut")){
+            updateLaut();
         }
 
     }
@@ -196,11 +211,29 @@ public class DataLayananFragment extends Fragment implements BlockingStep {
 
         cv_kapal.setVisibility(View.VISIBLE);
         cv_perusahaan.setVisibility(View.GONE);
+        cv_laut.setVisibility(View.GONE);
+        ll_datalaut.setVisibility(View.GONE);
+    }
+
+    private void updateLaut(){
+        btn_daftarlaut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ll_datalaut.setVisibility(View.VISIBLE);
+            }
+        });
+
+        cv_laut.setVisibility(View.VISIBLE);
+        cv_perusahaan.setVisibility(View.GONE);
+        cv_kapal.setVisibility(View.GONE);
+        ll_data.setVisibility(View.GONE);
     }
 
     private void updatePerusahaan(){
         cv_perusahaan.setVisibility(View.VISIBLE);
         cv_kapal.setVisibility(View.GONE);
+        cv_laut.setVisibility(View.GONE);
         ll_data.setVisibility(View.GONE);
+        ll_datalaut.setVisibility(View.GONE);
     }
 }
