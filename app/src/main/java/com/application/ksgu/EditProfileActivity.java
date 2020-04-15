@@ -59,13 +59,16 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import static com.application.ksgu.Cons.KEY_AGEN;
+import static com.application.ksgu.Cons.KEY_AGEN_ALAMAT;
+import static com.application.ksgu.Cons.KEY_AGEN_ID;
+import static com.application.ksgu.Cons.KEY_AGEN_KOTA;
+import static com.application.ksgu.Cons.KEY_AGEN_NAMA;
 import static com.application.ksgu.Cons.KEY_ALAMAT;
 import static com.application.ksgu.Cons.KEY_DAERAH;
 import static com.application.ksgu.Cons.KEY_DAERAH_ID;
 import static com.application.ksgu.Cons.KEY_EMAIL;
 import static com.application.ksgu.Cons.KEY_ID;
+import static com.application.ksgu.Cons.KEY_IMG;
 import static com.application.ksgu.Cons.KEY_NAME;
 import static com.application.ksgu.Cons.KEY_NPWP;
 import static com.application.ksgu.Cons.KEY_TELEPON;
@@ -78,9 +81,7 @@ public class EditProfileActivity extends AppCompatActivity {
     HashMap<String, String> getLogin;
     SessionManager sessionManager;
     FloatingActionButton btn_save,btn_change;
-    int daerah_id;
-    int agen_id;
-    int id;
+    int daerah_id,agen_id,id;
     Uri photo;
     ImageView iv_photo;
     List<DataDaerah> dataDaerahs;
@@ -209,6 +210,25 @@ public class EditProfileActivity extends AppCompatActivity {
         daerah_id       = Integer.valueOf(getLogin.get(KEY_DAERAH_ID));
         id              = Integer.valueOf(getLogin.get(KEY_ID));
         token           = getLogin.get(KEY_TOKEN);
+
+        if (getLogin.get(KEY_AGEN_ID) != null){
+            et_perusahaan.setText(getLogin.get(KEY_AGEN_NAMA));
+            et_alamatp.setText(getLogin.get(KEY_AGEN_ALAMAT));
+            et_kotap.setText(getLogin.get(KEY_AGEN_KOTA));
+            agen_id = Integer.valueOf(getLogin.get(KEY_AGEN_ID));
+        }
+
+        if (getLogin.get(KEY_IMG) != null) {
+            Glide.with(this)
+                    .load(getLogin.get(KEY_IMG))
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(iv_photo);
+        } else {
+            Glide.with(this)
+                    .load(R.drawable.ic_empty)
+                    .into(iv_photo);
+        }
+
     }
 
     private void updateProfile(){
@@ -228,20 +248,40 @@ public class EditProfileActivity extends AppCompatActivity {
         RequestBody ids         = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(id));
         if (photo != null){
             RequestBody foto        = getRequestBodyFromURI(photo.toString());
-            photos                   = MultipartBody.Part.createFormData("ktp", getFileName(photo), foto);
+            photos                   = MultipartBody.Part.createFormData("img", getFileName(photo), foto);
         }
         ApiInterface apiInterface   = ServiceGenerator.createService(ApiInterface.class,token);
         Call<Login> call            = apiInterface.updateProfile(photos,pass,confirm,nama,npwp,alamat,daerah,telepon,agen_ids,agen_nama,agen_alamat,agen_daerah,ids);
         call.enqueue(new Callback<Login>() {
             @Override
-            public void onResponse(Call<Login> call, Response<Login> response) {
+            public void onResponse(Call<Login> call, final Response<Login> response) {
                 hidepDialog();
-
+                if (response.isSuccessful()){
+                    new SweetAlertDialog(EditProfileActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+                            .setContentText("Profil berhasil \ndiperbaharui")
+                            .setConfirmText("OK")
+                            .showCancelButton(false)
+                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                    sweetAlertDialog.dismissWithAnimation();
+                                    sessionManager.createLoginSession(response.body());
+                                    Intent i = new Intent(EditProfileActivity.this, ProfileActivity.class);
+                                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(i);
+                                }
+                            })
+                            .show();
+                } else {
+                    Toast.makeText(EditProfileActivity.this, "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
             public void onFailure(Call<Login> call, Throwable t) {
                 hidepDialog();
+                Toast.makeText(EditProfileActivity.this, "Terjadi Kesalahan Jaringan", Toast.LENGTH_SHORT).show();
             }
         });
     }

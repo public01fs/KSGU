@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,10 @@ import com.application.ksgu.SessionManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import static com.application.ksgu.Cons.KEY_AGEN_ALAMAT;
+import static com.application.ksgu.Cons.KEY_AGEN_KOTA;
+import static com.application.ksgu.Cons.KEY_AGEN_NAMA;
 
 public class PerusahaanDetailFragment extends Fragment {
 
@@ -52,17 +57,17 @@ public class PerusahaanDetailFragment extends Fragment {
         getLogin    = sessionManager.getLogin();
         Profile profile = new Profile();
         profile.setTitle("Perusahaan");
-        profile.setValue("");
+        profile.setValue((TextUtils.isEmpty(getLogin.get(KEY_AGEN_NAMA)))?"":getLogin.get(KEY_AGEN_NAMA));
         profileList.add(profile);
 
         Profile profile1 = new Profile();
         profile1.setTitle("Alamat");
-        profile1.setValue("");
+        profile1.setValue((TextUtils.isEmpty(getLogin.get(KEY_AGEN_ALAMAT)))?"":getLogin.get(KEY_AGEN_ALAMAT));
         profileList.add(profile1);
 
         Profile profile2 = new Profile();
         profile2.setTitle("Kota");
-        profile2.setValue("");
+        profile2.setValue((TextUtils.isEmpty(getLogin.get(KEY_AGEN_KOTA)))?"":getLogin.get(KEY_AGEN_KOTA));
         profileList.add(profile2);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity().getBaseContext());

@@ -24,7 +24,10 @@ public class Cons {
     public static final String KEY_DAERAH = "daerah";
     public static final String KEY_DAERAH_ID = "daerah_id";
     public static final String KEY_TOKEN = "token";
-    public static final String KEY_AGEN = "agen";
+    public static final String KEY_AGEN_ID = "agen_id";
+    public static final String KEY_AGEN_NAMA = "agen_nama";
+    public static final String KEY_AGEN_ALAMAT = "agen_alamat";
+    public static final String KEY_AGEN_KOTA = "agen_kota";
 
     public static List<String> getDetailProfile(Context ctx) {
         List<String> items = new ArrayList<>();

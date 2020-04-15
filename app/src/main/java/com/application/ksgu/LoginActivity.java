@@ -130,19 +130,20 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     } else {
                         sessionManager.createLoginSession(response.body());
-                        sessionManager.createOtpSession(false);
+//                        sessionManager.createOtpSession(false);
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
                     }
                 } else {
-
+                    Toast.makeText(LoginActivity.this, "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Login> call, Throwable t) {
-
+                hidepDialog();
+                Toast.makeText(LoginActivity.this, "Terjadi Kesalahan Jaringan", Toast.LENGTH_SHORT).show();
             }
         });
     }

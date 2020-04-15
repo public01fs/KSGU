@@ -9,6 +9,10 @@ import com.application.ksgu.Model.Login;
 
 import java.util.HashMap;
 
+import static com.application.ksgu.Cons.KEY_AGEN_ALAMAT;
+import static com.application.ksgu.Cons.KEY_AGEN_ID;
+import static com.application.ksgu.Cons.KEY_AGEN_KOTA;
+import static com.application.ksgu.Cons.KEY_AGEN_NAMA;
 import static com.application.ksgu.Cons.KEY_ALAMAT;
 import static com.application.ksgu.Cons.KEY_CREATED;
 import static com.application.ksgu.Cons.KEY_DAERAH;
@@ -69,6 +73,12 @@ public class SessionManager {
         editor.putString(KEY_DAERAH,login.getAddress().getNama());
         editor.putString(KEY_DAERAH_ID,String.valueOf(login.getDaerahId()));
         editor.putString(KEY_TOKEN,login.getApiToken());
+        if (login.getAgen() != null){
+            editor.putString(KEY_AGEN_ID,String.valueOf(login.getAgen().getIDAGEN()));
+            editor.putString(KEY_AGEN_NAMA,login.getAgen().getNAMAAGEN());
+            editor.putString(KEY_AGEN_ALAMAT,login.getAgen().getALAMAT());
+            editor.putString(KEY_AGEN_KOTA,login.getAgen().getKOTA());
+        }
         editor.commit();
     }
 
@@ -119,6 +129,10 @@ public class SessionManager {
         user.put(KEY_DAERAH, pref.getString(KEY_DAERAH,null));
         user.put(KEY_DAERAH_ID,pref.getString(KEY_DAERAH_ID,null));
         user.put(KEY_TOKEN,pref.getString(KEY_TOKEN,null));
+        user.put(KEY_AGEN_ID,pref.getString(KEY_AGEN_ID,null));
+        user.put(KEY_AGEN_ALAMAT,pref.getString(KEY_AGEN_ALAMAT,null));
+        user.put(KEY_AGEN_NAMA,pref.getString(KEY_AGEN_NAMA,null));
+        user.put(KEY_AGEN_KOTA,pref.getString(KEY_AGEN_KOTA,null));
         return user;
     }
 

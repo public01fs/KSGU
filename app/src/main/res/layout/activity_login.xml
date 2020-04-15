@@ -46,7 +46,6 @@
                 <LinearLayout
                     android:id="@+id/LinearLayout1"
                     android:layout_width="fill_parent"
-                    android:layout_below="@+id/logo"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:orientation="vertical"
@@ -111,7 +110,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:text="Tidak punya akun ?? "
+                            android:text="Belum punya akun ?? "
                             android:textColor="@android:color/black"
                             android:textSize="15sp" />
 

@@ -6,12 +6,12 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="KSU"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme2"
         android:usesCleartextTraffic="true"
-        tools:replace="android:icon">
+        tools:replace="android:icon,android:label">
         <activity android:name=".VerificationActivity"></activity>
         <activity android:name=".EditProfileActivity" />
         <activity android:name=".ProfileActivity" />

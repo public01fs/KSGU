@@ -11,7 +11,7 @@ public class Login{
 	private String img;
 
 	@SerializedName("agen")
-	private String agen;
+	private Agen agen;
 
 	@SerializedName("address")
 	private Address address;
@@ -91,11 +91,11 @@ public class Login{
 		return img;
 	}
 
-	public void setAgen(String agen){
+	public void setAgen(Agen agen){
 		this.agen = agen;
 	}
 
-	public String getAgen(){
+	public Agen getAgen(){
 		return agen;
 	}
 
