@@ -59,4 +59,10 @@ dependencies {
 
     //dependency for the reCAPTCHA (safetynet)
     implementation 'com.google.android.gms:play-services-safetynet:17.0.0'
+
+    //otp
+    implementation 'com.raycoarana.codeinputview:codeinputview:2.1.1'
+    implementation 'com.github.mukeshsolanki:android-otpview-pinview:2.1.0'
+
+    implementation 'com.github.artcak:artcak-base:0.1.13'
 }

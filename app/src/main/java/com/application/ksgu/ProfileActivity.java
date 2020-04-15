@@ -1,5 +1,6 @@
 package com.application.ksgu;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -12,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -21,6 +24,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -37,14 +41,22 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+
+import static com.application.ksgu.Cons.KEY_EMAIL;
+import static com.application.ksgu.Cons.KEY_NAME;
 
 public class ProfileActivity extends AppCompatActivity {
 
     private static final String TAG = ProfileActivity.class.getSimpleName();
     AppBarLayout appBarLayout;
     ImageView iv_back;
-    TextView tv_title;
+    TextView tv_title,tv_nama,tv_email;
+    Button btn_edit,btn_logout;
+    SessionManager sessionManager;
+    HashMap<String, String> getLogin;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +66,19 @@ public class ProfileActivity extends AppCompatActivity {
         appBarLayout        = findViewById(R.id.htab_appbar);
         iv_back             = findViewById(R.id.iv_back);
         tv_title            = findViewById(R.id.tv_title);
+        tv_nama             = findViewById(R.id.tv_nama);
+        tv_email            = findViewById(R.id.tv_email);
+//        btn_edit            = findViewById(R.id.btn_edit);
+//        btn_logout          = findViewById(R.id.btn_logout);
+        sessionManager      = new SessionManager(this);
+        getLogin            = sessionManager.getLogin();
+        toolbar             = findViewById(R.id.htab_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        tv_nama.setText(getLogin.get(KEY_NAME));
+        tv_email.setText(getLogin.get(KEY_EMAIL));
 
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
@@ -71,25 +96,22 @@ public class ProfileActivity extends AppCompatActivity {
 //                        onStateChangeListener.onStateChange(State.EXPANDED);
 //                    }
 //                    state = State.EXPANDED;
-                    iv_back.setVisibility(View.GONE);
+//                    iv_back.setVisibility(View.GONE);
                     tv_title.setVisibility(View.GONE);
-                    Log.d("status","expand");
                 } else if (Math.abs(i) >= appBarLayout.getTotalScrollRange()) {
 //                    if (onStateChangeListener != null && state != State.COLLAPSED) {
 //                        onStateChangeListener.onStateChange(State.COLLAPSED);
 //                    }
 //                    state = State.COLLAPSED;
-                    iv_back.setVisibility(View.VISIBLE);
+//                    iv_back.setVisibility(View.VISIBLE);
                     tv_title.setVisibility(View.VISIBLE);
-                    Log.d("status","collapse");
                 } else {
 //                    if (onStateChangeListener != null && state != State.IDLE) {
 //                        onStateChangeListener.onStateChange(State.IDLE);
 //                    }
 //                    state = State.IDLE;
-                    iv_back.setVisibility(View.GONE);
+//                    iv_back.setVisibility(View.GONE);
                     tv_title.setVisibility(View.GONE);
-                    Log.d("status","idle");
                 }
             }
         });
@@ -122,6 +144,36 @@ public class ProfileActivity extends AppCompatActivity {
             public void onTabReselected(TabLayout.Tab tab) {
             }
         });
+
+//        btn_edit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(ProfileActivity.this,EditProfileActivity.class));
+//            }
+//        });
+
+//        btn_logout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity.this);
+//                builder.setMessage("Apakah anda yakin ingin keluar?")
+//                        .setCancelable(false)
+//                        .setPositiveButton("Iya",
+//                                new DialogInterface.OnClickListener() {
+//                                    public void onClick(DialogInterface dialog, int id) {
+//                                        sessionManager.logoutUser();
+////                                        startActivity(new Intent(getContext(), LoginActivity.class));
+////                                        getActivity().finish();
+////                                    startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+//                                    }
+//                                })
+//                        .setNegativeButton("Tidak",new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int id) {
+//                                dialog.cancel();
+//                            }
+//                        }).show();
+//            }
+//        });
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -162,5 +214,37 @@ public class ProfileActivity extends AppCompatActivity {
 
             return view;
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_edit:
+                startActivity(new Intent(ProfileActivity.this,EditProfileActivity.class));
+                break;
+            case R.id.action_logout:
+                AlertDialog.Builder builder = new AlertDialog.Builder(ProfileActivity.this);
+                builder.setMessage("Apakah anda yakin ingin keluar?")
+                        .setCancelable(false)
+                        .setPositiveButton("Iya",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        sessionManager.logoutUser();
+                                    }
+                                })
+                        .setNegativeButton("Tidak",new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        }).show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

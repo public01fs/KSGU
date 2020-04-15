@@ -11,12 +11,20 @@ public class Cons {
     public static final String URL1                     = "http://core.samudera.com:8010/coins2018/modules/survey/";
     public static final String URL2                     = "http://core.samudera.com:8010/coins2018/modules/gate/";
 
-    public static final String KEY_USER_ID = "user_id";
-    public static final String KEY_NAMA = "name";
-    public static final String KEY_USERNAME = "nickname";
-    public static final String KEY_TIPE = "vendor";
-    public static final String KEY_NIP_NIM = "branch_id";
-    public static final String KEY_TOKEN = "depo_code";
+    public static final String KEY_ID = "id";
+    public static final String KEY_NAME = "name";
+    public static final String KEY_EMAIL = "email";
+    public static final String KEY_CREATED = "created_at";
+    public static final String KEY_UPDATED = "updated_at";
+    public static final String KEY_KETERANGAN = "keterangan";
+    public static final String KEY_IMG = "img";
+    public static final String KEY_NPWP = "npwp";
+    public static final String KEY_ALAMAT = "alamat";
+    public static final String KEY_TELEPON = "telepon";
+    public static final String KEY_DAERAH = "daerah";
+    public static final String KEY_DAERAH_ID = "daerah_id";
+    public static final String KEY_TOKEN = "token";
+    public static final String KEY_AGEN = "agen";
 
     public static List<String> getDetailProfile(Context ctx) {
         List<String> items = new ArrayList<>();

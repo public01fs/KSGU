@@ -49,6 +49,19 @@ public class ServiceGenerator {
         return retrofit.create(serviceClass);
     }
 
+    public static <S> S createService(Class<S> serviceClass, String token) {
+        AuthenticationInterceptor1 interceptor = new AuthenticationInterceptor1(token);
+
+        if (!httpClient.interceptors().contains(interceptor)) {
+            httpClient.addInterceptor(interceptor);
+
+            builder.client(httpClient.build());
+            retrofit = builder.build();
+        }
+
+        return retrofit.create(serviceClass);
+    }
+
     private static SSLSocketFactory getSSLSocketFactory() {
         try {
             // Create a trust manager that does not validate certificate chains

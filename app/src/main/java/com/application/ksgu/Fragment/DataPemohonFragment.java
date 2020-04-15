@@ -30,6 +30,7 @@ import com.application.ksgu.OnNavigationBarListener;
 import com.application.ksgu.R;
 import com.application.ksgu.Retrofit.ApiInterface;
 import com.application.ksgu.Retrofit.ServiceGenerator;
+import com.application.ksgu.SessionManager;
 import com.google.gson.Gson;
 import com.stepstone.stepper.BlockingStep;
 import com.stepstone.stepper.StepperLayout;
@@ -38,6 +39,7 @@ import com.stepstone.stepper.VerificationError;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -50,6 +52,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.application.ksgu.Cons.KEY_ALAMAT;
+import static com.application.ksgu.Cons.KEY_NAME;
+import static com.application.ksgu.Cons.KEY_NPWP;
+import static com.application.ksgu.Cons.KEY_TELEPON;
+
 public class DataPemohonFragment extends Fragment implements BlockingStep {
 
     public static DataPemohonFragment newInstance() {
@@ -58,6 +65,7 @@ public class DataPemohonFragment extends Fragment implements BlockingStep {
 
     View view;
     EditText et_layanan,et_tanggal;
+    EditText et_nama,et_npwp,et_alamat,et_pic,et_telepon;
     int layanan_id;
     List<Layanan> layanans;
     SweetAlertDialog sweetAlertDialog;
@@ -69,6 +77,9 @@ public class DataPemohonFragment extends Fragment implements BlockingStep {
     Layanan layanan;
     Gson gson = new Gson();
     Boolean check = false;
+
+    SessionManager sessionManager;
+    HashMap<String, String> getLogin;
 
     @Nullable
     private OnNavigationBarListener onNavigationBarListener;
@@ -84,6 +95,12 @@ public class DataPemohonFragment extends Fragment implements BlockingStep {
         view                = inflater.inflate(R.layout.fragment_data_pemohon, container, false);
         et_layanan          = view.findViewById(R.id.et_layanan);
         et_tanggal          = view.findViewById(R.id.et_tanggal);
+        et_nama             = view.findViewById(R.id.et_nama);
+        et_npwp             = view.findViewById(R.id.et_npwp);
+        et_alamat           = view.findViewById(R.id.et_alamat);
+        et_pic              = view.findViewById(R.id.et_pic);
+        et_telepon          = view.findViewById(R.id.et_telepon);
+        sessionManager      = new SessionManager(getContext());
 
         sweetAlertDialog    = new SweetAlertDialog(getContext(), SweetAlertDialog.PROGRESS_TYPE);
         sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#000080"));
@@ -191,7 +208,7 @@ public class DataPemohonFragment extends Fragment implements BlockingStep {
 
     @Override
     public void onSelected() {
-
+        setLayout();
     }
 
     @Override
@@ -316,5 +333,13 @@ public class DataPemohonFragment extends Fragment implements BlockingStep {
     public void onSaveInstanceState(Bundle outState) {
         outState.putBoolean("check", check);
         super.onSaveInstanceState(outState);
+    }
+
+    private void setLayout(){
+        getLogin    = sessionManager.getLogin();
+        et_alamat.setText(getLogin.get(KEY_ALAMAT));
+        et_pic.setText(getLogin.get(KEY_NAME));
+        et_npwp.setText(getLogin.get(KEY_NPWP));
+        et_telepon.setText(getLogin.get(KEY_TELEPON));
     }
 }

@@ -21,6 +21,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -84,9 +85,12 @@ public class RegisterActivity extends AppCompatActivity {
     Button btnverifyCaptcha;
     String TAG = RegisterActivity.class.getSimpleName();
     LinearLayout ll_foto;
-    TextView tv_foto;
+    TextView tv_foto,tv_login;
     Uri ktp;
     AlertDialog dialog;
+    SessionManager sessionManager;
+    SharedPreferences prefs;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +107,10 @@ public class RegisterActivity extends AppCompatActivity {
         ll_foto             = findViewById(R.id.ll_photo);
         tv_foto             = findViewById(R.id.tv_ktp);
         btnverifyCaptcha    = findViewById(R.id.button);
+        tv_login            = findViewById(R.id.tv_login);
+        prefs               = getSharedPreferences("email",MODE_PRIVATE);
+        editor              = prefs.edit();
+        sessionManager      = new SessionManager(this);
 
         sweetAlertDialog    = new SweetAlertDialog(RegisterActivity.this, SweetAlertDialog.PROGRESS_TYPE);
         sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#000080"));
@@ -112,10 +120,10 @@ public class RegisterActivity extends AppCompatActivity {
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                startActivity(new Intent(RegisterActivity.this,PermohonanActivity.class));
-//                if (isValid()){
-//                    kirimRegister();
-//                }
+//                startActivity(new Intent(RegisterActivity.this,VerificationActivity.class));
+                if (isValid()){
+                    kirimRegister();
+                }
 
 //                final Dialog dialog = new Dialog(RegisterActivity.this);
 //                dialog.setContentView(R.layout.dialog_verifikasi);
@@ -124,24 +132,24 @@ public class RegisterActivity extends AppCompatActivity {
 //
 //                dialog.show();
 
-                final AlertDialog.Builder builder   = new AlertDialog.Builder(RegisterActivity.this);
-                LayoutInflater inflater             = getLayoutInflater();
-                View mView                          = inflater.inflate(R.layout.dialog_verifikasi, null);
-
-                builder.setView(mView);
-
-                dialog = builder.create();
-
-                WindowManager.LayoutParams wmlp = dialog.getWindow()
-                        .getAttributes();
-                wmlp.width = WindowManager.LayoutParams.MATCH_PARENT;
-                wmlp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-
-                dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-
-                dialog.setCanceledOnTouchOutside(false);
-
-                dialog.show();
+//                final AlertDialog.Builder builder   = new AlertDialog.Builder(RegisterActivity.this);
+//                LayoutInflater inflater             = getLayoutInflater();
+//                View mView                          = inflater.inflate(R.layout.dialog_verifikasi, null);
+//
+//                builder.setView(mView);
+//
+//                dialog = builder.create();
+//
+//                WindowManager.LayoutParams wmlp = dialog.getWindow()
+//                        .getAttributes();
+//                wmlp.width = WindowManager.LayoutParams.MATCH_PARENT;
+//                wmlp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+//
+//                dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+//
+//                dialog.setCanceledOnTouchOutside(false);
+//
+//                dialog.show();
 
             }
         });
@@ -177,6 +185,14 @@ public class RegisterActivity extends AppCompatActivity {
                 } else {
                     getDaerah();
                 }
+            }
+        });
+
+        tv_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                finish();
             }
         });
 
@@ -582,7 +598,13 @@ public class RegisterActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(SweetAlertDialog sweetAlertDialog) {
                                     sweetAlertDialog.dismissWithAnimation();
-
+//                                    sessionManager.createOtpSession(true);
+                                    editor.putString("email",et_email.getText().toString());
+                                    editor.commit();
+                                    Intent i = new Intent(RegisterActivity.this, VerificationActivity.class);
+//                                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(i);
+//                                    finish();
                                 }
                             })
                             .show();
@@ -597,5 +619,24 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(RegisterActivity.this, "Terjadi Kesalahan Jaringan", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        finish();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (sessionManager.isOTP()) {
+            Intent Jump_to_login = new Intent(this, VerificationActivity.class);
+            Jump_to_login.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            startActivity(Jump_to_login);
+            finish();
+            return;
+        }
     }
 }

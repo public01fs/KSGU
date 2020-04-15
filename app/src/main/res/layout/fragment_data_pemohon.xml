@@ -132,6 +132,8 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:hint="Nama"
+                                    android:enabled="false"
+                                    android:textColor="@drawable/selector"
                                     android:paddingBottom="16dp" />
 
                             </com.google.android.material.textfield.TextInputLayout>
@@ -149,6 +151,8 @@
                                     android:layout_height="wrap_content"
                                     android:inputType="number"
                                     android:hint="NPWP"
+                                    android:enabled="false"
+                                    android:textColor="@drawable/selector"
                                     android:paddingBottom="16dp" />
 
                             </com.google.android.material.textfield.TextInputLayout>
@@ -165,6 +169,8 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:hint="Alamat"
+                                    android:enabled="false"
+                                    android:textColor="@drawable/selector"
                                     android:paddingBottom="16dp" />
 
                             </com.google.android.material.textfield.TextInputLayout>
@@ -181,6 +187,8 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:hint="PIC"
+                                    android:enabled="false"
+                                    android:textColor="@drawable/selector"
                                     android:paddingBottom="16dp" />
 
                             </com.google.android.material.textfield.TextInputLayout>
@@ -198,6 +206,8 @@
                                     android:layout_height="wrap_content"
                                     android:inputType="phone"
                                     android:hint="Telepon"
+                                    android:enabled="false"
+                                    android:textColor="@drawable/selector"
                                     android:paddingBottom="16dp" />
 
                             </com.google.android.material.textfield.TextInputLayout>

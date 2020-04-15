@@ -14,7 +14,7 @@
         android:background="@drawable/fab_shadow"/>
 
     <ImageButton
-        android:id="@+id/myfab_main_btn"
+        android:id="@+id/iv_edit"
         android:layout_width="@dimen/fab_size"
         android:layout_height="@dimen/fab_size"
         android:layout_gravity="center"

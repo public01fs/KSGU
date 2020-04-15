@@ -5,6 +5,8 @@ import com.application.ksgu.Model.Checklist;
 import com.application.ksgu.Model.DataDaerah;
 import com.application.ksgu.Model.DataNota;
 import com.application.ksgu.Model.Layanan;
+import com.application.ksgu.Model.Login;
+import com.application.ksgu.Model.Resend;
 
 import java.util.List;
 
@@ -50,4 +52,34 @@ public interface ApiInterface {
                                     @Part("daerah_id") RequestBody daerah_id,
                                     @Part("telepon") RequestBody telepon,
                                     @Part MultipartBody.Part ktp);
+
+    @FormUrlEncoded
+    @POST(API + "register/verification")
+    Call<Login> verification(@Field("confirm") String confirm,
+                             @Field("email") String email);
+
+    @FormUrlEncoded
+    @POST(API + "register/resend-code")
+    Call<Resend> resend(@Field("email") String email);
+
+    @FormUrlEncoded
+    @POST(API + "auth/login")
+    Call<Login> login(@Field("email") String email,
+                      @Field("password") String password);
+
+    @Multipart
+    @POST(API + "user/update-profile")
+    Call<Login> updateProfile(@Part MultipartBody.Part img,
+                              @Part("password") RequestBody password,
+                              @Part("confirm-password") RequestBody confirm,
+                              @Part("name") RequestBody name,
+                              @Part("npwp") RequestBody npwp,
+                              @Part("alamat") RequestBody alamat,
+                              @Part("daerah_id") RequestBody daerah_id,
+                              @Part("telepon") RequestBody telepon,
+                              @Part("agen_id") RequestBody agen_id,
+                              @Part("agen_nama") RequestBody agen_nama,
+                              @Part("agen_alamat") RequestBody agen_alamat,
+                              @Part("agen_daerah") RequestBody agen_daerah,
+                              @Part("id") RequestBody id);
 }
