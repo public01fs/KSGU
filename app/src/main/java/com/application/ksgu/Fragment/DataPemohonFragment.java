@@ -3,6 +3,7 @@ package com.application.ksgu.Fragment;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -56,6 +57,7 @@ import static com.application.ksgu.Cons.KEY_ALAMAT;
 import static com.application.ksgu.Cons.KEY_NAME;
 import static com.application.ksgu.Cons.KEY_NPWP;
 import static com.application.ksgu.Cons.KEY_TELEPON;
+import static com.application.ksgu.Cons.KEY_TOKEN;
 
 public class DataPemohonFragment extends Fragment implements BlockingStep {
 
@@ -81,6 +83,9 @@ public class DataPemohonFragment extends Fragment implements BlockingStep {
     SessionManager sessionManager;
     HashMap<String, String> getLogin;
 
+    SharedPreferences prefs;
+    String layanan_kode;
+
     @Nullable
     private OnNavigationBarListener onNavigationBarListener;
 
@@ -100,6 +105,8 @@ public class DataPemohonFragment extends Fragment implements BlockingStep {
         et_alamat           = view.findViewById(R.id.et_alamat);
         et_pic              = view.findViewById(R.id.et_pic);
         et_telepon          = view.findViewById(R.id.et_telepon);
+        prefs               = getActivity().getSharedPreferences("layanan",Context.MODE_PRIVATE);
+        layanan_kode        = prefs.getString("data","");
         sessionManager      = new SessionManager(getContext());
 
         sweetAlertDialog    = new SweetAlertDialog(getContext(), SweetAlertDialog.PROGRESS_TYPE);
@@ -139,7 +146,7 @@ public class DataPemohonFragment extends Fragment implements BlockingStep {
                     dialog.show();
                     dialog.getSearchBox().setTypeface(Typeface.SERIF);
                 } else {
-                    getLayanan();
+                    getLayanan(layanan_kode);
                 }
             }
         });
@@ -157,7 +164,7 @@ public class DataPemohonFragment extends Fragment implements BlockingStep {
     @Override
     public void onNextClicked(final StepperLayout.OnNextClickedCallback callback) {
         callback.getStepperLayout().showProgress("Mohon Tunggu...");
-        ApiInterface apiInterface       = ServiceGenerator.createService(ApiInterface.class);
+        ApiInterface apiInterface       = ServiceGenerator.createService(ApiInterface.class,getLogin.get(KEY_TOKEN));
         Call<List<DataNota>> call       = apiInterface.getDataNota(layanan.getJENISID());
         call.enqueue(new Callback<List<DataNota>>() {
             @Override
@@ -216,10 +223,10 @@ public class DataPemohonFragment extends Fragment implements BlockingStep {
         Toast.makeText(getContext(), error.getErrorMessage(), Toast.LENGTH_SHORT).show();
     }
 
-    private void getLayanan(){
+    private void getLayanan(String layanan_kode){
         showpDialog();
-        ApiInterface apiInterface   = ServiceGenerator.createService(ApiInterface.class);
-        Call<List<Layanan>> call    = apiInterface.getLayanan();
+        ApiInterface apiInterface   = ServiceGenerator.createService(ApiInterface.class,getLogin.get(KEY_TOKEN));
+        Call<List<Layanan>> call    = apiInterface.getLayanan(layanan_kode);
         call.enqueue(new Callback<List<Layanan>>() {
             @Override
             public void onResponse(Call<List<Layanan>> call, Response<List<Layanan>> response) {

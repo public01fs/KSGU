@@ -111,6 +111,6 @@ public class Layanan implements Searchable {
 
 	@Override
 	public String getTitle() {
-		return jENISNOTE + "-" + jENISNAME;
+		return jENISNAME;
 	}
 }

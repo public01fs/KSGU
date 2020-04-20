@@ -115,7 +115,7 @@ public class VerificationActivity extends AppCompatActivity {
                 if (response.isSuccessful()){
                     sessionManager.createLoginSession(response.body());
                     sessionManager.createOtpSession(false);
-                    Intent intent = new Intent(VerificationActivity.this, MainActivity.class);
+                    Intent intent = new Intent(VerificationActivity.this, Main2Activity.class);
                     startActivity(intent);
                     finish();
                 } else if (response.code() == 422){

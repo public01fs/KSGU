@@ -266,7 +266,7 @@ public class EditProfileActivity extends AppCompatActivity {
                                 public void onClick(SweetAlertDialog sweetAlertDialog) {
                                     sweetAlertDialog.dismissWithAnimation();
                                     sessionManager.createLoginSession(response.body());
-                                    Intent i = new Intent(EditProfileActivity.this, ProfileActivity.class);
+                                    Intent i = new Intent(EditProfileActivity.this, Main2Activity.class);
                                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                     startActivity(i);

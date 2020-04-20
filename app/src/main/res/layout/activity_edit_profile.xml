@@ -17,7 +17,7 @@
             android:id="@+id/white_holder"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimary"
+            android:background="@color/next1"
             android:orientation="vertical">
 
             <LinearLayout
@@ -88,7 +88,7 @@
         android:scrollbars="none"
         android:scrollingCache="true"
         android:fillViewport="true"
-        android:layout_margin="10dp"
+        android:padding="10dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
