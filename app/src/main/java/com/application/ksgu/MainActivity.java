@@ -57,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
         iv_photo        = findViewById(R.id.iv_photo);
         pb_loading      = findViewById(R.id.pbLoading);
         sessionManager  = new SessionManager(this);
-        getLogin        = sessionManager.getLogin();
 
         if (!sessionManager.isLoggedIn()){
             Intent Jump_to_login = new Intent(this, LoginActivity.class);
@@ -83,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setLayout(){
+        getLogin        = sessionManager.getLogin();
         tv_nama.setText(getLogin.get(KEY_NAME));
         tv_email.setText(getLogin.get(KEY_EMAIL));
         if (getLogin.get(KEY_IMG) != null) {

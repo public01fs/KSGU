@@ -110,16 +110,15 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <GridLayout
+    <androidx.gridlayout.widget.GridLayout
         android:id="@+id/grid_item"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="220dp"
-        android:alignmentMode="alignMargins"
-        android:columnCount="2"
-        android:columnOrderPreserved="false"
-
-        android:rowCount="3"
+        app:alignmentMode="alignMargins"
+        app:columnCount="2"
+        app:columnOrderPreserved="false"
+        app:rowCount="3"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -131,8 +130,8 @@
             android:id="@+id/cv_profile"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
+            app:layout_rowWeight="1"
+            app:layout_columnWeight="1"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="16dp"
             android:background="@color/cardColor"
@@ -170,8 +169,8 @@
             android:id="@+id/cv_permohonan"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
+            app:layout_rowWeight="1"
+            app:layout_columnWeight="1"
             android:layout_marginLeft="16dp"
             android:layout_marginBottom="16dp"
             android:background="@color/cardColor"
@@ -209,8 +208,8 @@
             android:visibility="invisible"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
+            app:layout_rowWeight="1"
+            app:layout_columnWeight="1"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="16dp"
             android:background="@color/cardColor"
@@ -248,8 +247,8 @@
             android:visibility="invisible"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
+            app:layout_rowWeight="1"
+            app:layout_columnWeight="1"
             android:layout_marginLeft="16dp"
             android:layout_marginBottom="16dp"
             android:background="@color/cardColor"
@@ -286,8 +285,8 @@
             android:visibility="invisible"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
+            app:layout_rowWeight="1"
+            app:layout_columnWeight="1"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="16dp"
             android:background="@color/cardColor"
@@ -325,8 +324,8 @@
             android:visibility="invisible"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
+            app:layout_rowWeight="1"
+            app:layout_columnWeight="1"
             android:layout_marginLeft="16dp"
             android:layout_marginBottom="16dp"
             android:background="@color/cardColor"
@@ -360,6 +359,6 @@
 
         </androidx.cardview.widget.CardView>
 
-    </GridLayout>
+    </androidx.gridlayout.widget.GridLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
 
