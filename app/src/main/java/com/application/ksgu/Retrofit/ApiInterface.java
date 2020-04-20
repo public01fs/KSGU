@@ -25,8 +25,8 @@ import retrofit2.http.Path;
 public interface ApiInterface {
     String API = Cons.SERVER_URL;
 
-    @GET(API + "data-layanan")
-    Call<List<Layanan>> getLayanan();
+    @GET(API + "data-layanan/{note}")
+    Call<List<Layanan>> getLayanan(@Path("note") String note);
 
     @GET(API + "data-nota/{id}")
     Call<List<DataNota>> getDataNota(@Path("id") int id);

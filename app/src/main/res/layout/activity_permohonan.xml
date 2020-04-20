@@ -10,7 +10,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:background="@color/next"
+    android:background="@color/next1"
     android:theme="@style/ThemeOverlay.AppCompat.Light"
     app:layout_scrollFlags="scroll|enterAlways">
 
@@ -46,12 +46,12 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
         app:ms_stepperType="tabs"
         app:ms_stepperFeedbackType="tabs|disabled_bottom_navigation"
         app:ms_showErrorStateEnabled="true"
-        app:ms_activeStepColor="@color/next"
+        app:ms_activeStepColor="@color/next1"
         app:ms_inactiveStepColor="#44000000"
         app:ms_backButtonColor="#FFFFFF"
         app:ms_nextButtonColor="@color/ms_custom_button_text_color"
         app:ms_completeButtonColor="@color/ms_custom_button_text_color"
-        app:ms_bottomNavigationBackground="@color/next"
+        app:ms_bottomNavigationBackground="@color/next1"
         app:ms_tabStepDividerWidth="35dp"
         tools:theme="@style/AppTheme" />
 </LinearLayout>

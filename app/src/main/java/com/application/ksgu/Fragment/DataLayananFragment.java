@@ -34,13 +34,17 @@ import com.application.ksgu.Model.UploadFotoModel;
 import com.application.ksgu.R;
 import com.application.ksgu.Retrofit.ApiInterface;
 import com.application.ksgu.Retrofit.ServiceGenerator;
+import com.application.ksgu.SessionManager;
 import com.google.gson.Gson;
 import com.stepstone.stepper.BlockingStep;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import static com.application.ksgu.Cons.KEY_TOKEN;
 
 public class DataLayananFragment extends Fragment implements BlockingStep {
 
@@ -65,6 +69,9 @@ public class DataLayananFragment extends Fragment implements BlockingStep {
     Button btn_daftar,btn_daftarlaut;
 
     LinearLayout ll_data,ll_datalaut;
+
+    SessionManager sessionManager;
+    HashMap<String, String> getLogin;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -106,6 +113,8 @@ public class DataLayananFragment extends Fragment implements BlockingStep {
         et_sertifikat       = view.findViewById(R.id.et_sertifikat);
         btn_daftarlaut      = view.findViewById(R.id.btn_daftarlaut);
         ll_datalaut         = view.findViewById(R.id.ll_datalaut);
+        sessionManager      = new SessionManager(getContext());
+        getLogin            = sessionManager.getLogin();
 
         sweetAlertDialog    = new SweetAlertDialog(getContext(), SweetAlertDialog.PROGRESS_TYPE);
         sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#000080"));
@@ -118,7 +127,7 @@ public class DataLayananFragment extends Fragment implements BlockingStep {
     @Override
     public void onNextClicked(final StepperLayout.OnNextClickedCallback callback) {
         callback.getStepperLayout().showProgress("Mohon Tunggu...");
-        ApiInterface apiInterface   = ServiceGenerator.createService(ApiInterface.class);
+        ApiInterface apiInterface   = ServiceGenerator.createService(ApiInterface.class,getLogin.get(KEY_TOKEN));
         Call<List<Checklist>> call  = apiInterface.getCheckList(dataKirim.getLayanan().getJENISID());
         call.enqueue(new Callback<List<Checklist>>() {
             @Override

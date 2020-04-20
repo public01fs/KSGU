@@ -52,4 +52,6 @@
     <color name="amber_50">#FFF8E1</color>
     <color name="purple_50">#F3E5F5</color>
     <color name="accent_700">#C2185B</color>
+
+    <color name="colorSecondary">#158CCA</color>
 </resources>
