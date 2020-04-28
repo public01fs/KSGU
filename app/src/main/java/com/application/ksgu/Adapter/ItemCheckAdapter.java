@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.application.ksgu.Model.DataNota;
 import com.application.ksgu.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -20,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ItemCheckAdapter extends RecyclerView.Adapter<ItemCheckAdapter.MyViewHolder> {
     List<DataNota> daftarpaket;
+    List<String> check = new ArrayList<>();
     Context context;
 
     public ItemCheckAdapter(List<DataNota> daftarpaket) {
@@ -37,25 +39,25 @@ public class ItemCheckAdapter extends RecyclerView.Adapter<ItemCheckAdapter.MyVi
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
-        DataNota model = daftarpaket.get(position);
+        final DataNota model = daftarpaket.get(position);
 //        holder.tv_nama.setText(model.getNOTANAME());
         holder.checkBox.setText(model.getNOTANAME());
 
-//        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-//                try {
-//                    if (b){
-//                        daftarpaket.get(position).setIs_aktif("1");
-//                    } else {
-//                        daftarpaket.get(position).setIs_aktif("0");
-//                    }
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                try {
+                    if (b){
+                        check.add(model.getCHILDID());
+                    } else {
+                        check.remove(model.getCHILDID());
+                    }
 //                    notifyDataSetChanged();
-//                } catch (Exception e){
-//                    Log.e("onCheckChanged", e.getMessage());
-//                }
-//            }
-//        });
+                } catch (Exception e){
+                    Log.e("onCheckChanged", e.getMessage());
+                }
+            }
+        });
 
 //        if (holder.checkBox.isChecked()){
 //            daftarpaket.get(position).setIs_aktif("1");
@@ -91,5 +93,9 @@ public class ItemCheckAdapter extends RecyclerView.Adapter<ItemCheckAdapter.MyVi
 
     public List<DataNota> getItems() {
         return daftarpaket;
+    }
+
+    public List<String> getCheck(){
+        return check;
     }
 }

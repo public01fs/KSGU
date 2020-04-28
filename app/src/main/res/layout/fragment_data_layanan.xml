@@ -83,13 +83,15 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="0.7">
 
-                            <com.google.android.material.textfield.TextInputEditText
+                            <AutoCompleteTextView
                                 style="@style/modifiedEditText"
                                 android:id="@+id/et_pendaftaran"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Tanda Pendaftaran"
-                                android:paddingBottom="16dp" />
+                                android:paddingBottom="16dp"
+                                android:paddingTop="16dp"
+                                android:paddingLeft="12dp"/>
 
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -141,13 +143,15 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp">
 
-                            <com.google.android.material.textfield.TextInputEditText
+                            <AutoCompleteTextView
                                 style="@style/modifiedEditText"
                                 android:id="@+id/et_kapal"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Nama Kapal"
-                                android:paddingBottom="16dp" />
+                                android:paddingBottom="16dp"
+                                android:paddingTop="16dp"
+                                android:paddingLeft="12dp"/>
 
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -189,13 +193,15 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp">
 
-                            <com.google.android.material.textfield.TextInputEditText
+                            <AutoCompleteTextView
                                 style="@style/modifiedEditText"
                                 android:id="@+id/et_bendera"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Bendera"
-                                android:paddingBottom="16dp" />
+                                android:paddingBottom="16dp"
+                                android:paddingTop="16dp"
+                                android:paddingLeft="12dp"/>
 
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -266,13 +272,16 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="0.7">
 
-                            <com.google.android.material.textfield.TextInputEditText
+                            <AutoCompleteTextView
                                 style="@style/modifiedEditText"
                                 android:id="@+id/et_kode"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Masukkan Seaferer Code"
-                                android:paddingBottom="16dp" />
+                                android:paddingBottom="16dp"
+                                android:paddingTop="16dp"
+                                android:inputType="number"
+                                android:paddingLeft="12dp"/>
 
                         </com.google.android.material.textfield.TextInputLayout>
 

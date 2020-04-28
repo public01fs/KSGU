@@ -53,6 +53,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.application.ksgu.Cons.KEY_AGEN_ID;
+import static com.application.ksgu.Cons.KEY_AGEN_NAMA;
 import static com.application.ksgu.Cons.KEY_ALAMAT;
 import static com.application.ksgu.Cons.KEY_NAME;
 import static com.application.ksgu.Cons.KEY_NPWP;
@@ -66,7 +68,7 @@ public class DataPemohonFragment extends Fragment implements BlockingStep {
     }
 
     View view;
-    EditText et_layanan,et_tanggal;
+    EditText et_layanan,et_tanggal,et_nomor,et_perihal;
     EditText et_nama,et_npwp,et_alamat,et_pic,et_telepon;
     int layanan_id;
     List<Layanan> layanans;
@@ -74,17 +76,15 @@ public class DataPemohonFragment extends Fragment implements BlockingStep {
     private int mYear,mMonth,mDay;
     private SimpleDateFormat dateFormatter;
     DataKirim dataKirim = new DataKirim();
-
     private DataManager dataManager;
     Layanan layanan;
     Gson gson = new Gson();
     Boolean check = false;
-
     SessionManager sessionManager;
     HashMap<String, String> getLogin;
-
     SharedPreferences prefs;
     String layanan_kode;
+    int agen_id;
 
     @Nullable
     private OnNavigationBarListener onNavigationBarListener;
@@ -105,6 +105,8 @@ public class DataPemohonFragment extends Fragment implements BlockingStep {
         et_alamat           = view.findViewById(R.id.et_alamat);
         et_pic              = view.findViewById(R.id.et_pic);
         et_telepon          = view.findViewById(R.id.et_telepon);
+        et_nomor            = view.findViewById(R.id.et_nomor);
+        et_perihal          = view.findViewById(R.id.et_perihal);
         prefs               = getActivity().getSharedPreferences("layanan",Context.MODE_PRIVATE);
         layanan_kode        = prefs.getString("data","");
         sessionManager      = new SessionManager(getContext());
@@ -178,6 +180,15 @@ public class DataPemohonFragment extends Fragment implements BlockingStep {
                         dataKirim.setDataNotas(dataNotas);
                     }
                     dataKirim.setLayanan(layanan);
+                    dataKirim.setJenis_id(String.valueOf(layanan.getJENISID()));
+                    dataKirim.setRequire_check(layanan.getREQUIRECHECK());
+                    dataKirim.setIdkantor(String.valueOf(agen_id));
+                    dataKirim.setSurat_hal(et_perihal.getText().toString());
+                    dataKirim.setSurat_no(et_nomor.getText().toString());
+                    dataKirim.setSurat_tgl(et_nomor.getText().toString());
+                    dataKirim.setSurat_npwp(et_npwp.getText().toString());
+                    dataKirim.setSurat_pengirim(et_nama.getText().toString());
+                    dataKirim.setSurat_pengirim_kota(et_alamat.getText().toString());
                     dataManager.saveData(gson.toJson(dataKirim));
                     callback.goToNextStep();
                 } else {
@@ -344,9 +355,11 @@ public class DataPemohonFragment extends Fragment implements BlockingStep {
 
     private void setLayout(){
         getLogin    = sessionManager.getLogin();
+        agen_id     = Integer.valueOf(getLogin.get(KEY_AGEN_ID));
         et_alamat.setText(getLogin.get(KEY_ALAMAT));
         et_pic.setText(getLogin.get(KEY_NAME));
         et_npwp.setText(getLogin.get(KEY_NPWP));
         et_telepon.setText(getLogin.get(KEY_TELEPON));
+        et_nama.setText(getLogin.get(KEY_AGEN_NAMA));
     }
 }

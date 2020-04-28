@@ -16,25 +16,46 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import android.os.Handler;
+import android.os.Message;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.application.ksgu.Adapter.DitkapelAdapter;
 import com.application.ksgu.Adapter.ItemCheckAdapter;
+import com.application.ksgu.Adapter.KapalAdapter;
+import com.application.ksgu.Adapter.NegaraAdapter;
+import com.application.ksgu.Adapter.PelautAdapter;
 import com.application.ksgu.Adapter.UploadFotoAdapter;
 import com.application.ksgu.DataManager;
 import com.application.ksgu.Model.Checklist;
 import com.application.ksgu.Model.DataKirim;
 import com.application.ksgu.Model.DataNota;
+import com.application.ksgu.Model.Ditkapel;
+import com.application.ksgu.Model.DitkapelService;
+import com.application.ksgu.Model.Kapal;
+import com.application.ksgu.Model.Negara;
+import com.application.ksgu.Model.Pelaut;
+import com.application.ksgu.Model.PelautService;
 import com.application.ksgu.Model.UploadFotoModel;
 import com.application.ksgu.R;
 import com.application.ksgu.Retrofit.ApiInterface;
 import com.application.ksgu.Retrofit.ServiceGenerator;
 import com.application.ksgu.SessionManager;
+import com.google.android.gms.common.api.Api;
 import com.google.gson.Gson;
 import com.stepstone.stepper.BlockingStep;
 import com.stepstone.stepper.StepperLayout;
@@ -62,9 +83,11 @@ public class DataLayananFragment extends Fragment implements BlockingStep {
 
     CardView cv_kapal,cv_layanan,cv_perusahaan,cv_laut;
 
-    EditText et_pendaftaran,et_posisi,et_kapal,et_gt,et_callsign,et_bendera,et_pendaftaran1,et_pemilik;
+    EditText et_posisi,et_gt,et_callsign,et_pendaftaran1,et_pemilik;
     EditText et_perusahaan,et_alamatp,et_noidentitas,et_jmlkapal,et_totalgt;
-    EditText et_kode,et_pelaut,et_tempat,et_tgllhr,et_umur,et_kelamin,et_status,et_sertifikat;
+    EditText et_pelaut,et_tempat,et_tgllhr,et_umur,et_kelamin,et_status,et_sertifikat;
+
+    AutoCompleteTextView et_pendaftaran,et_kode,et_kapal,et_bendera;
 
     Button btn_daftar,btn_daftarlaut;
 
@@ -72,6 +95,22 @@ public class DataLayananFragment extends Fragment implements BlockingStep {
 
     SessionManager sessionManager;
     HashMap<String, String> getLogin;
+
+    DitkapelAdapter ditkapelAdapter;
+    PelautAdapter pelautAdapter;
+    NegaraAdapter negaraAdapter;
+    KapalAdapter kapalAdapter;
+    List<Ditkapel>ditkapels;
+    List<Pelaut> pelauts;
+    List<Negara> negaras;
+    List<Kapal> kapals;
+
+    PelautService pelautService;
+
+    private static final int TRIGGER_AUTO_COMPLETE = 100;
+    private static final long AUTO_COMPLETE_DELAY = 100;
+
+    private Handler handler,handler1,handler2;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -118,8 +157,159 @@ public class DataLayananFragment extends Fragment implements BlockingStep {
 
         sweetAlertDialog    = new SweetAlertDialog(getContext(), SweetAlertDialog.PROGRESS_TYPE);
         sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#000080"));
-        sweetAlertDialog.setTitleText("Loading");
+        sweetAlertDialog.setTitleText("Mohon Tunggu...");
         sweetAlertDialog.setCancelable(false);
+
+//        getDitkapel("a");
+
+        ditkapelAdapter = new DitkapelAdapter(getActivity());
+        et_pendaftaran.setThreshold(1);
+        et_pendaftaran.setAdapter(ditkapelAdapter);
+
+        et_pendaftaran.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                handler.removeMessages(TRIGGER_AUTO_COMPLETE);
+                handler.sendEmptyMessageDelayed(TRIGGER_AUTO_COMPLETE,
+                        AUTO_COMPLETE_DELAY);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        et_pendaftaran.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                getDitkapelService(ditkapelAdapter.getItem(i).getValue());
+            }
+        });
+
+        pelautAdapter = new PelautAdapter(getActivity());
+        et_kode.setThreshold(1);
+        et_kode.setAdapter(pelautAdapter);
+
+        et_kode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                handler.removeMessages(TRIGGER_AUTO_COMPLETE);
+                handler.sendEmptyMessageDelayed(TRIGGER_AUTO_COMPLETE,
+                        AUTO_COMPLETE_DELAY);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        et_kode.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                getPelautService(pelautAdapter.getItem(i).getValue());
+            }
+        });
+
+        negaraAdapter = new NegaraAdapter(getActivity());
+        et_bendera.setThreshold(1);
+        et_bendera.setAdapter(negaraAdapter);
+
+        et_bendera.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                handler1.removeMessages(TRIGGER_AUTO_COMPLETE);
+                handler1.sendEmptyMessageDelayed(TRIGGER_AUTO_COMPLETE,
+                        AUTO_COMPLETE_DELAY);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        kapalAdapter = new KapalAdapter(getActivity());
+        et_kapal.setThreshold(1);
+        et_kapal.setAdapter(kapalAdapter);
+
+        et_kapal.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                handler2.removeMessages(TRIGGER_AUTO_COMPLETE);
+                handler2.sendEmptyMessageDelayed(TRIGGER_AUTO_COMPLETE,
+                        AUTO_COMPLETE_DELAY);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        handler = new Handler(new Handler.Callback() {
+            @Override
+            public boolean handleMessage(Message msg) {
+                if (msg.what == TRIGGER_AUTO_COMPLETE) {
+                    if (dataKirim.getLayanan().getREQUIRECHECK().toLowerCase().equals("kapal")){
+                        if (!TextUtils.isEmpty(et_pendaftaran.getText())) {
+                            getDitkapel(et_pendaftaran.getText().toString());
+                        }
+                    } else if (dataKirim.getLayanan().getREQUIRECHECK().toLowerCase().equals("pelaut")){
+                        if (!TextUtils.isEmpty(et_kode.getText())) {
+                            getPelaut(et_kode.getText().toString());
+                        }
+                    }
+                }
+                return false;
+            }
+        });
+
+        handler1 = new Handler(new Handler.Callback() {
+            @Override
+            public boolean handleMessage(Message msg) {
+                if (msg.what == TRIGGER_AUTO_COMPLETE) {
+                    if (!TextUtils.isEmpty(et_bendera.getText())) {
+                        getNegara(et_bendera.getText().toString());
+                    }
+                }
+                return false;
+            }
+        });
+
+        handler2 = new Handler(new Handler.Callback() {
+            @Override
+            public boolean handleMessage(Message msg) {
+                if (msg.what == TRIGGER_AUTO_COMPLETE) {
+                    if (!TextUtils.isEmpty(et_kapal.getText())) {
+                        getKapal(et_kapal.getText().toString());
+                    }
+                }
+                return false;
+            }
+        });
+
 
         return view;
     }
@@ -140,6 +330,15 @@ public class DataLayananFragment extends Fragment implements BlockingStep {
                         List<Checklist> checklists = new ArrayList<>();
                         dataKirim.setChecklists(checklists);
                     }
+
+                    if (dataKirim.getLayanan().getREQUIRECHECK().toLowerCase().equals("kapal")){
+                        setDataKapal();
+                    } else if (dataKirim.getLayanan().getREQUIRECHECK().toLowerCase().equals("perusahaan")){
+                        setDataPerusahaan();
+                    } else if (dataKirim.getLayanan().getREQUIRECHECK().toLowerCase().equals("pelaut")){
+                        setDataPelaut();
+                    }
+
                     dataManager.saveData(gson.toJson(dataKirim));
                     callback.goToNextStep();
                 } else {
@@ -244,5 +443,238 @@ public class DataLayananFragment extends Fragment implements BlockingStep {
         cv_laut.setVisibility(View.GONE);
         ll_data.setVisibility(View.GONE);
         ll_datalaut.setVisibility(View.GONE);
+    }
+
+    public void getDitkapel(String term){
+        ApiInterface apiInterface       = ServiceGenerator.createService(ApiInterface.class,getLogin.get(KEY_TOKEN));
+        Call<List<Ditkapel>> call       = apiInterface.getDitkapel(term);
+        call.enqueue(new Callback<List<Ditkapel>>() {
+            @Override
+            public void onResponse(Call<List<Ditkapel>> call, Response<List<Ditkapel>> response) {
+                if (response.isSuccessful()){
+                    if (response.body().size() > 0){
+                        ditkapels = response.body();
+                        ditkapelAdapter.setData(ditkapels);
+                        ditkapelAdapter.notifyDataSetChanged();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Ditkapel>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void getDitkapelService(String pendaftaran){
+        showpDialog();
+        ApiInterface apiInterface       = ServiceGenerator.createService(ApiInterface.class,getLogin.get(KEY_TOKEN));
+        Call<List<DitkapelService>> call      = apiInterface.getDitkapelService(pendaftaran);
+        call.enqueue(new Callback<List<DitkapelService>>() {
+            @Override
+            public void onResponse(Call<List<DitkapelService>> call, Response<List<DitkapelService>> response) {
+                hidepDialog();
+                if (response.isSuccessful()){
+                    ll_data.setVisibility(View.VISIBLE);
+                    List<DitkapelService> ditkapelServices = response.body();
+                    if (ditkapelServices.size() > 0){
+                        et_kapal.setText(ditkapelServices.get(0).getNAMAKPL());
+                        et_gt.setText(ditkapelServices.get(0).getISIKOTOR());
+                        et_bendera.setText(ditkapelServices.get(0).getBenderaAsal());
+                        et_pendaftaran1.setText(ditkapelServices.get(0).getTANDADAFTAR());
+                        et_callsign.setText(ditkapelServices.get(0).getCALLSIGN());
+                        et_pemilik.setText(ditkapelServices.get(0).getNAMAPEMILIK());
+                        et_posisi.setText(ditkapelServices.get(0).getKAPALPOSISI());
+                    }
+                } else {
+                    Toast.makeText(getContext(), "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<DitkapelService>> call, Throwable t) {
+                hidepDialog();
+                Log.e("error",t.getMessage());
+                Toast.makeText(getContext(), "Terjadi Kesalahan Jaringan", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void getPelaut(String term){
+        ApiInterface apiInterface       = ServiceGenerator.createService(ApiInterface.class,getLogin.get(KEY_TOKEN));
+        Call<List<Pelaut>> call         = apiInterface.getPelaut(term);
+        call.enqueue(new Callback<List<Pelaut>>() {
+            @Override
+            public void onResponse(Call<List<Pelaut>> call, Response<List<Pelaut>> response) {
+                if (response.isSuccessful()){
+                    if (response.body().size() > 0){
+                        pelauts = response.body();
+                        pelautAdapter.setData(pelauts);
+                        pelautAdapter.notifyDataSetChanged();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Pelaut>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void getPelautService(String kode){
+        showpDialog();
+        ApiInterface apiInterface       = ServiceGenerator.createService(ApiInterface.class,getLogin.get(KEY_TOKEN));
+        Call<PelautService> call        = apiInterface.getPelautService(kode);
+        call.enqueue(new Callback<PelautService>() {
+            @Override
+            public void onResponse(Call<PelautService> call, Response<PelautService> response) {
+                hidepDialog();
+                if (response.isSuccessful()){
+                    ll_datalaut.setVisibility(View.VISIBLE);
+                    pelautService = response.body();
+                    et_pelaut.setText(pelautService.getNamaPelaut());
+                    et_tempat.setText(pelautService.getTempatLahir());
+                    et_tgllhr.setText(pelautService.getTglLahir());
+                    et_umur.setText(pelautService.getUmur());
+                    et_kelamin.setText(pelautService.getJK());
+                    et_status.setText(pelautService.getStatusPelaut());
+                    et_sertifikat.setText(pelautService.getSertifikat());
+                } else {
+                    Toast.makeText(getContext(), "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PelautService> call, Throwable t) {
+                hidepDialog();
+                Log.e("error",t.getMessage());
+                Toast.makeText(getContext(), "Terjadi Kesalahan Jaringan", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void getNegara(String term){
+        ApiInterface apiInterface       = ServiceGenerator.createService(ApiInterface.class,getLogin.get(KEY_TOKEN));
+        Call<List<Negara>> call         = apiInterface.getNegara(term);
+        call.enqueue(new Callback<List<Negara>>() {
+            @Override
+            public void onResponse(Call<List<Negara>> call, Response<List<Negara>> response) {
+                if (response.isSuccessful()){
+                    if (response.body().size() > 0){
+                        negaras = response.body();
+                        negaraAdapter.setData(negaras);
+                        negaraAdapter.notifyDataSetChanged();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Negara>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void getKapal(String term){
+        ApiInterface apiInterface       = ServiceGenerator.createService(ApiInterface.class,getLogin.get(KEY_TOKEN));
+        Call<List<Kapal>> call          = apiInterface.getKapal(term);
+        call.enqueue(new Callback<List<Kapal>>() {
+            @Override
+            public void onResponse(Call<List<Kapal>> call, Response<List<Kapal>> response) {
+                if (response.isSuccessful()){
+                    if (response.body().size() > 0){
+                        kapals = response.body();
+                        kapalAdapter.setData(kapals);
+                        kapalAdapter.notifyDataSetChanged();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Kapal>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void setDataKapal(){
+        dataKirim.setKapal_name(et_kapal.getText().toString());
+        dataKirim.setKapal_gt(et_gt.getText().toString());
+        dataKirim.setKapal_cs(et_callsign.getText().toString());
+        dataKirim.setKapal_bendera(et_bendera.getText().toString());
+        dataKirim.setKapal_pemilik(et_pemilik.getText().toString());
+        dataKirim.setKapal_posisi(et_posisi.getText().toString());
+        dataKirim.setNamaprsh("");
+        dataKirim.setAlamatprsh("");
+        dataKirim.setIdentitasprsh("");
+        dataKirim.setJmlkapal("");
+        dataKirim.setTotalgt("");
+        dataKirim.setIdpelaut("");
+        dataKirim.setNamapelaut("");
+        dataKirim.setKodepelaut("");
+        dataKirim.setTempatlahir("");
+        dataKirim.setTgllahir("");
+        dataKirim.setUmur("");
+        dataKirim.setJk("");
+        dataKirim.setStatuspelaut("");
+        dataKirim.setSertifikat("");
+    }
+
+    private void setDataPerusahaan(){
+        dataKirim.setKapal_name("");
+        dataKirim.setKapal_gt("");
+        dataKirim.setKapal_cs("");
+        dataKirim.setKapal_bendera("");
+        dataKirim.setKapal_pemilik("");
+        dataKirim.setKapal_posisi("");
+        dataKirim.setNamaprsh(et_perusahaan.getText().toString());
+        dataKirim.setAlamatprsh(et_alamatp.getText().toString());
+        dataKirim.setIdentitasprsh(et_noidentitas.getText().toString());
+        dataKirim.setJmlkapal(et_jmlkapal.getText().toString());
+        dataKirim.setTotalgt(et_totalgt.getText().toString());
+        dataKirim.setIdpelaut("");
+        dataKirim.setNamapelaut("");
+        dataKirim.setKodepelaut("");
+        dataKirim.setTempatlahir("");
+        dataKirim.setTgllahir("");
+        dataKirim.setUmur("");
+        dataKirim.setJk("");
+        dataKirim.setStatuspelaut("");
+        dataKirim.setSertifikat("");
+    }
+
+    private void setDataPelaut(){
+        dataKirim.setKapal_name("");
+        dataKirim.setKapal_gt("");
+        dataKirim.setKapal_cs("");
+        dataKirim.setKapal_bendera("");
+        dataKirim.setKapal_pemilik("");
+        dataKirim.setKapal_posisi("");
+        dataKirim.setNamaprsh("");
+        dataKirim.setAlamatprsh("");
+        dataKirim.setIdentitasprsh("");
+        dataKirim.setJmlkapal("");
+        dataKirim.setTotalgt("");
+        dataKirim.setIdpelaut(String.valueOf(pelautService.getIdPelaut()));
+        dataKirim.setNamapelaut(et_pelaut.getText().toString());
+        dataKirim.setKodepelaut(String.valueOf(pelautService.getKodePelaut()));
+        dataKirim.setTempatlahir(et_tempat.getText().toString());
+        dataKirim.setTgllahir(et_tgllhr.getText().toString());
+        dataKirim.setUmur(et_umur.getText().toString());
+        dataKirim.setJk(et_kelamin.getText().toString());
+        dataKirim.setStatuspelaut(et_status.getText().toString());
+        dataKirim.setSertifikat(et_sertifikat.getText().toString());
+    }
+
+    private void showpDialog() {
+        if (!sweetAlertDialog.isShowing())
+            sweetAlertDialog.show();
+    }
+
+    private void hidepDialog() {
+        if (sweetAlertDialog.isShowing())
+            sweetAlertDialog.dismiss();
     }
 }
