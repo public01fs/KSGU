@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.application.ksgu.Fragment.DashboardFragment;
+import com.application.ksgu.Fragment.PermohonanListFragment;
 import com.application.ksgu.Fragment.ProfileFragment;
 import com.application.ksgu.Library.BottomNavigationViewHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -74,6 +75,9 @@ public class Main2Activity extends AppCompatActivity {
                                 break;
                             case R.id.action_profile:
                                 fragmentClass = ProfileFragment.class;
+                                break;
+                            case R.id.action_permohonan:
+                                fragmentClass = PermohonanListFragment.class;
                                 break;
                             default:
                                 fragmentClass = DashboardFragment.class;

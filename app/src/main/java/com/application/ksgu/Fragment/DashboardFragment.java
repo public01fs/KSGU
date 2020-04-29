@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.application.ksgu.MainActivity;
+import com.application.ksgu.PermohonanActivity;
 import com.application.ksgu.PermohonanListActivity;
 import com.application.ksgu.R;
 import com.application.ksgu.SessionManager;
@@ -77,7 +78,7 @@ public class DashboardFragment extends Fragment {
                 editor.putString("title","Permohonan PPMKK");
                 editor.putString("data","PPMKK");
                 editor.commit();
-                startActivity(new Intent(getContext(),PermohonanListActivity.class));
+                startActivity(new Intent(getContext(), PermohonanActivity.class));
             }
         });
 
@@ -87,7 +88,7 @@ public class DashboardFragment extends Fragment {
                 editor.putString("title","Permohonan Keselamatan Kapal");
                 editor.putString("data","KESELAMATAN KAPAL");
                 editor.commit();
-                startActivity(new Intent(getContext(),PermohonanListActivity.class));
+                startActivity(new Intent(getContext(),PermohonanActivity.class));
             }
         });
 
@@ -97,7 +98,7 @@ public class DashboardFragment extends Fragment {
                 editor.putString("title","Permohonan Kepelautan");
                 editor.putString("data","KEPELAUTAN");
                 editor.commit();
-                startActivity(new Intent(getContext(),PermohonanListActivity.class));
+                startActivity(new Intent(getContext(),PermohonanActivity.class));
             }
         });
 
@@ -107,7 +108,7 @@ public class DashboardFragment extends Fragment {
                 editor.putString("title","Permohonan PPK");
                 editor.putString("data","PPK");
                 editor.commit();
-                startActivity(new Intent(getContext(),PermohonanListActivity.class));
+                startActivity(new Intent(getContext(),PermohonanActivity.class));
             }
         });
 
@@ -117,7 +118,7 @@ public class DashboardFragment extends Fragment {
                 editor.putString("title","Permohonan STB");
                 editor.putString("data","STB");
                 editor.commit();
-                startActivity(new Intent(getContext(),PermohonanListActivity.class));
+                startActivity(new Intent(getContext(),PermohonanActivity.class));
             }
         });
 
@@ -127,7 +128,7 @@ public class DashboardFragment extends Fragment {
                 editor.putString("title","Permohonan P3");
                 editor.putString("data","P3");
                 editor.commit();
-                startActivity(new Intent(getContext(),PermohonanListActivity.class));
+                startActivity(new Intent(getContext(),PermohonanActivity.class));
             }
         });
 

@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ItemCheckAdapter extends RecyclerView.Adapter<ItemCheckAdapter.MyViewHolder> {
     List<DataNota> daftarpaket;
-    List<String> check = new ArrayList<>();
+    List<DataNota> check = new ArrayList<>();
     Context context;
 
     public ItemCheckAdapter(List<DataNota> daftarpaket) {
@@ -48,9 +48,9 @@ public class ItemCheckAdapter extends RecyclerView.Adapter<ItemCheckAdapter.MyVi
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 try {
                     if (b){
-                        check.add(model.getCHILDID());
+                        check.add(model);
                     } else {
-                        check.remove(model.getCHILDID());
+                        check.remove(model);
                     }
 //                    notifyDataSetChanged();
                 } catch (Exception e){
@@ -95,7 +95,7 @@ public class ItemCheckAdapter extends RecyclerView.Adapter<ItemCheckAdapter.MyVi
         return daftarpaket;
     }
 
-    public List<String> getCheck(){
+    public List<DataNota> getCheck(){
         return check;
     }
 }

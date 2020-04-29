@@ -7,6 +7,16 @@
         android:title="Beranda"
         app:showAsAction="always|withText" />
     <item
+        android:id="@+id/action_permohonan"
+        android:icon="@drawable/ic_home"
+        android:title="Permohonan"
+        app:showAsAction="always|withText"/>
+    <item
+        android:id="@+id/action_billing"
+        android:icon="@drawable/ic_home"
+        android:title="Billing"
+        app:showAsAction="always|withText"/>
+    <item
         android:id="@+id/action_profile"
         android:icon="@drawable/ic_profile2"
         android:title="Profil"
