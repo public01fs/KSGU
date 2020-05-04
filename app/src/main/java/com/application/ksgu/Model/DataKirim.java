@@ -20,6 +20,7 @@ public class DataKirim {
     private Layanan layanan;
     private List<DataNota> dataNotas;
     private List<Checklist> checklists;
+    private List<DataNota> dataCheck;
 
     //kapal atau rambu
     private String kapal_id;
@@ -48,6 +49,14 @@ public class DataKirim {
     private String statuspelaut;
     private String sertifikat;
     private String fotopelaut;
+
+    public List<DataNota> getDataCheck() {
+        return dataCheck;
+    }
+
+    public void setDataCheck(List<DataNota> dataCheck) {
+        this.dataCheck = dataCheck;
+    }
 
     public String getIdkantor() {
         return idkantor;

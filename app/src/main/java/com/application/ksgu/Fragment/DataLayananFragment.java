@@ -104,6 +104,7 @@ public class DataLayananFragment extends Fragment implements BlockingStep {
     List<Pelaut> pelauts;
     List<Negara> negaras;
     List<Kapal> kapals;
+    List<DataNota> dataCheck;
 
     PelautService pelautService;
 
@@ -337,6 +338,16 @@ public class DataLayananFragment extends Fragment implements BlockingStep {
                         setDataPerusahaan();
                     } else if (dataKirim.getLayanan().getREQUIRECHECK().toLowerCase().equals("pelaut")){
                         setDataPelaut();
+                    }
+
+                    dataCheck   = itemCheckAdapter.getCheck();
+
+                    if (dataCheck != null && dataCheck.size() > 0){
+                        dataKirim.setDataCheck(dataCheck);
+
+                        for (int i = 0; i < dataCheck.size(); i++) {
+                            Log.d("id jenis",dataCheck.get(i).getJENISID()+"");
+                        }
                     }
 
                     dataManager.saveData(gson.toJson(dataKirim));
