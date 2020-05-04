@@ -10,7 +10,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:background="@color/next1"
+    android:background="@color/white"
     android:theme="@style/ThemeOverlay.AppCompat.Light"
     app:layout_scrollFlags="scroll|enterAlways">
 
@@ -18,17 +18,17 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
         android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:tint="@color/white"
+        android:tint="@color/black"
         android:src="@drawable/ic_chevron_left_black_24dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:fontFamily="@font/poppins_semibold"
+        android:fontFamily="@font/poppins"
         android:gravity="center"
         android:text="Permohonan Layanan Jasa"
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/black"
         android:textSize="17sp" />
 </androidx.appcompat.widget.Toolbar>
 
@@ -51,7 +51,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
         app:ms_backButtonColor="#FFFFFF"
         app:ms_nextButtonColor="@color/ms_custom_button_text_color"
         app:ms_completeButtonColor="@color/ms_custom_button_text_color"
-        app:ms_bottomNavigationBackground="@color/next1"
+        app:ms_bottomNavigationBackground="@color/white"
         app:ms_tabStepDividerWidth="35dp"
         tools:theme="@style/AppTheme" />
 </LinearLayout>

@@ -19,6 +19,7 @@ public class DataKirim {
     private String require_check;
     private Layanan layanan;
     private List<DataNota> dataNotas;
+    private List<DataNota> check;
     private List<Checklist> checklists;
     private List<DataNota> dataCheck;
 
@@ -328,5 +329,13 @@ public class DataKirim {
 
     public void setFotopelaut(String fotopelaut) {
         this.fotopelaut = fotopelaut;
+    }
+
+    public List<DataNota> getCheck() {
+        return check;
+    }
+
+    public void setCheck(List<DataNota> check) {
+        this.check = check;
     }
 }
