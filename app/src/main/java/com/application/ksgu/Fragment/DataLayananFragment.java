@@ -344,10 +344,8 @@ public class DataLayananFragment extends Fragment implements BlockingStep {
 
                     if (dataCheck != null && dataCheck.size() > 0){
                         dataKirim.setDataCheck(dataCheck);
-
-                        for (int i = 0; i < dataCheck.size(); i++) {
-                            Log.d("id jenis",dataCheck.get(i).getJENISID()+"");
-                        }
+                    } else {
+                        dataKirim.setDataCheck(dataCheck);
                     }
 
                     dataManager.saveData(gson.toJson(dataKirim));

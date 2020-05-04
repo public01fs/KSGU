@@ -129,6 +129,7 @@ public class UploadDokumenFragment extends Fragment implements BlockingStep {
                 editor.apply();
             }
         }
+
         if (dataKirim.getChecklists().size() > 0){
             if (menuList.size() == 0){
                 for (int i = 0; i < dataKirim.getChecklists().size(); i++) {

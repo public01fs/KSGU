@@ -57,6 +57,17 @@ public class DataNota{
 	@SerializedName("NOTA_ID")
 	private int nOTAID;
 
+	@SerializedName("CHECKED")
+	private boolean checked;
+
+	public boolean isChecked() {
+		return checked;
+	}
+
+	public void setChecked(boolean checked) {
+		this.checked = checked;
+	}
+
 	public void setPELRA(Object pELRA){
 		this.pELRA = pELRA;
 	}

@@ -42,14 +42,16 @@ public class ItemCheckAdapter extends RecyclerView.Adapter<ItemCheckAdapter.MyVi
         final DataNota model = daftarpaket.get(position);
 //        holder.tv_nama.setText(model.getNOTANAME());
         holder.checkBox.setText(model.getNOTANAME());
-
+        holder.checkBox.setOnCheckedChangeListener(null);
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 try {
                     if (b){
                         check.add(model);
+                        model.setChecked(true);
                     } else {
+                        model.setChecked(false);
                         check.remove(model);
                     }
 //                    notifyDataSetChanged();
@@ -59,18 +61,18 @@ public class ItemCheckAdapter extends RecyclerView.Adapter<ItemCheckAdapter.MyVi
             }
         });
 
+        if (model.isChecked()){
+            holder.checkBox.setChecked(true);
+        } else {
+            holder.checkBox.setChecked(false);
+        }
+
 //        if (holder.checkBox.isChecked()){
 //            daftarpaket.get(position).setIs_aktif("1");
 ////            notifyDataSetChanged();
 //        } else {
 //            daftarpaket.get(position).setIs_aktif("0");
 ////            notifyDataSetChanged();
-//        }
-//
-//        if (model.getIs_aktif().equals("1")){
-//            holder.checkBox.setChecked(true);
-//        } else if (model.getIs_aktif().equals("0")){
-//            holder.checkBox.setChecked(false);
 //        }
 //        holder.tv_hapus.setVisibility(View.GONE);
     }
