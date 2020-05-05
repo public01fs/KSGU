@@ -182,7 +182,7 @@ public class DataPemohonFragment extends Fragment implements BlockingStep {
                     dataKirim.setLayanan(layanan);
                     dataKirim.setJenis_id(String.valueOf(layanan.getJENISID()));
                     dataKirim.setRequire_check(layanan.getREQUIRECHECK());
-                    dataKirim.setIdkantor(String.valueOf(agen_id));
+//                    dataKirim.setIdkantor(String.valueOf(agen_id));
                     dataKirim.setSurat_hal(et_perihal.getText().toString());
                     dataKirim.setSurat_no(et_nomor.getText().toString());
                     dataKirim.setSurat_tgl(et_nomor.getText().toString());

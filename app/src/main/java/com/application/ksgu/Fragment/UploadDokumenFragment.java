@@ -20,7 +20,9 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import io.reactivex.disposables.Disposable;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -35,13 +37,18 @@ import android.view.WindowManager;
 import com.application.ksgu.Adapter.ItemCheckAdapter;
 import com.application.ksgu.Adapter.UploadFotoAdapter;
 import com.application.ksgu.DataManager;
+import com.application.ksgu.EditProfileActivity;
+import com.application.ksgu.Main2Activity;
 import com.application.ksgu.Model.Checklist;
 import com.application.ksgu.Model.DataKirim;
+import com.application.ksgu.Model.Kantor;
 import com.application.ksgu.Model.Layanan;
+import com.application.ksgu.Model.Save;
 import com.application.ksgu.Model.UploadFotoModel;
 import com.application.ksgu.R;
 import com.application.ksgu.Retrofit.ApiInterface;
 import com.application.ksgu.Retrofit.ServiceGenerator;
+import com.application.ksgu.SessionManager;
 import com.google.gson.Gson;
 import com.stepstone.stepper.BlockingStep;
 import com.stepstone.stepper.StepperLayout;
@@ -53,9 +60,11 @@ import com.zhihu.matisse.engine.impl.GlideEngine;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
+import static com.application.ksgu.Cons.KEY_TOKEN;
 
 public class UploadDokumenFragment extends Fragment implements BlockingStep {
 
@@ -76,6 +85,9 @@ public class UploadDokumenFragment extends Fragment implements BlockingStep {
     SharedPreferences.Editor editor;
     Layanan layanan;
 
+    SessionManager sessionManager;
+    HashMap<String, String> getLogin;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +100,8 @@ public class UploadDokumenFragment extends Fragment implements BlockingStep {
         rv_upload       = view.findViewById(R.id.rv_upload);
         prefs           = getActivity().getSharedPreferences("layanan",Context.MODE_PRIVATE);
         editor          = prefs.edit();
+        sessionManager  = new SessionManager(getContext());
+        getLogin        = sessionManager.getLogin();
 
         return view;
     }
@@ -98,7 +112,9 @@ public class UploadDokumenFragment extends Fragment implements BlockingStep {
 
     @Override
     public void onCompleteClicked(StepperLayout.OnCompleteClickedCallback callback) {
-        getActivity().finish();
+//        getActivity().finish();
+//        savePermohonan(dataKirim);
+        getDataKantor();
     }
 
     @Override
@@ -355,4 +371,66 @@ public class UploadDokumenFragment extends Fragment implements BlockingStep {
 //        outState.putString("layanan", gson.toJson(dataKirim.getLayanan()));
 //        super.onSaveInstanceState(outState);
 //    }
+
+    private void savePermohonan(DataKirim dataKirim){
+        List<String> nota_id = new ArrayList<>();
+        List<String> parent_id = new ArrayList<>();
+
+        for (int i = 0; i < dataKirim.getDataCheck().size(); i++) {
+            nota_id.add(String.valueOf(dataKirim.getDataCheck().get(i).getNOTAID()));
+            if ((!TextUtils.isEmpty(String.valueOf(dataKirim.getDataCheck().get(i).getNOTAID())))) {
+                parent_id.add(String.valueOf(dataKirim.getDataCheck().get(i).getPARENTID()));
+            } else {
+                parent_id.add("");
+            }
+        }
+
+        ApiInterface apiInterface       = ServiceGenerator.createService(ApiInterface.class,getLogin.get(KEY_TOKEN));
+        Call<Save> call                 = apiInterface.savePermohonan(dataKirim.getIdkantor(),dataKirim.getJenis_id(),dataKirim.getSurat_no(),dataKirim.getSurat_hal(),dataKirim.getSurat_pengirim(),dataKirim.getSurat_pengirim_kota(),dataKirim.getSurat_npwp(),
+                dataKirim.getSurat_tgl(),dataKirim.getRequire_check(),dataKirim.getKapal_id(),dataKirim.getKapal_name(),dataKirim.getKapal_gt(),dataKirim.getKapal_cs(),dataKirim.getKapal_bendera(),dataKirim.getKapal_pemilik(),dataKirim.getKapal_posisi(),dataKirim.getNamaprsh(),
+                dataKirim.getAlamatprsh(),dataKirim.getIdentitasprsh(),dataKirim.getJmlkapal(),dataKirim.getTotalgt(),dataKirim.getIdpelaut(),dataKirim.getNamapelaut(),dataKirim.getKodepelaut(),dataKirim.getTempatlahir(),dataKirim.getTgllahir(),dataKirim.getUmur(),dataKirim.getJk(),
+                dataKirim.getStatuspelaut(),dataKirim.getSertifikat(),dataKirim.getFotopelaut(),nota_id,parent_id);
+        call.enqueue(new Callback<Save>() {
+            @Override
+            public void onResponse(Call<Save> call, Response<Save> response) {
+                if (response.body().isStatus()){
+                    new SweetAlertDialog(getActivity(), SweetAlertDialog.SUCCESS_TYPE)
+                            .setContentText("Permohonan Berhasil Disimpan")
+                            .setConfirmText("OK")
+                            .showCancelButton(false)
+                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                    getActivity().finish();
+                                }
+                            })
+                            .show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Save> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void getDataKantor(){
+        ApiInterface apiInterface       = ServiceGenerator.createService(ApiInterface.class,getLogin.get(KEY_TOKEN));
+        Call<Kantor> call               = apiInterface.getKantor();
+        call.enqueue(new Callback<Kantor>() {
+            @Override
+            public void onResponse(Call<Kantor> call, Response<Kantor> response) {
+                if (response.isSuccessful()){
+                    dataKirim.setIdkantor(String.valueOf(response.body().getIDKANTOR()));
+                    savePermohonan(dataKirim);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Kantor> call, Throwable t) {
+
+            }
+        });
+    }
 }

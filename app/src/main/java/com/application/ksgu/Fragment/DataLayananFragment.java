@@ -106,6 +106,9 @@ public class DataLayananFragment extends Fragment implements BlockingStep {
     List<Kapal> kapals;
     List<DataNota> dataCheck;
 
+    int kapal_id;
+    String foto_pelaut;
+
     PelautService pelautService;
 
     private static final int TRIGGER_AUTO_COMPLETE = 100;
@@ -266,6 +269,13 @@ public class DataLayananFragment extends Fragment implements BlockingStep {
             @Override
             public void afterTextChanged(Editable editable) {
 
+            }
+        });
+
+        et_kapal.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                kapal_id = kapalAdapter.getItem(i).getId();
             }
         });
 
@@ -495,6 +505,7 @@ public class DataLayananFragment extends Fragment implements BlockingStep {
                         et_callsign.setText(ditkapelServices.get(0).getCALLSIGN());
                         et_pemilik.setText(ditkapelServices.get(0).getNAMAPEMILIK());
                         et_posisi.setText(ditkapelServices.get(0).getKAPALPOSISI());
+                        kapal_id    = ditkapelServices.get(0).getIDKAPAL();
                     }
                 } else {
                     Toast.makeText(getContext(), "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
@@ -550,6 +561,7 @@ public class DataLayananFragment extends Fragment implements BlockingStep {
                     et_kelamin.setText(pelautService.getJK());
                     et_status.setText(pelautService.getStatusPelaut());
                     et_sertifikat.setText(pelautService.getSertifikat());
+                    foto_pelaut = pelautService.getFotoPelaut();
                 } else {
                     Toast.makeText(getContext(), "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
                 }
@@ -615,6 +627,7 @@ public class DataLayananFragment extends Fragment implements BlockingStep {
         dataKirim.setKapal_bendera(et_bendera.getText().toString());
         dataKirim.setKapal_pemilik(et_pemilik.getText().toString());
         dataKirim.setKapal_posisi(et_posisi.getText().toString());
+        dataKirim.setKapal_id(String.valueOf(kapal_id));
         dataKirim.setNamaprsh("");
         dataKirim.setAlamatprsh("");
         dataKirim.setIdentitasprsh("");
@@ -629,6 +642,7 @@ public class DataLayananFragment extends Fragment implements BlockingStep {
         dataKirim.setJk("");
         dataKirim.setStatuspelaut("");
         dataKirim.setSertifikat("");
+        dataKirim.setFotopelaut("");
     }
 
     private void setDataPerusahaan(){
@@ -638,6 +652,7 @@ public class DataLayananFragment extends Fragment implements BlockingStep {
         dataKirim.setKapal_bendera("");
         dataKirim.setKapal_pemilik("");
         dataKirim.setKapal_posisi("");
+        dataKirim.setKapal_id("");
         dataKirim.setNamaprsh(et_perusahaan.getText().toString());
         dataKirim.setAlamatprsh(et_alamatp.getText().toString());
         dataKirim.setIdentitasprsh(et_noidentitas.getText().toString());
@@ -652,6 +667,7 @@ public class DataLayananFragment extends Fragment implements BlockingStep {
         dataKirim.setJk("");
         dataKirim.setStatuspelaut("");
         dataKirim.setSertifikat("");
+        dataKirim.setFotopelaut("");
     }
 
     private void setDataPelaut(){
@@ -661,6 +677,7 @@ public class DataLayananFragment extends Fragment implements BlockingStep {
         dataKirim.setKapal_bendera("");
         dataKirim.setKapal_pemilik("");
         dataKirim.setKapal_posisi("");
+        dataKirim.setKapal_id("");
         dataKirim.setNamaprsh("");
         dataKirim.setAlamatprsh("");
         dataKirim.setIdentitasprsh("");
@@ -675,6 +692,11 @@ public class DataLayananFragment extends Fragment implements BlockingStep {
         dataKirim.setJk(et_kelamin.getText().toString());
         dataKirim.setStatuspelaut(et_status.getText().toString());
         dataKirim.setSertifikat(et_sertifikat.getText().toString());
+        if (foto_pelaut == null || foto_pelaut.equals("")){
+            dataKirim.setFotopelaut("");
+        } else {
+            dataKirim.setFotopelaut(foto_pelaut);
+        }
     }
 
     private void showpDialog() {

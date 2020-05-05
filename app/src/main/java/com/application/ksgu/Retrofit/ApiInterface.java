@@ -6,6 +6,7 @@ import com.application.ksgu.Model.DataDaerah;
 import com.application.ksgu.Model.DataNota;
 import com.application.ksgu.Model.Ditkapel;
 import com.application.ksgu.Model.DitkapelService;
+import com.application.ksgu.Model.Kantor;
 import com.application.ksgu.Model.Kapal;
 import com.application.ksgu.Model.Layanan;
 import com.application.ksgu.Model.Login;
@@ -13,6 +14,7 @@ import com.application.ksgu.Model.Negara;
 import com.application.ksgu.Model.Pelaut;
 import com.application.ksgu.Model.PelautService;
 import com.application.ksgu.Model.Resend;
+import com.application.ksgu.Model.Save;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,40 +92,41 @@ public interface ApiInterface {
                               @Part("agen_daerah") RequestBody agen_daerah,
                               @Part("id") RequestBody id);
 
-    @Multipart
+    @FormUrlEncoded
     @POST(API + "surat/save")
-    Call<ResponseBody> savePermohonan(@Part("idkantor") RequestBody idkantor,
-                                      @Part("jenis_id") RequestBody jenis_id,
-                                      @Part("surat_no") RequestBody surat_no,
-                                      @Part("surat_hal") RequestBody surat_hal,
-                                      @Part("surat_pengirim") RequestBody surat_pengirim,
-                                      @Part("surat_pengirim_kota") RequestBody surat_pengirim_kota,
-                                      @Part("surat_npwp") RequestBody surat_npwp,
-                                      @Part("surat_tgl") RequestBody surat_tgl,
-                                      @Part("require_check") RequestBody require_check,
-                                      @Part("kapal_id") RequestBody kapal_id,
-                                      @Part("kapal_name") RequestBody kapal_name,
-                                      @Part("kapal_gt") RequestBody kapal_gt,
-                                      @Part("kapal_cs") RequestBody kapal_cs,
-                                      @Part("kapal_bendera") RequestBody kapal_bendera,
-                                      @Part("kapal_pemilik") RequestBody kapal_pemilik,
-                                      @Part("kapal_posisi") RequestBody kapal_posisi,
-                                      @Part("namaprsh") RequestBody namaprsh,
-                                      @Part("alamatprsh") RequestBody alamatprsh,
-                                      @Part("identitasprsh") RequestBody identitasprsh,
-                                      @Part("jmlkapal") RequestBody jmlkapal,
-                                      @Part("totalgt") RequestBody totalgt,
-                                      @Part("idpelaut") RequestBody idpelaut,
-                                      @Part("namapelaut") RequestBody namapelaut,
-                                      @Part("kodepelaut") RequestBody kodepelaut,
-                                      @Part("tempatlahir") RequestBody tempatlahir,
-                                      @Part("tgllahir") RequestBody tgllahir,
-                                      @Part("umur") RequestBody umur,
-                                      @Part("jk") RequestBody jk,
-                                      @Part("statuspelaut") RequestBody statuspelaut,
-                                      @Part("sertifikat") RequestBody sertifikat,
-                                      @Part("fotopelaut") RequestBody fotopelaut
-                                      );
+    Call<Save> savePermohonan(@Field("IDKANTOR") String idkantor,
+                              @Field("JENIS_ID") String jenis_id,
+                              @Field("SURAT_NO") String surat_no,
+                              @Field("SURAT_HAL") String surat_hal,
+                              @Field("SURAT_PENGIRIM") String surat_pengirim,
+                              @Field("SURAT_PENGIRIM_KOTA") String surat_pengirim_kota,
+                              @Field("SURAT_NPWP") String surat_npwp,
+                              @Field("SURAT_TGL") String surat_tgl,
+                              @Field("require_check") String require_check,
+                              @Field("KAPAL_ID") String kapal_id,
+                              @Field("KAPAL_NAME") String kapal_name,
+                              @Field("KAPAL_GT") String kapal_gt,
+                              @Field("KAPAL_CS") String kapal_cs,
+                              @Field("KAPAL_BENDERA") String kapal_bendera,
+                              @Field("KAPAL_PEMILIK") String kapal_pemilik,
+                              @Field("KAPAL_POSISI") String kapal_posisi,
+                              @Field("NAMAPRSH") String namaprsh,
+                              @Field("ALAMATPRSH") String alamatprsh,
+                              @Field("IDENTITASPRSH") String identitasprsh,
+                              @Field("JMLKAPAL") String jmlkapal,
+                              @Field("TOTALGT") String totalgt,
+                              @Field("IDPELAUT") String idpelaut,
+                              @Field("NAMAPELAUT") String namapelaut,
+                              @Field("KODEPELAUT") String kodepelaut,
+                              @Field("TEMPATLAHIR") String tempatlahir,
+                              @Field("TGLLAHIR") String tgllahir,
+                              @Field("UMUR") String umur,
+                              @Field("JK") String jk,
+                              @Field("STATUSPELAUT") String statuspelaut,
+                              @Field("SERTIFIKAT") String sertifikat,
+                              @Field("FOTOPELAUT") String fotopelaut,
+                              @Field("NOTA_ID[]") List<String> nota_id,
+                              @Field("PARENT_ID[]") List<String> parent_id);
 
     @FormUrlEncoded
     @POST(API + "ditkapel-auto")
@@ -148,5 +151,8 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST(API + "kapal-auto")
     Call<List<Kapal>> getKapal(@Field("term") String term);
+
+    @GET(API + "data-kantor")
+    Call<Kantor> getKantor();
 
 }
