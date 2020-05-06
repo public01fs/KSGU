@@ -54,4 +54,11 @@
     <color name="accent_700">#C2185B</color>
 
     <color name="colorSecondary">#158CCA</color>
+
+    <color name="grey_text">#222D31</color>
+    <color name="grey_hard">#96989A</color>
+
+    <color name="ongoing_color">#F7CE00</color>
+    <color name="finished_color">#8BC34A</color>
+    <color name="canceled_color">#96989A</color>
 </resources>

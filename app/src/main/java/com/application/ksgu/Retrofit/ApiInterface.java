@@ -4,6 +4,7 @@ import com.application.ksgu.Cons;
 import com.application.ksgu.Model.Checklist;
 import com.application.ksgu.Model.DataDaerah;
 import com.application.ksgu.Model.DataNota;
+import com.application.ksgu.Model.DetailSurat;
 import com.application.ksgu.Model.Ditkapel;
 import com.application.ksgu.Model.DitkapelService;
 import com.application.ksgu.Model.Kantor;
@@ -15,6 +16,7 @@ import com.application.ksgu.Model.Pelaut;
 import com.application.ksgu.Model.PelautService;
 import com.application.ksgu.Model.Resend;
 import com.application.ksgu.Model.Save;
+import com.application.ksgu.Model.Surat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +32,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ApiInterface {
     String API = Cons.SERVER_URL;
@@ -127,6 +130,12 @@ public interface ApiInterface {
                               @Field("FOTOPELAUT") String fotopelaut,
                               @Field("NOTA_ID[]") List<String> nota_id,
                               @Field("PARENT_ID[]") List<String> parent_id);
+
+    @GET(API + "surat/new")
+    Call<List<Surat>> getSuratNew();
+
+    @GET(API + "surat/detail/{surat_id}")
+    Call<DetailSurat> detailSurat(@Query("surat_id") String surat);
 
     @FormUrlEncoded
     @POST(API + "ditkapel-auto")
