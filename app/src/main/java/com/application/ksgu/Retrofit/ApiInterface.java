@@ -164,4 +164,7 @@ public interface ApiInterface {
     @GET(API + "data-kantor")
     Call<Kantor> getKantor();
 
+    @Multipart
+    @POST(API + "surat/upload")
+    Call<ResponseBody> uploadSurat(@Part MultipartBody.Part img);
 }

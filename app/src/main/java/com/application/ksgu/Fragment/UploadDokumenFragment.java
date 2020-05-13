@@ -8,6 +8,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,17 +28,23 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import io.reactivex.disposables.Disposable;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Multipart;
 
+import android.provider.OpenableColumns;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.application.ksgu.Adapter.ItemCheckAdapter;
 import com.application.ksgu.Adapter.UploadFotoAdapter;
@@ -46,6 +58,7 @@ import com.application.ksgu.Model.Layanan;
 import com.application.ksgu.Model.Save;
 import com.application.ksgu.Model.UploadFotoModel;
 import com.application.ksgu.R;
+import com.application.ksgu.RegisterActivity;
 import com.application.ksgu.Retrofit.ApiInterface;
 import com.application.ksgu.Retrofit.ServiceGenerator;
 import com.application.ksgu.SessionManager;
@@ -59,6 +72,12 @@ import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -87,6 +106,7 @@ public class UploadDokumenFragment extends Fragment implements BlockingStep {
 
     SessionManager sessionManager;
     HashMap<String, String> getLogin;
+    SweetAlertDialog sweetAlertDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -96,12 +116,16 @@ public class UploadDokumenFragment extends Fragment implements BlockingStep {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view            = inflater.inflate(R.layout.fragment_upload_dokumen, container, false);
-        rv_upload       = view.findViewById(R.id.rv_upload);
-        prefs           = getActivity().getSharedPreferences("layanan",Context.MODE_PRIVATE);
-        editor          = prefs.edit();
-        sessionManager  = new SessionManager(getContext());
-        getLogin        = sessionManager.getLogin();
+        view                = inflater.inflate(R.layout.fragment_upload_dokumen, container, false);
+        rv_upload           = view.findViewById(R.id.rv_upload);
+        prefs               = getActivity().getSharedPreferences("layanan",Context.MODE_PRIVATE);
+        editor              = prefs.edit();
+        sessionManager      = new SessionManager(getContext());
+        getLogin            = sessionManager.getLogin();
+        sweetAlertDialog    = new SweetAlertDialog(getContext(), SweetAlertDialog.PROGRESS_TYPE);
+        sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#000080"));
+        sweetAlertDialog.setTitleText("Mohon Tunggu...");
+        sweetAlertDialog.setCancelable(false);
 
         return view;
     }
@@ -328,7 +352,9 @@ public class UploadDokumenFragment extends Fragment implements BlockingStep {
             if (Matisse.obtainResult(data).size()>0){
                 List<Uri> uris = new ArrayList<>();
                 uris.add(Matisse.obtainResult(data).get(0));
+                uploadSurat(Matisse.obtainResult(data).get(0));
                 menuList.get(currentFile).setmUri(uris);
+
             }
             uploadFotoAdapter.notifyDataSetChanged();
         } else if (requestCode == 1 && resultCode == RESULT_OK){
@@ -338,6 +364,125 @@ public class UploadDokumenFragment extends Fragment implements BlockingStep {
             menuList.get(currentFile).setmUri(uris);
             uploadFotoAdapter.notifyDataSetChanged();
         }
+    }
+
+    private RequestBody getRequestBodyFromURI(String uriString){
+        try {
+            Uri uri = Uri.parse(uriString);
+            File f = new File(uri.getPath());
+            ExifInterface ei = null;
+            try {
+//                        ei = new ExifInterface(uri.getPath());
+                ei = new ExifInterface(getFilePathForN(uri, getContext()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            InputStream inputStream = getActivity().getContentResolver().openInputStream(uri);
+            Bitmap bitmapOri = BitmapFactory.decodeStream(inputStream);
+            if (inputStream!=null){
+                inputStream.close();
+            }
+            if (bitmapOri!=null){
+                int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
+                        ExifInterface.ORIENTATION_UNDEFINED);
+
+                Bitmap rotatedBitmap = null;
+                switch(orientation) {
+                    case ExifInterface.ORIENTATION_ROTATE_90:
+                        rotatedBitmap = rotateImage(bitmapOri, 90);
+                        break;
+
+                    case ExifInterface.ORIENTATION_ROTATE_180:
+                        rotatedBitmap = rotateImage(bitmapOri, 180);
+                        break;
+
+                    case ExifInterface.ORIENTATION_ROTATE_270:
+                        rotatedBitmap = rotateImage(bitmapOri, 270);
+                        break;
+
+                    case ExifInterface.ORIENTATION_NORMAL:
+                    default:
+                        rotatedBitmap = bitmapOri;
+                }
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                Boolean isCompressed = rotatedBitmap.compress(Bitmap.CompressFormat.JPEG, 75, stream);
+                byte[] byteArray = stream.toByteArray();
+                return RequestBody.create(MediaType.parse("image/jpg"), byteArray);
+            }else{
+                return null;
+            }
+        } catch (FileNotFoundException e) {
+            new SweetAlertDialog(getContext(), SweetAlertDialog.ERROR_TYPE)
+                    .setContentText("Terjadi Kesalahan Jaringan")
+                    .setConfirmText("OK")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            sweetAlertDialog.dismissWithAnimation();
+
+                        }
+                    })
+                    .show();
+            e.printStackTrace();
+        } catch (IOException e) {
+            new SweetAlertDialog(getContext(), SweetAlertDialog.ERROR_TYPE)
+                    .setContentText("Terjadi Kesalahan Jaringan")
+                    .setConfirmText("OK")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            sweetAlertDialog.dismissWithAnimation();
+
+                        }
+                    })
+                    .show();
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private static String getFilePathForN(Uri uri, Context context) {
+        Uri returnUri = uri;
+        Cursor returnCursor = context.getContentResolver().query(returnUri, null, null, null, null);
+        /*
+         * Get the column indexes of the data in the Cursor,
+         *     * move to the first row in the Cursor, get the data,
+         *     * and display it.
+         * */
+        int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+        int sizeIndex = returnCursor.getColumnIndex(OpenableColumns.SIZE);
+        returnCursor.moveToFirst();
+        String name = (returnCursor.getString(nameIndex));
+        String size = (Long.toString(returnCursor.getLong(sizeIndex)));
+        File file = new File(context.getFilesDir(), name);
+        try {
+            InputStream inputStream = context.getContentResolver().openInputStream(uri);
+            FileOutputStream outputStream = new FileOutputStream(file);
+            int read = 0;
+            int maxBufferSize = 1 * 1024 * 1024;
+            int bytesAvailable = inputStream.available();
+
+            //int bufferSize = 1024;
+            int bufferSize = Math.min(bytesAvailable, maxBufferSize);
+
+            final byte[] buffers = new byte[bufferSize];
+            while ((read = inputStream.read(buffers)) != -1) {
+                outputStream.write(buffers, 0, read);
+            }
+            inputStream.close();
+            outputStream.close();
+        } catch (Exception e) {
+            Log.e("Exception", e.getMessage());
+        }
+        return file.getPath();
+    }
+
+    public static Bitmap rotateImage(Bitmap source, float angle) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(),
+                matrix, true);
     }
 
     private void showFileChooser() {
@@ -432,5 +577,63 @@ public class UploadDokumenFragment extends Fragment implements BlockingStep {
 
             }
         });
+    }
+
+    private void uploadSurat(Uri uri){
+        showpDialog();
+        MultipartBody.Part data = null;
+        RequestBody foto        = getRequestBodyFromURI(uri.toString());
+        data                    = MultipartBody.Part.createFormData("file", getFileName(uri), foto);
+        ApiInterface apiInterface       = ServiceGenerator.createService(ApiInterface.class,getLogin.get(KEY_TOKEN));
+        Call<ResponseBody> call         = apiInterface.uploadSurat(data);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                hidepDialog();
+                if (response.isSuccessful()){
+                    Toast.makeText(getContext(), "Surat Berhasil Terupload", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), "Surat Gagal Terupload", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                hidepDialog();
+                Toast.makeText(getContext(), "Terjadi Kesalahan Jaringan", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public String getFileName(Uri uri) {
+        String result = null;
+        if (uri.getScheme().equals("content")) {
+            Cursor cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
+            try {
+                if (cursor != null && cursor.moveToFirst()) {
+                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        if (result == null) {
+            result = uri.getPath();
+            int cut = result.lastIndexOf('/');
+            if (cut != -1) {
+                result = result.substring(cut + 1);
+            }
+        }
+        return result;
+    }
+
+    private void showpDialog() {
+        if (!sweetAlertDialog.isShowing())
+            sweetAlertDialog.show();
+    }
+
+    private void hidepDialog() {
+        if (sweetAlertDialog.isShowing())
+            sweetAlertDialog.dismiss();
     }
 }

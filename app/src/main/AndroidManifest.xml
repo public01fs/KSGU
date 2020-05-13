@@ -3,6 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.application.ksgu">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,7 +18,8 @@
         android:theme="@style/AppTheme2"
         android:usesCleartextTraffic="true"
         tools:replace="android:icon,android:label">
-        <activity android:name=".DetailActivity"></activity>
+        <activity android:name=".PermohonanDetailActivity"></activity>
+        <activity android:name=".DetailActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".VerificationActivity" />
         <activity android:name=".EditProfileActivity" />
@@ -42,11 +49,5 @@
                 tools:replace="android:resource" />
         </provider>
     </application>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>

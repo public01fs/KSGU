@@ -1,5 +1,8 @@
 package com.application.ksgu.Fragment;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -20,12 +23,15 @@ import android.widget.Toast;
 
 import com.application.ksgu.Adapter.SuratListAdapter;
 import com.application.ksgu.LoginActivity;
+import com.application.ksgu.Model.DetailSurat;
 import com.application.ksgu.Model.Surat;
+import com.application.ksgu.PermohonanDetailActivity;
 import com.application.ksgu.R;
 import com.application.ksgu.Retrofit.ApiInterface;
 import com.application.ksgu.Retrofit.ServiceGenerator;
 import com.application.ksgu.SessionManager;
 import com.google.android.gms.common.api.Api;
+import com.google.gson.Gson;
 
 import java.util.HashMap;
 import java.util.List;
@@ -41,6 +47,9 @@ public class PermohonanBaruFragment extends Fragment {
     SweetAlertDialog sweetAlertDialog;
     RecyclerView rv_data;
     LinearLayout ll_notfound;
+    SharedPreferences prefs;
+    SharedPreferences.Editor editor;
+    Gson gson = new Gson();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,6 +64,8 @@ public class PermohonanBaruFragment extends Fragment {
         getLogin            = sessionManager.getLogin();
         rv_data             = view.findViewById(R.id.rv_data);
         ll_notfound         = view.findViewById(R.id.ll_notfound);
+        prefs               = getActivity().getSharedPreferences("detail", Context.MODE_PRIVATE);
+        editor              = prefs.edit();
         sweetAlertDialog    = new SweetAlertDialog(getContext(), SweetAlertDialog.PROGRESS_TYPE);
         sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#000080"));
         sweetAlertDialog.setTitleText("Mohon Tunggu...");
@@ -81,6 +92,13 @@ public class PermohonanBaruFragment extends Fragment {
                     suratListAdapter = new SuratListAdapter(getActivity(), response.body());
                     rv_data.setAdapter(suratListAdapter);
 
+                    suratListAdapter.setOnItemClickListener(new SuratListAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, Surat obj, int position) {
+
+                        }
+                    });
+
                     if (response.body().size() > 0){
                         ll_notfound.setVisibility(View.GONE);
                     } else {
@@ -93,6 +111,31 @@ public class PermohonanBaruFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Surat>> call, Throwable t) {
+                hidepDialog();
+                Toast.makeText(getContext(), "Terjadi Kesalahan Jaringan", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void getDetailSurat(String nomor){
+        hidepDialog();
+        ApiInterface apiInterface       = ServiceGenerator.createService(ApiInterface.class,getLogin.get(KEY_TOKEN));
+        Call<DetailSurat> call          = apiInterface.detailSurat(nomor);
+        call.enqueue(new Callback<DetailSurat>() {
+            @Override
+            public void onResponse(Call<DetailSurat> call, Response<DetailSurat> response) {
+                hidepDialog();
+                if (response.isSuccessful()){
+                    editor.putString("detail",gson.toJson(response.body()));
+                    editor.apply();
+                    startActivity(new Intent(getContext(), PermohonanDetailActivity.class));
+                } else {
+                    Toast.makeText(getContext(), "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DetailSurat> call, Throwable t) {
                 hidepDialog();
                 Toast.makeText(getContext(), "Terjadi Kesalahan Jaringan", Toast.LENGTH_SHORT).show();
             }

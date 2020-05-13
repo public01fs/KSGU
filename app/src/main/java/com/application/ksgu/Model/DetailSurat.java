@@ -6,19 +6,19 @@ import com.google.gson.annotations.SerializedName;
 public class DetailSurat{
 
 	@SerializedName("SuratLampiran")
-	private List<Object> suratLampiran;
+	private List<String> suratLampiran;
 
 	@SerializedName("SuratListOne")
 	private SuratListOne suratListOne;
 
 	@SerializedName("Disposisi")
-	private List<Object> disposisi;
+	private List<String> disposisi;
 
-	public void setSuratLampiran(List<Object> suratLampiran){
+	public void setSuratLampiran(List<String> suratLampiran){
 		this.suratLampiran = suratLampiran;
 	}
 
-	public List<Object> getSuratLampiran(){
+	public List<String> getSuratLampiran(){
 		return suratLampiran;
 	}
 
@@ -30,11 +30,11 @@ public class DetailSurat{
 		return suratListOne;
 	}
 
-	public void setDisposisi(List<Object> disposisi){
+	public void setDisposisi(List<String> disposisi){
 		this.disposisi = disposisi;
 	}
 
-	public List<Object> getDisposisi(){
+	public List<String> getDisposisi(){
 		return disposisi;
 	}
 
