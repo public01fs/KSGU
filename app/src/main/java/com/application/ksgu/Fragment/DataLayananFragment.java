@@ -627,7 +627,7 @@ public class DataLayananFragment extends Fragment implements BlockingStep {
         dataKirim.setKapal_bendera(et_bendera.getText().toString());
         dataKirim.setKapal_pemilik(et_pemilik.getText().toString());
         dataKirim.setKapal_posisi(et_posisi.getText().toString());
-        dataKirim.setKapal_id(String.valueOf(kapal_id));
+        dataKirim.setKapal_id((TextUtils.isEmpty(String.valueOf(kapal_id)))?"":String.valueOf(kapal_id));
         dataKirim.setNamaprsh("");
         dataKirim.setAlamatprsh("");
         dataKirim.setIdentitasprsh("");
@@ -683,9 +683,14 @@ public class DataLayananFragment extends Fragment implements BlockingStep {
         dataKirim.setIdentitasprsh("");
         dataKirim.setJmlkapal("");
         dataKirim.setTotalgt("");
-        dataKirim.setIdpelaut(String.valueOf(pelautService.getIdPelaut()));
+        if (pelautService == null){
+            dataKirim.setIdpelaut("");
+            dataKirim.setKodepelaut("");
+        } else {
+            dataKirim.setIdpelaut(String.valueOf(pelautService.getIdPelaut()));
+            dataKirim.setKodepelaut(String.valueOf(pelautService.getKodePelaut()));
+        }
         dataKirim.setNamapelaut(et_pelaut.getText().toString());
-        dataKirim.setKodepelaut(String.valueOf(pelautService.getKodePelaut()));
         dataKirim.setTempatlahir(et_tempat.getText().toString());
         dataKirim.setTgllahir(et_tgllhr.getText().toString());
         dataKirim.setUmur(et_umur.getText().toString());

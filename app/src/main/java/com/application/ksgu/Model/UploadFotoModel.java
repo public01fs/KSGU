@@ -7,8 +7,10 @@ import java.util.List;
 public class UploadFotoModel {
     public UploadFotoModel() {
     }
-    public UploadFotoModel(String title) {
+    public UploadFotoModel(String title, FileBerkas fileBerkas, ChecklistKirim checklistKirim) {
         this.title = title;
+        this.fileBerkas = fileBerkas;
+        this.checklistKirim = checklistKirim;
     }
 
     public UploadFotoModel(String title, List<Uri> mUri) {
@@ -40,6 +42,24 @@ public class UploadFotoModel {
     private String title;
     private String uri;
     private List<Uri> mUri;
+    private FileBerkas fileBerkas;
+    private ChecklistKirim checklistKirim;
+
+    public ChecklistKirim getChecklistKirim() {
+        return checklistKirim;
+    }
+
+    public void setChecklistKirim(ChecklistKirim checklistKirim) {
+        this.checklistKirim = checklistKirim;
+    }
+
+    public FileBerkas getFileBerkas() {
+        return fileBerkas;
+    }
+
+    public void setFileBerkas(FileBerkas fileBerkas) {
+        this.fileBerkas = fileBerkas;
+    }
 
     public List<Uri> getmUri() {
         return mUri;

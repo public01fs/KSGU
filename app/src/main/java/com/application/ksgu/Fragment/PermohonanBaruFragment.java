@@ -95,7 +95,7 @@ public class PermohonanBaruFragment extends Fragment {
                     suratListAdapter.setOnItemClickListener(new SuratListAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(View view, Surat obj, int position) {
-
+                            getDetailSurat(obj.getSURATID());
                         }
                     });
 
@@ -118,7 +118,7 @@ public class PermohonanBaruFragment extends Fragment {
     }
 
     private void getDetailSurat(String nomor){
-        hidepDialog();
+        showpDialog();
         ApiInterface apiInterface       = ServiceGenerator.createService(ApiInterface.class,getLogin.get(KEY_TOKEN));
         Call<DetailSurat> call          = apiInterface.detailSurat(nomor);
         call.enqueue(new Callback<DetailSurat>() {

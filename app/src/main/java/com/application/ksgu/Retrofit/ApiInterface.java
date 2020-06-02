@@ -7,6 +7,7 @@ import com.application.ksgu.Model.DataNota;
 import com.application.ksgu.Model.DetailSurat;
 import com.application.ksgu.Model.Ditkapel;
 import com.application.ksgu.Model.DitkapelService;
+import com.application.ksgu.Model.FileBerkas;
 import com.application.ksgu.Model.Kantor;
 import com.application.ksgu.Model.Kapal;
 import com.application.ksgu.Model.Layanan;
@@ -95,47 +96,49 @@ public interface ApiInterface {
                               @Part("agen_daerah") RequestBody agen_daerah,
                               @Part("id") RequestBody id);
 
-    @FormUrlEncoded
+    @Multipart
     @POST(API + "surat/save")
-    Call<Save> savePermohonan(@Field("IDKANTOR") String idkantor,
-                              @Field("JENIS_ID") String jenis_id,
-                              @Field("SURAT_NO") String surat_no,
-                              @Field("SURAT_HAL") String surat_hal,
-                              @Field("SURAT_PENGIRIM") String surat_pengirim,
-                              @Field("SURAT_PENGIRIM_KOTA") String surat_pengirim_kota,
-                              @Field("SURAT_NPWP") String surat_npwp,
-                              @Field("SURAT_TGL") String surat_tgl,
-                              @Field("require_check") String require_check,
-                              @Field("KAPAL_ID") String kapal_id,
-                              @Field("KAPAL_NAME") String kapal_name,
-                              @Field("KAPAL_GT") String kapal_gt,
-                              @Field("KAPAL_CS") String kapal_cs,
-                              @Field("KAPAL_BENDERA") String kapal_bendera,
-                              @Field("KAPAL_PEMILIK") String kapal_pemilik,
-                              @Field("KAPAL_POSISI") String kapal_posisi,
-                              @Field("NAMAPRSH") String namaprsh,
-                              @Field("ALAMATPRSH") String alamatprsh,
-                              @Field("IDENTITASPRSH") String identitasprsh,
-                              @Field("JMLKAPAL") String jmlkapal,
-                              @Field("TOTALGT") String totalgt,
-                              @Field("IDPELAUT") String idpelaut,
-                              @Field("NAMAPELAUT") String namapelaut,
-                              @Field("KODEPELAUT") String kodepelaut,
-                              @Field("TEMPATLAHIR") String tempatlahir,
-                              @Field("TGLLAHIR") String tgllahir,
-                              @Field("UMUR") String umur,
-                              @Field("JK") String jk,
-                              @Field("STATUSPELAUT") String statuspelaut,
-                              @Field("SERTIFIKAT") String sertifikat,
-                              @Field("FOTOPELAUT") String fotopelaut,
-                              @Field("NOTA_ID[]") List<String> nota_id,
-                              @Field("PARENT_ID[]") List<String> parent_id);
+    Call<Save> savePermohonan(@Part("IDKANTOR") RequestBody idkantor,
+                              @Part("JENIS_ID") RequestBody jenis_id,
+                              @Part("SURAT_NO") RequestBody surat_no,
+                              @Part("SURAT_HAL") RequestBody surat_hal,
+                              @Part("SURAT_PENGIRIM") RequestBody surat_pengirim,
+                              @Part("SURAT_PENGIRIM_KOTA") RequestBody surat_pengirim_kota,
+                              @Part("SURAT_NPWP") RequestBody surat_npwp,
+                              @Part("SURAT_TGL") RequestBody surat_tgl,
+                              @Part("require_check") RequestBody require_check,
+                              @Part("KAPAL_ID") RequestBody kapal_id,
+                              @Part("KAPAL_NAME") RequestBody kapal_name,
+                              @Part("KAPAL_GT") RequestBody kapal_gt,
+                              @Part("KAPAL_CS") RequestBody kapal_cs,
+                              @Part("KAPAL_BENDERA") RequestBody kapal_bendera,
+                              @Part("KAPAL_PEMILIK") RequestBody kapal_pemilik,
+                              @Part("KAPAL_POSISI") RequestBody kapal_posisi,
+                              @Part("NAMAPRSH") RequestBody namaprsh,
+                              @Part("ALAMATPRSH") RequestBody alamatprsh,
+                              @Part("IDENTITASPRSH") RequestBody identitasprsh,
+                              @Part("JMLKAPAL") RequestBody jmlkapal,
+                              @Part("TOTALGT") RequestBody totalgt,
+                              @Part("IDPELAUT") RequestBody idpelaut,
+                              @Part("NAMAPELAUT") RequestBody namapelaut,
+                              @Part("KODEPELAUT") RequestBody kodepelaut,
+                              @Part("TEMPATLAHIR") RequestBody tempatlahir,
+                              @Part("TGLLAHIR") RequestBody tgllahir,
+                              @Part("UMUR") RequestBody umur,
+                              @Part("JK") RequestBody jk,
+                              @Part("STATUSPELAUT") RequestBody statuspelaut,
+                              @Part("SERTIFIKAT") RequestBody sertifikat,
+                              @Part("FOTOPELAUT") RequestBody fotopelaut,
+                              @Part List<MultipartBody.Part> nota_id,
+                              @Part List<MultipartBody.Part> parent_id,
+                              @Part("lampiran") RequestBody lampiran,
+                              @Part("checklist") RequestBody checklist);
 
     @GET(API + "surat/new")
     Call<List<Surat>> getSuratNew();
 
     @GET(API + "surat/detail/{surat_id}")
-    Call<DetailSurat> detailSurat(@Query("surat_id") String surat);
+    Call<DetailSurat> detailSurat(@Path("surat_id") String surat);
 
     @FormUrlEncoded
     @POST(API + "ditkapel-auto")
@@ -166,5 +169,5 @@ public interface ApiInterface {
 
     @Multipart
     @POST(API + "surat/upload")
-    Call<ResponseBody> uploadSurat(@Part MultipartBody.Part img);
+    Call<FileBerkas> uploadSurat(@Part MultipartBody.Part img);
 }

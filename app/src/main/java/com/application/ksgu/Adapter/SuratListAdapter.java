@@ -125,15 +125,15 @@ public class SuratListAdapter extends RecyclerView.Adapter<SuratListAdapter.View
 //        }
 //
         holder.status.setText(b.getStatusNotaDesc());
-//
-//        holder.lyt_parent.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (mOnItemClickListener != null){
-//                    mOnItemClickListener.onItemClick(view,items.get(position),position);
-//                }
-//            }
-//        });
+
+        holder.lyt_parent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mOnItemClickListener != null){
+                    mOnItemClickListener.onItemClick(view,items.get(position),position);
+                }
+            }
+        });
 //
 ////        holder.lyt_parent.setOnClickListener(new View.OnClickListener() {
 ////            @Override

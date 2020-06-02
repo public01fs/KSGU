@@ -2,9 +2,6 @@ package com.application.ksgu.Model;
 
 import java.util.List;
 
-import okhttp3.RequestBody;
-import retrofit2.http.Part;
-
 public class DataKirim {
 
     //Data Pemohon
@@ -50,6 +47,17 @@ public class DataKirim {
     private String statuspelaut;
     private String sertifikat;
     private String fotopelaut;
+
+    //List
+    private List<FileBerkas> files;
+
+    public List<FileBerkas> getFiles() {
+        return files;
+    }
+
+    public void setFiles(List<FileBerkas> files) {
+        this.files = files;
+    }
 
     public List<DataNota> getDataCheck() {
         return dataCheck;

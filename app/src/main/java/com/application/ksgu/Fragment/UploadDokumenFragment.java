@@ -36,6 +36,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.http.Multipart;
+import retrofit2.http.Part;
 
 import android.provider.OpenableColumns;
 import android.text.TextUtils;
@@ -52,7 +53,9 @@ import com.application.ksgu.DataManager;
 import com.application.ksgu.EditProfileActivity;
 import com.application.ksgu.Main2Activity;
 import com.application.ksgu.Model.Checklist;
+import com.application.ksgu.Model.ChecklistKirim;
 import com.application.ksgu.Model.DataKirim;
+import com.application.ksgu.Model.FileBerkas;
 import com.application.ksgu.Model.Kantor;
 import com.application.ksgu.Model.Layanan;
 import com.application.ksgu.Model.Save;
@@ -107,6 +110,7 @@ public class UploadDokumenFragment extends Fragment implements BlockingStep {
     SessionManager sessionManager;
     HashMap<String, String> getLogin;
     SweetAlertDialog sweetAlertDialog;
+//    List<FileBerkas> files = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -173,7 +177,15 @@ public class UploadDokumenFragment extends Fragment implements BlockingStep {
         if (dataKirim.getChecklists().size() > 0){
             if (menuList.size() == 0){
                 for (int i = 0; i < dataKirim.getChecklists().size(); i++) {
-                    menuList.add(new UploadFotoModel(dataKirim.getChecklists().get(i).getCEKLISTNAME()));
+                    FileBerkas file = new FileBerkas();
+                    file.setFILEEXTENSION("");
+                    file.setFILENAME("");
+                    file.setFILESIZE(0);
+                    file.setSERVERFILE("");
+                    ChecklistKirim checklistKirim = new ChecklistKirim();
+                    checklistKirim.setCEKLIST_NAME(dataKirim.getChecklists().get(i).getCEKLISTNAME());
+                    checklistKirim.setCEKLIST_ID(String.valueOf(dataKirim.getChecklists().get(i).getCEKLISTID()));
+                    menuList.add(new UploadFotoModel(dataKirim.getChecklists().get(i).getCEKLISTNAME(),file,checklistKirim));
                 }
             }
 
@@ -238,9 +250,9 @@ public class UploadDokumenFragment extends Fragment implements BlockingStep {
                     if (response.body().size() > 0){
                         checklists  = response.body();
 
-                        for (int i = 0; i < checklists.size(); i++) {
-                            menuList.add(new UploadFotoModel(checklists.get(i).getCEKLISTNAME()));
-                        }
+//                        for (int i = 0; i < checklists.size(); i++) {
+//                            menuList.add(new UploadFotoModel(checklists.get(i).getCEKLISTNAME()));
+//                        }
 
                         uploadFotoAdapter = new UploadFotoAdapter(menuList);
                         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 2);
@@ -352,7 +364,7 @@ public class UploadDokumenFragment extends Fragment implements BlockingStep {
             if (Matisse.obtainResult(data).size()>0){
                 List<Uri> uris = new ArrayList<>();
                 uris.add(Matisse.obtainResult(data).get(0));
-                uploadSurat(Matisse.obtainResult(data).get(0));
+                uploadSurat(Matisse.obtainResult(data).get(0),currentFile);
                 menuList.get(currentFile).setmUri(uris);
 
             }
@@ -518,23 +530,65 @@ public class UploadDokumenFragment extends Fragment implements BlockingStep {
 //    }
 
     private void savePermohonan(DataKirim dataKirim){
-        List<String> nota_id = new ArrayList<>();
-        List<String> parent_id = new ArrayList<>();
+        List<MultipartBody.Part> nota_id = new ArrayList<>();
+        List<MultipartBody.Part> parent_id = new ArrayList<>();
+//        List<String> nota_id = new ArrayList<>();
+//        List<String> parent_id = new ArrayList<>();
 
         for (int i = 0; i < dataKirim.getDataCheck().size(); i++) {
-            nota_id.add(String.valueOf(dataKirim.getDataCheck().get(i).getNOTAID()));
+//            nota_id.add(String.valueOf(dataKirim.getDataCheck().get(i).getNOTAID()));
+            nota_id.add(MultipartBody.Part.createFormData("NOTA_ID[]", String.valueOf(dataKirim.getDataCheck().get(i).getNOTAID())));
             if ((!TextUtils.isEmpty(String.valueOf(dataKirim.getDataCheck().get(i).getNOTAID())))) {
-                parent_id.add(String.valueOf(dataKirim.getDataCheck().get(i).getPARENTID()));
+                parent_id.add(MultipartBody.Part.createFormData("PARENT_ID[]",String.valueOf(dataKirim.getDataCheck().get(i).getPARENTID())));
             } else {
-                parent_id.add("");
+                parent_id.add(MultipartBody.Part.createFormData("PARENT_ID[]",""));
             }
         }
 
+        List<FileBerkas> berkas = new ArrayList<>();
+        List<ChecklistKirim> kirim = new ArrayList<>();
+        for (int i = 0; i < menuList.size(); i++) {
+            berkas.add(menuList.get(i).getFileBerkas());
+            kirim.add(menuList.get(i).getChecklistKirim());
+        }
+
         ApiInterface apiInterface       = ServiceGenerator.createService(ApiInterface.class,getLogin.get(KEY_TOKEN));
-        Call<Save> call                 = apiInterface.savePermohonan(dataKirim.getIdkantor(),dataKirim.getJenis_id(),dataKirim.getSurat_no(),dataKirim.getSurat_hal(),dataKirim.getSurat_pengirim(),dataKirim.getSurat_pengirim_kota(),dataKirim.getSurat_npwp(),
-                dataKirim.getSurat_tgl(),dataKirim.getRequire_check(),dataKirim.getKapal_id(),dataKirim.getKapal_name(),dataKirim.getKapal_gt(),dataKirim.getKapal_cs(),dataKirim.getKapal_bendera(),dataKirim.getKapal_pemilik(),dataKirim.getKapal_posisi(),dataKirim.getNamaprsh(),
-                dataKirim.getAlamatprsh(),dataKirim.getIdentitasprsh(),dataKirim.getJmlkapal(),dataKirim.getTotalgt(),dataKirim.getIdpelaut(),dataKirim.getNamapelaut(),dataKirim.getKodepelaut(),dataKirim.getTempatlahir(),dataKirim.getTgllahir(),dataKirim.getUmur(),dataKirim.getJk(),
-                dataKirim.getStatuspelaut(),dataKirim.getSertifikat(),dataKirim.getFotopelaut(),nota_id,parent_id);
+        Call<Save> call                 =
+                apiInterface.savePermohonan(
+                RequestBody.create(MediaType.parse("text/plain"), String.valueOf(dataKirim.getIdkantor())),
+                RequestBody.create(MediaType.parse("text/plain"), dataKirim.getJenis_id()),
+                RequestBody.create(MediaType.parse("text/plain"), dataKirim.getSurat_no()),
+                RequestBody.create(MediaType.parse("text/plain"), dataKirim.getSurat_hal()),
+                RequestBody.create(MediaType.parse("text/plain"), dataKirim.getSurat_pengirim()),
+                RequestBody.create(MediaType.parse("text/plain"), dataKirim.getSurat_pengirim_kota()),
+                RequestBody.create(MediaType.parse("text/plain"), dataKirim.getSurat_npwp()),
+                RequestBody.create(MediaType.parse("text/plain"), dataKirim.getSurat_tgl()),
+                RequestBody.create(MediaType.parse("text/plain"), dataKirim.getRequire_check()),
+                RequestBody.create(MediaType.parse("text/plain"), dataKirim.getKapal_id()),
+                RequestBody.create(MediaType.parse("text/plain"), dataKirim.getKapal_name()),
+                RequestBody.create(MediaType.parse("text/plain"), dataKirim.getKapal_gt()),
+                RequestBody.create(MediaType.parse("text/plain"), dataKirim.getKapal_cs()),
+                RequestBody.create(MediaType.parse("text/plain"), dataKirim.getKapal_bendera()),
+                RequestBody.create(MediaType.parse("text/plain"), dataKirim.getKapal_pemilik()),
+                RequestBody.create(MediaType.parse("text/plain"), dataKirim.getKapal_posisi()),
+                RequestBody.create(MediaType.parse("text/plain"), dataKirim.getNamaprsh()),
+                RequestBody.create(MediaType.parse("text/plain"), dataKirim.getAlamatprsh()),
+                RequestBody.create(MediaType.parse("text/plain"), dataKirim.getIdentitasprsh()),
+                RequestBody.create(MediaType.parse("text/plain"), dataKirim.getJmlkapal()),
+                RequestBody.create(MediaType.parse("text/plain"), dataKirim.getTotalgt()),
+                RequestBody.create(MediaType.parse("text/plain"), dataKirim.getIdpelaut()),
+                RequestBody.create(MediaType.parse("text/plain"), dataKirim.getNamapelaut()),
+                RequestBody.create(MediaType.parse("text/plain"), dataKirim.getKodepelaut()),
+                RequestBody.create(MediaType.parse("text/plain"), dataKirim.getTempatlahir()),
+                RequestBody.create(MediaType.parse("text/plain"), dataKirim.getTgllahir()),
+                RequestBody.create(MediaType.parse("text/plain"), dataKirim.getUmur()),
+                RequestBody.create(MediaType.parse("text/plain"), dataKirim.getJk()),
+                RequestBody.create(MediaType.parse("text/plain"), dataKirim.getStatuspelaut()),
+                RequestBody.create(MediaType.parse("text/plain"), dataKirim.getSertifikat()),
+                RequestBody.create(MediaType.parse("text/plain"), dataKirim.getFotopelaut()),
+                nota_id,parent_id,
+                RequestBody.create(MediaType.parse("multipart/form-data"), gson.toJson(berkas)),
+                RequestBody.create(MediaType.parse("multipart/form-data"), gson.toJson(kirim)));
         call.enqueue(new Callback<Save>() {
             @Override
             public void onResponse(Call<Save> call, Response<Save> response) {
@@ -579,18 +633,24 @@ public class UploadDokumenFragment extends Fragment implements BlockingStep {
         });
     }
 
-    private void uploadSurat(Uri uri){
+    private void uploadSurat(Uri uri, final int position){
         showpDialog();
-        MultipartBody.Part data = null;
-        RequestBody foto        = getRequestBodyFromURI(uri.toString());
-        data                    = MultipartBody.Part.createFormData("file", getFileName(uri), foto);
+        MultipartBody.Part data         = null;
+        RequestBody foto                = getRequestBodyFromURI(uri.toString());
+        data                            = MultipartBody.Part.createFormData("file", getFileName(uri), foto);
         ApiInterface apiInterface       = ServiceGenerator.createService(ApiInterface.class,getLogin.get(KEY_TOKEN));
-        Call<ResponseBody> call         = apiInterface.uploadSurat(data);
-        call.enqueue(new Callback<ResponseBody>() {
+        Call<FileBerkas> call           = apiInterface.uploadSurat(data);
+        call.enqueue(new Callback<FileBerkas>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<FileBerkas> call, Response<FileBerkas> response) {
                 hidepDialog();
                 if (response.isSuccessful()){
+//                    files.get(position).setSERVERFILE(response.body().getSERVERFILE());
+//                    files.get(position).setFILESIZE(response.body().getFILESIZE());
+//                    files.get(position).setFILENAME(response.body().getFILENAME());
+//                    files.get(position).setFILEEXTENSION(response.body().getFILEEXTENSION());
+                    menuList.get(position).setFileBerkas(response.body());
+//                    dataKirim.setFiles(files);
                     Toast.makeText(getContext(), "Surat Berhasil Terupload", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getContext(), "Surat Gagal Terupload", Toast.LENGTH_SHORT).show();
@@ -598,7 +658,7 @@ public class UploadDokumenFragment extends Fragment implements BlockingStep {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<FileBerkas> call, Throwable t) {
                 hidepDialog();
                 Toast.makeText(getContext(), "Terjadi Kesalahan Jaringan", Toast.LENGTH_SHORT).show();
             }
