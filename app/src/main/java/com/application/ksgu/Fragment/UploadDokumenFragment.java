@@ -535,13 +535,15 @@ public class UploadDokumenFragment extends Fragment implements BlockingStep {
 //        List<String> nota_id = new ArrayList<>();
 //        List<String> parent_id = new ArrayList<>();
 
-        for (int i = 0; i < dataKirim.getDataCheck().size(); i++) {
+        if (dataKirim.getDataCheck() != null){
+            for (int i = 0; i < dataKirim.getDataCheck().size(); i++) {
 //            nota_id.add(String.valueOf(dataKirim.getDataCheck().get(i).getNOTAID()));
-            nota_id.add(MultipartBody.Part.createFormData("NOTA_ID[]", String.valueOf(dataKirim.getDataCheck().get(i).getNOTAID())));
-            if ((!TextUtils.isEmpty(String.valueOf(dataKirim.getDataCheck().get(i).getNOTAID())))) {
-                parent_id.add(MultipartBody.Part.createFormData("PARENT_ID[]",String.valueOf(dataKirim.getDataCheck().get(i).getPARENTID())));
-            } else {
-                parent_id.add(MultipartBody.Part.createFormData("PARENT_ID[]",""));
+                nota_id.add(MultipartBody.Part.createFormData("NOTA_ID[]", String.valueOf(dataKirim.getDataCheck().get(i).getNOTAID())));
+                if ((!TextUtils.isEmpty(String.valueOf(dataKirim.getDataCheck().get(i).getNOTAID())))) {
+                    parent_id.add(MultipartBody.Part.createFormData("PARENT_ID[]",String.valueOf(dataKirim.getDataCheck().get(i).getPARENTID())));
+                } else {
+                    parent_id.add(MultipartBody.Part.createFormData("PARENT_ID[]",""));
+                }
             }
         }
 

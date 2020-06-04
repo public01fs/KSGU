@@ -14,7 +14,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,15 +21,13 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.application.ksgu.Adapter.SuratListAdapter;
-import com.application.ksgu.LoginActivity;
-import com.application.ksgu.Model.DetailSurat;
+import com.application.ksgu.Model.DetailSuratNew;
 import com.application.ksgu.Model.Surat;
 import com.application.ksgu.PermohonanDetailActivity;
 import com.application.ksgu.R;
 import com.application.ksgu.Retrofit.ApiInterface;
 import com.application.ksgu.Retrofit.ServiceGenerator;
 import com.application.ksgu.SessionManager;
-import com.google.android.gms.common.api.Api;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
@@ -120,10 +117,10 @@ public class PermohonanBaruFragment extends Fragment {
     private void getDetailSurat(String nomor){
         showpDialog();
         ApiInterface apiInterface       = ServiceGenerator.createService(ApiInterface.class,getLogin.get(KEY_TOKEN));
-        Call<DetailSurat> call          = apiInterface.detailSurat(nomor);
-        call.enqueue(new Callback<DetailSurat>() {
+        Call<DetailSuratNew> call       = apiInterface.detailSurat(nomor);
+        call.enqueue(new Callback<DetailSuratNew>() {
             @Override
-            public void onResponse(Call<DetailSurat> call, Response<DetailSurat> response) {
+            public void onResponse(Call<DetailSuratNew> call, Response<DetailSuratNew> response) {
                 hidepDialog();
                 if (response.isSuccessful()){
                     editor.putString("detail",gson.toJson(response.body()));
@@ -135,7 +132,7 @@ public class PermohonanBaruFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<DetailSurat> call, Throwable t) {
+            public void onFailure(Call<DetailSuratNew> call, Throwable t) {
                 hidepDialog();
                 Toast.makeText(getContext(), "Terjadi Kesalahan Jaringan", Toast.LENGTH_SHORT).show();
             }

@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 public class SuratListOne{
 
 	@SerializedName("TrxId")
-	private String trxId;
+	private Object trxId;
 
 	@SerializedName("SURAT_NO")
 	private String sURATNO;
@@ -14,22 +14,22 @@ public class SuratListOne{
 	private String kAPALBENDERA;
 
 	@SerializedName("StatusKode")
-	private String statusKode;
+	private Object statusKode;
 
 	@SerializedName("JENIS_GRUP")
-	private String jENISGRUP;
+	private Object jENISGRUP;
 
 	@SerializedName("Bendahara")
-	private String bendahara;
+	private Object bendahara;
 
 	@SerializedName("TanggalJT")
-	private String tanggalJT;
+	private Object tanggalJT;
 
 	@SerializedName("StatusBilling")
-	private String statusBilling;
+	private Object statusBilling;
 
 	@SerializedName("ExpiredDate")
-	private String expiredDate;
+	private Object expiredDate;
 
 	@SerializedName("IdStatusNota")
 	private int idStatusNota;
@@ -38,16 +38,16 @@ public class SuratListOne{
 	private String statusNotaDesc;
 
 	@SerializedName("NomorInvoice")
-	private String nomorInvoice;
+	private Object nomorInvoice;
 
 	@SerializedName("SURAT_DISPOSISI")
-	private String sURATDISPOSISI;
+	private Object sURATDISPOSISI;
 
 	@SerializedName("JENIS_SHORT")
 	private String jENISSHORT;
 
 	@SerializedName("KodeInvoice")
-	private String kodeInvoice;
+	private Object kodeInvoice;
 
 	@SerializedName("STATUS")
 	private int sTATUS;
@@ -56,49 +56,49 @@ public class SuratListOne{
 	private String sURATEMAIL;
 
 	@SerializedName("BookDate")
-	private String bookDate;
+	private Object bookDate;
 
 	@SerializedName("SURAT_NOTE")
-	private String sURATNOTE;
+	private Object sURATNOTE;
 
 	@SerializedName("InvoiceNote")
-	private String invoiceNote;
+	private Object invoiceNote;
 
 	@SerializedName("NoKwitansi")
-	private String noKwitansi;
+	private Object noKwitansi;
 
 	@SerializedName("KAPAL_ID")
 	private int kAPALID;
 
 	@SerializedName("Status")
-	private String status;
+	private Object status;
 
 	@SerializedName("KAPAL_CS")
 	private String kAPALCS;
 
 	@SerializedName("TglNota")
-	private String tglNota;
+	private Object tglNota;
 
 	@SerializedName("SURAT_NPWP")
 	private String sURATNPWP;
 
 	@SerializedName("InputUser")
-	private String inputUser;
+	private Object inputUser;
 
 	@SerializedName("SURAT_PENGIRIM")
 	private String sURATPENGIRIM;
 
 	@SerializedName("Petugas")
-	private String petugas;
+	private Object petugas;
 
 	@SerializedName("InputTgl")
-	private String inputTgl;
+	private Object inputTgl;
 
 	@SerializedName("TrxDate")
-	private String trxDate;
+	private Object trxDate;
 
 	@SerializedName("MAX_DAY")
-	private String mAXDAY;
+	private Object mAXDAY;
 
 	@SerializedName("KAPAL_GT")
 	private String kAPALGT;
@@ -107,16 +107,16 @@ public class SuratListOne{
 	private String kAPALPEMILIK;
 
 	@SerializedName("TotalNominalBilling")
-	private String totalNominalBilling;
+	private Object totalNominalBilling;
 
 	@SerializedName("KAPAL_TUJUAN")
-	private String kAPALTUJUAN;
+	private Object kAPALTUJUAN;
 
 	@SerializedName("KursDollar")
-	private String kursDollar;
+	private Object kursDollar;
 
 	@SerializedName("NoNota")
-	private String noNota;
+	private Object noNota;
 
 	@SerializedName("SURAT_EDIT")
 	private String sURATEDIT;
@@ -131,19 +131,19 @@ public class SuratListOne{
 	private String statusNota;
 
 	@SerializedName("KodeNota")
-	private String kodeNota;
+	private Object kodeNota;
 
 	@SerializedName("STATUS_ID")
 	private int sTATUSID;
 
 	@SerializedName("ChannelPembayaran")
-	private String channelPembayaran;
+	private Object channelPembayaran;
 
 	@SerializedName("NTB")
-	private String nTB;
+	private Object nTB;
 
 	@SerializedName("KodeJasaPUP")
-	private String kodeJasaPUP;
+	private Object kodeJasaPUP;
 
 	@SerializedName("SURAT_INPUT")
 	private String sURATINPUT;
@@ -152,34 +152,34 @@ public class SuratListOne{
 	private String sURATINPUTTGL;
 
 	@SerializedName("NamaInduk")
-	private String namaInduk;
+	private Object namaInduk;
 
 	@SerializedName("NomorNota")
-	private String nomorNota;
+	private Object nomorNota;
 
 	@SerializedName("NamaWajibBayar")
-	private String namaWajibBayar;
+	private Object namaWajibBayar;
 
 	@SerializedName("KodeMataUang")
-	private String kodeMataUang;
+	private Object kodeMataUang;
 
 	@SerializedName("SURAT_TELP")
 	private String sURATTELP;
 
 	@SerializedName("KodeJasa")
-	private String kodeJasa;
+	private Object kodeJasa;
 
 	@SerializedName("IDKANTOR")
-	private String iDKANTOR;
+	private Object iDKANTOR;
 
 	@SerializedName("AGENDA_TU")
-	private String aGENDATU;
+	private Object aGENDATU;
 
 	@SerializedName("STATUS_NAME")
 	private String sTATUSNAME;
 
 	@SerializedName("KodeBillingSimponi")
-	private String kodeBillingSimponi;
+	private Object kodeBillingSimponi;
 
 	@SerializedName("SURAT_CP")
 	private String sURATCP;
@@ -191,13 +191,13 @@ public class SuratListOne{
 	private String rEQUIRECHECK;
 
 	@SerializedName("InvoiceDate")
-	private String invoiceDate;
+	private Object invoiceDate;
 
 	@SerializedName("JENIS_NAME")
 	private String jENISNAME;
 
 	@SerializedName("NTPN")
-	private String nTPN;
+	private Object nTPN;
 
 	@SerializedName("SURAT_PENGIRIM_KOTA")
 	private String sURATPENGIRIMKOTA;
@@ -209,19 +209,19 @@ public class SuratListOne{
 	private String kAPALNAME;
 
 	@SerializedName("IdDokumen")
-	private String idDokumen;
+	private Object idDokumen;
 
 	@SerializedName("JENIS_NOTE")
 	private String jENISNOTE;
 
 	@SerializedName("NotaDesc")
-	private String notaDesc;
+	private Object notaDesc;
 
 	@SerializedName("TotalNominalBillingUsd")
-	private String totalNominalBillingUsd;
+	private Object totalNominalBillingUsd;
 
 	@SerializedName("SimponiTrxId")
-	private String simponiTrxId;
+	private Object simponiTrxId;
 
 	@SerializedName("BILLING_STATUS")
 	private String bILLINGSTATUS;
@@ -233,49 +233,49 @@ public class SuratListOne{
 	private String sURATID;
 
 	@SerializedName("Date")
-	private String date;
+	private Object date;
 
 	@SerializedName("BankPersepsi")
-	private String bankPersepsi;
+	private Object bankPersepsi;
 
 	@SerializedName("SURAT_STATUS")
 	private String sURATSTATUS;
 
 	@SerializedName("UpdateTgl")
-	private String updateTgl;
+	private Object updateTgl;
 
 	@SerializedName("NIP")
-	private String nIP;
+	private Object nIP;
 
 	@SerializedName("Register")
-	private String register;
+	private Object register;
 
 	@SerializedName("KAPAL_POSISI")
 	private String kAPALPOSISI;
 
 	@SerializedName("IdNotaTagih")
-	private String idNotaTagih;
+	private Object idNotaTagih;
 
 	@SerializedName("SURAT_JENIS")
 	private String sURATJENIS;
 
 	@SerializedName("UpdateUser")
-	private String updateUser;
+	private Object updateUser;
 
 	@SerializedName("IdInvoice")
-	private String idInvoice;
+	private Object idInvoice;
 
 	@SerializedName("SURAT_SIFAT")
-	private String sURATSIFAT;
+	private Object sURATSIFAT;
 
 	@SerializedName("SURAT_HAL")
 	private String sURATHAL;
 
-	public void setTrxId(String trxId){
+	public void setTrxId(Object trxId){
 		this.trxId = trxId;
 	}
 
-	public String getTrxId(){
+	public Object getTrxId(){
 		return trxId;
 	}
 
@@ -295,51 +295,51 @@ public class SuratListOne{
 		return kAPALBENDERA;
 	}
 
-	public void setStatusKode(String statusKode){
+	public void setStatusKode(Object statusKode){
 		this.statusKode = statusKode;
 	}
 
-	public String getStatusKode(){
+	public Object getStatusKode(){
 		return statusKode;
 	}
 
-	public void setJENISGRUP(String jENISGRUP){
+	public void setJENISGRUP(Object jENISGRUP){
 		this.jENISGRUP = jENISGRUP;
 	}
 
-	public String getJENISGRUP(){
+	public Object getJENISGRUP(){
 		return jENISGRUP;
 	}
 
-	public void setBendahara(String bendahara){
+	public void setBendahara(Object bendahara){
 		this.bendahara = bendahara;
 	}
 
-	public String getBendahara(){
+	public Object getBendahara(){
 		return bendahara;
 	}
 
-	public void setTanggalJT(String tanggalJT){
+	public void setTanggalJT(Object tanggalJT){
 		this.tanggalJT = tanggalJT;
 	}
 
-	public String getTanggalJT(){
+	public Object getTanggalJT(){
 		return tanggalJT;
 	}
 
-	public void setStatusBilling(String statusBilling){
+	public void setStatusBilling(Object statusBilling){
 		this.statusBilling = statusBilling;
 	}
 
-	public String getStatusBilling(){
+	public Object getStatusBilling(){
 		return statusBilling;
 	}
 
-	public void setExpiredDate(String expiredDate){
+	public void setExpiredDate(Object expiredDate){
 		this.expiredDate = expiredDate;
 	}
 
-	public String getExpiredDate(){
+	public Object getExpiredDate(){
 		return expiredDate;
 	}
 
@@ -359,19 +359,19 @@ public class SuratListOne{
 		return statusNotaDesc;
 	}
 
-	public void setNomorInvoice(String nomorInvoice){
+	public void setNomorInvoice(Object nomorInvoice){
 		this.nomorInvoice = nomorInvoice;
 	}
 
-	public String getNomorInvoice(){
+	public Object getNomorInvoice(){
 		return nomorInvoice;
 	}
 
-	public void setSURATDISPOSISI(String sURATDISPOSISI){
+	public void setSURATDISPOSISI(Object sURATDISPOSISI){
 		this.sURATDISPOSISI = sURATDISPOSISI;
 	}
 
-	public String getSURATDISPOSISI(){
+	public Object getSURATDISPOSISI(){
 		return sURATDISPOSISI;
 	}
 
@@ -383,11 +383,11 @@ public class SuratListOne{
 		return jENISSHORT;
 	}
 
-	public void setKodeInvoice(String kodeInvoice){
+	public void setKodeInvoice(Object kodeInvoice){
 		this.kodeInvoice = kodeInvoice;
 	}
 
-	public String getKodeInvoice(){
+	public Object getKodeInvoice(){
 		return kodeInvoice;
 	}
 
@@ -407,35 +407,35 @@ public class SuratListOne{
 		return sURATEMAIL;
 	}
 
-	public void setBookDate(String bookDate){
+	public void setBookDate(Object bookDate){
 		this.bookDate = bookDate;
 	}
 
-	public String getBookDate(){
+	public Object getBookDate(){
 		return bookDate;
 	}
 
-	public void setSURATNOTE(String sURATNOTE){
+	public void setSURATNOTE(Object sURATNOTE){
 		this.sURATNOTE = sURATNOTE;
 	}
 
-	public String getSURATNOTE(){
+	public Object getSURATNOTE(){
 		return sURATNOTE;
 	}
 
-	public void setInvoiceNote(String invoiceNote){
+	public void setInvoiceNote(Object invoiceNote){
 		this.invoiceNote = invoiceNote;
 	}
 
-	public String getInvoiceNote(){
+	public Object getInvoiceNote(){
 		return invoiceNote;
 	}
 
-	public void setNoKwitansi(String noKwitansi){
+	public void setNoKwitansi(Object noKwitansi){
 		this.noKwitansi = noKwitansi;
 	}
 
-	public String getNoKwitansi(){
+	public Object getNoKwitansi(){
 		return noKwitansi;
 	}
 
@@ -447,11 +447,11 @@ public class SuratListOne{
 		return kAPALID;
 	}
 
-	public void setStatus(String status){
+	public void setStatus(Object status){
 		this.status = status;
 	}
 
-	public String getStatus(){
+	public Object getStatus(){
 		return status;
 	}
 
@@ -463,11 +463,11 @@ public class SuratListOne{
 		return kAPALCS;
 	}
 
-	public void setTglNota(String tglNota){
+	public void setTglNota(Object tglNota){
 		this.tglNota = tglNota;
 	}
 
-	public String getTglNota(){
+	public Object getTglNota(){
 		return tglNota;
 	}
 
@@ -479,11 +479,11 @@ public class SuratListOne{
 		return sURATNPWP;
 	}
 
-	public void setInputUser(String inputUser){
+	public void setInputUser(Object inputUser){
 		this.inputUser = inputUser;
 	}
 
-	public String getInputUser(){
+	public Object getInputUser(){
 		return inputUser;
 	}
 
@@ -495,35 +495,35 @@ public class SuratListOne{
 		return sURATPENGIRIM;
 	}
 
-	public void setPetugas(String petugas){
+	public void setPetugas(Object petugas){
 		this.petugas = petugas;
 	}
 
-	public String getPetugas(){
+	public Object getPetugas(){
 		return petugas;
 	}
 
-	public void setInputTgl(String inputTgl){
+	public void setInputTgl(Object inputTgl){
 		this.inputTgl = inputTgl;
 	}
 
-	public String getInputTgl(){
+	public Object getInputTgl(){
 		return inputTgl;
 	}
 
-	public void setTrxDate(String trxDate){
+	public void setTrxDate(Object trxDate){
 		this.trxDate = trxDate;
 	}
 
-	public String getTrxDate(){
+	public Object getTrxDate(){
 		return trxDate;
 	}
 
-	public void setMAXDAY(String mAXDAY){
+	public void setMAXDAY(Object mAXDAY){
 		this.mAXDAY = mAXDAY;
 	}
 
-	public String getMAXDAY(){
+	public Object getMAXDAY(){
 		return mAXDAY;
 	}
 
@@ -543,35 +543,35 @@ public class SuratListOne{
 		return kAPALPEMILIK;
 	}
 
-	public void setTotalNominalBilling(String totalNominalBilling){
+	public void setTotalNominalBilling(Object totalNominalBilling){
 		this.totalNominalBilling = totalNominalBilling;
 	}
 
-	public String getTotalNominalBilling(){
+	public Object getTotalNominalBilling(){
 		return totalNominalBilling;
 	}
 
-	public void setKAPALTUJUAN(String kAPALTUJUAN){
+	public void setKAPALTUJUAN(Object kAPALTUJUAN){
 		this.kAPALTUJUAN = kAPALTUJUAN;
 	}
 
-	public String getKAPALTUJUAN(){
+	public Object getKAPALTUJUAN(){
 		return kAPALTUJUAN;
 	}
 
-	public void setKursDollar(String kursDollar){
+	public void setKursDollar(Object kursDollar){
 		this.kursDollar = kursDollar;
 	}
 
-	public String getKursDollar(){
+	public Object getKursDollar(){
 		return kursDollar;
 	}
 
-	public void setNoNota(String noNota){
+	public void setNoNota(Object noNota){
 		this.noNota = noNota;
 	}
 
-	public String getNoNota(){
+	public Object getNoNota(){
 		return noNota;
 	}
 
@@ -607,11 +607,11 @@ public class SuratListOne{
 		return statusNota;
 	}
 
-	public void setKodeNota(String kodeNota){
+	public void setKodeNota(Object kodeNota){
 		this.kodeNota = kodeNota;
 	}
 
-	public String getKodeNota(){
+	public Object getKodeNota(){
 		return kodeNota;
 	}
 
@@ -623,27 +623,27 @@ public class SuratListOne{
 		return sTATUSID;
 	}
 
-	public void setChannelPembayaran(String channelPembayaran){
+	public void setChannelPembayaran(Object channelPembayaran){
 		this.channelPembayaran = channelPembayaran;
 	}
 
-	public String getChannelPembayaran(){
+	public Object getChannelPembayaran(){
 		return channelPembayaran;
 	}
 
-	public void setNTB(String nTB){
+	public void setNTB(Object nTB){
 		this.nTB = nTB;
 	}
 
-	public String getNTB(){
+	public Object getNTB(){
 		return nTB;
 	}
 
-	public void setKodeJasaPUP(String kodeJasaPUP){
+	public void setKodeJasaPUP(Object kodeJasaPUP){
 		this.kodeJasaPUP = kodeJasaPUP;
 	}
 
-	public String getKodeJasaPUP(){
+	public Object getKodeJasaPUP(){
 		return kodeJasaPUP;
 	}
 
@@ -663,35 +663,35 @@ public class SuratListOne{
 		return sURATINPUTTGL;
 	}
 
-	public void setNamaInduk(String namaInduk){
+	public void setNamaInduk(Object namaInduk){
 		this.namaInduk = namaInduk;
 	}
 
-	public String getNamaInduk(){
+	public Object getNamaInduk(){
 		return namaInduk;
 	}
 
-	public void setNomorNota(String nomorNota){
+	public void setNomorNota(Object nomorNota){
 		this.nomorNota = nomorNota;
 	}
 
-	public String getNomorNota(){
+	public Object getNomorNota(){
 		return nomorNota;
 	}
 
-	public void setNamaWajibBayar(String namaWajibBayar){
+	public void setNamaWajibBayar(Object namaWajibBayar){
 		this.namaWajibBayar = namaWajibBayar;
 	}
 
-	public String getNamaWajibBayar(){
+	public Object getNamaWajibBayar(){
 		return namaWajibBayar;
 	}
 
-	public void setKodeMataUang(String kodeMataUang){
+	public void setKodeMataUang(Object kodeMataUang){
 		this.kodeMataUang = kodeMataUang;
 	}
 
-	public String getKodeMataUang(){
+	public Object getKodeMataUang(){
 		return kodeMataUang;
 	}
 
@@ -703,27 +703,27 @@ public class SuratListOne{
 		return sURATTELP;
 	}
 
-	public void setKodeJasa(String kodeJasa){
+	public void setKodeJasa(Object kodeJasa){
 		this.kodeJasa = kodeJasa;
 	}
 
-	public String getKodeJasa(){
+	public Object getKodeJasa(){
 		return kodeJasa;
 	}
 
-	public void setIDKANTOR(String iDKANTOR){
+	public void setIDKANTOR(Object iDKANTOR){
 		this.iDKANTOR = iDKANTOR;
 	}
 
-	public String getIDKANTOR(){
+	public Object getIDKANTOR(){
 		return iDKANTOR;
 	}
 
-	public void setAGENDATU(String aGENDATU){
+	public void setAGENDATU(Object aGENDATU){
 		this.aGENDATU = aGENDATU;
 	}
 
-	public String getAGENDATU(){
+	public Object getAGENDATU(){
 		return aGENDATU;
 	}
 
@@ -735,11 +735,11 @@ public class SuratListOne{
 		return sTATUSNAME;
 	}
 
-	public void setKodeBillingSimponi(String kodeBillingSimponi){
+	public void setKodeBillingSimponi(Object kodeBillingSimponi){
 		this.kodeBillingSimponi = kodeBillingSimponi;
 	}
 
-	public String getKodeBillingSimponi(){
+	public Object getKodeBillingSimponi(){
 		return kodeBillingSimponi;
 	}
 
@@ -767,11 +767,11 @@ public class SuratListOne{
 		return rEQUIRECHECK;
 	}
 
-	public void setInvoiceDate(String invoiceDate){
+	public void setInvoiceDate(Object invoiceDate){
 		this.invoiceDate = invoiceDate;
 	}
 
-	public String getInvoiceDate(){
+	public Object getInvoiceDate(){
 		return invoiceDate;
 	}
 
@@ -783,11 +783,11 @@ public class SuratListOne{
 		return jENISNAME;
 	}
 
-	public void setNTPN(String nTPN){
+	public void setNTPN(Object nTPN){
 		this.nTPN = nTPN;
 	}
 
-	public String getNTPN(){
+	public Object getNTPN(){
 		return nTPN;
 	}
 
@@ -815,11 +815,11 @@ public class SuratListOne{
 		return kAPALNAME;
 	}
 
-	public void setIdDokumen(String idDokumen){
+	public void setIdDokumen(Object idDokumen){
 		this.idDokumen = idDokumen;
 	}
 
-	public String getIdDokumen(){
+	public Object getIdDokumen(){
 		return idDokumen;
 	}
 
@@ -831,27 +831,27 @@ public class SuratListOne{
 		return jENISNOTE;
 	}
 
-	public void setNotaDesc(String notaDesc){
+	public void setNotaDesc(Object notaDesc){
 		this.notaDesc = notaDesc;
 	}
 
-	public String getNotaDesc(){
+	public Object getNotaDesc(){
 		return notaDesc;
 	}
 
-	public void setTotalNominalBillingUsd(String totalNominalBillingUsd){
+	public void setTotalNominalBillingUsd(Object totalNominalBillingUsd){
 		this.totalNominalBillingUsd = totalNominalBillingUsd;
 	}
 
-	public String getTotalNominalBillingUsd(){
+	public Object getTotalNominalBillingUsd(){
 		return totalNominalBillingUsd;
 	}
 
-	public void setSimponiTrxId(String simponiTrxId){
+	public void setSimponiTrxId(Object simponiTrxId){
 		this.simponiTrxId = simponiTrxId;
 	}
 
-	public String getSimponiTrxId(){
+	public Object getSimponiTrxId(){
 		return simponiTrxId;
 	}
 
@@ -879,19 +879,19 @@ public class SuratListOne{
 		return sURATID;
 	}
 
-	public void setDate(String date){
+	public void setDate(Object date){
 		this.date = date;
 	}
 
-	public String getDate(){
+	public Object getDate(){
 		return date;
 	}
 
-	public void setBankPersepsi(String bankPersepsi){
+	public void setBankPersepsi(Object bankPersepsi){
 		this.bankPersepsi = bankPersepsi;
 	}
 
-	public String getBankPersepsi(){
+	public Object getBankPersepsi(){
 		return bankPersepsi;
 	}
 
@@ -903,27 +903,27 @@ public class SuratListOne{
 		return sURATSTATUS;
 	}
 
-	public void setUpdateTgl(String updateTgl){
+	public void setUpdateTgl(Object updateTgl){
 		this.updateTgl = updateTgl;
 	}
 
-	public String getUpdateTgl(){
+	public Object getUpdateTgl(){
 		return updateTgl;
 	}
 
-	public void setNIP(String nIP){
+	public void setNIP(Object nIP){
 		this.nIP = nIP;
 	}
 
-	public String getNIP(){
+	public Object getNIP(){
 		return nIP;
 	}
 
-	public void setRegister(String register){
+	public void setRegister(Object register){
 		this.register = register;
 	}
 
-	public String getRegister(){
+	public Object getRegister(){
 		return register;
 	}
 
@@ -935,11 +935,11 @@ public class SuratListOne{
 		return kAPALPOSISI;
 	}
 
-	public void setIdNotaTagih(String idNotaTagih){
+	public void setIdNotaTagih(Object idNotaTagih){
 		this.idNotaTagih = idNotaTagih;
 	}
 
-	public String getIdNotaTagih(){
+	public Object getIdNotaTagih(){
 		return idNotaTagih;
 	}
 
@@ -951,27 +951,27 @@ public class SuratListOne{
 		return sURATJENIS;
 	}
 
-	public void setUpdateUser(String updateUser){
+	public void setUpdateUser(Object updateUser){
 		this.updateUser = updateUser;
 	}
 
-	public String getUpdateUser(){
+	public Object getUpdateUser(){
 		return updateUser;
 	}
 
-	public void setIdInvoice(String idInvoice){
+	public void setIdInvoice(Object idInvoice){
 		this.idInvoice = idInvoice;
 	}
 
-	public String getIdInvoice(){
+	public Object getIdInvoice(){
 		return idInvoice;
 	}
 
-	public void setSURATSIFAT(String sURATSIFAT){
+	public void setSURATSIFAT(Object sURATSIFAT){
 		this.sURATSIFAT = sURATSIFAT;
 	}
 
-	public String getSURATSIFAT(){
+	public Object getSURATSIFAT(){
 		return sURATSIFAT;
 	}
 

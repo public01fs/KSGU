@@ -14,9 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.application.ksgu.Adapter.DetailDataAdapter;
-import com.application.ksgu.Adapter.ProfileListAdapter;
-import com.application.ksgu.Model.DetailSurat;
+import com.application.ksgu.Model.DetailSuratNew;
 import com.application.ksgu.Model.Profile;
+import com.application.ksgu.Model.SuratDetail;
 import com.application.ksgu.Model.SuratListOne;
 import com.application.ksgu.R;
 import com.google.gson.Gson;
@@ -43,55 +43,57 @@ public class DetailFragment extends Fragment {
         view            = inflater.inflate(R.layout.fragment_detail, container, false);
         rv_detail       = view.findViewById(R.id.rv_detail);
         prefs           = getActivity().getSharedPreferences("detail", Context.MODE_PRIVATE);
-        initData(gson.fromJson(prefs.getString("detail",""), DetailSurat.class).getSuratListOne());
+        initData(gson.fromJson(prefs.getString("detail",""), DetailSuratNew.class).getSuratDetail(),gson.fromJson(prefs.getString("detail",""), DetailSuratNew.class).getSuratListOne());
         return view;
     }
 
-    private void initData(SuratListOne suratListOne){
+    private void initData(SuratDetail suratDetail, SuratListOne suratListOne){
         List<Profile> profiles  = new ArrayList<>();
         Profile profile         = new Profile();
         profile.setTitle("Status");
-        profile.setValue(suratListOne.getSTATUSNAME());
+        profile.setValue(suratDetail.getStatus());
         profiles.add(profile);
 
         Profile profile1        = new Profile();
         profile1.setTitle("Nomor");
-        profile1.setValue(suratListOne.getSURATNO());
+        profile1.setValue(suratDetail.getNomor());
         profiles.add(profile1);
 
         Profile profile2        = new Profile();
         profile2.setTitle("Tanggal");
-        profile2.setValue(suratListOne.getSURATTGL());
+        profile2.setValue(suratDetail.getTanggal());
         profiles.add(profile2);
 
         Profile profile3        = new Profile();
         profile3.setTitle("Perihal");
-        profile3.setValue(suratListOne.getSURATHAL());
+        profile3.setValue(suratDetail.getPerihal());
         profiles.add(profile3);
 
         Profile profile4        = new Profile();
         profile4.setTitle("Pemohon");
-        profile4.setValue(suratListOne.getSURATPENGIRIM());
+        profile4.setValue(suratDetail.getPemohon());
         profiles.add(profile4);
 
         Profile profile5        = new Profile();
         profile5.setTitle("Kontak");
-        profile5.setValue(suratListOne.getSURATCP());
+        profile5.setValue(suratDetail.getKontak());
         profiles.add(profile5);
 
         Profile profile6        = new Profile();
         profile6.setTitle("Catatan");
-        profile6.setValue(suratListOne.getSURATNOTE());
+        profile6.setValue(suratDetail.getCatatan());
         profiles.add(profile6);
 
         Profile profile7        = new Profile();
         profile7.setTitle("Create");
         profile7.setValue(suratListOne.getSURATINPUTTGL() +"\n("+suratListOne.getSURATINPUT()+")");
+//        profile7.setValue(suratListOne.getCreated());
         profiles.add(profile7);
 
         Profile profile8        = new Profile();
         profile8.setTitle("Updated");
         profile8.setValue(suratListOne.getSURATEDITTGL() +"\n("+suratListOne.getSURATEDIT()+")");
+//        profile8.setValue(suratListOne.getUpdated());
         profiles.add(profile8);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity().getBaseContext());

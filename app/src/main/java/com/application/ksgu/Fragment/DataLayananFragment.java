@@ -350,7 +350,9 @@ public class DataLayananFragment extends Fragment implements BlockingStep {
                         setDataPelaut();
                     }
 
-                    dataCheck   = itemCheckAdapter.getCheck();
+                    if (itemCheckAdapter != null){
+                        dataCheck   = itemCheckAdapter.getCheck();
+                    }
 
                     if (dataCheck != null && dataCheck.size() > 0){
                         dataKirim.setDataCheck(dataCheck);

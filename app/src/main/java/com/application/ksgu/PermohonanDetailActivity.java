@@ -8,8 +8,11 @@ import android.os.Bundle;
 
 import com.application.ksgu.Adapter.PermohonanDetailAdapter;
 import com.application.ksgu.Adapter.PermohonanListAdapter;
+import com.application.ksgu.Fragment.BillingFragment;
 import com.application.ksgu.Fragment.DetailFragment;
+import com.application.ksgu.Fragment.DisposisiFragment;
 import com.application.ksgu.Fragment.KapalFragment;
+import com.application.ksgu.Fragment.LampiranFragment;
 import com.application.ksgu.Fragment.PermohonanBaruFragment;
 import com.application.ksgu.Fragment.PermohonanSelesaiFragment;
 import com.google.android.material.tabs.TabLayout;
@@ -34,8 +37,10 @@ public class PermohonanDetailActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         PermohonanDetailAdapter adapter = new PermohonanDetailAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         adapter.addFrag(new DetailFragment(),"Detail");
-        adapter.addFrag(new PermohonanBaruFragment(), "Kembali");
+        adapter.addFrag(new DisposisiFragment(),"Disposisi");
         adapter.addFrag(new KapalFragment(), "Kapal");
+        adapter.addFrag(new BillingFragment(),"Billing");
+        adapter.addFrag(new LampiranFragment(), "Lampiran");
         viewPager.setAdapter(adapter);
     }
 }
