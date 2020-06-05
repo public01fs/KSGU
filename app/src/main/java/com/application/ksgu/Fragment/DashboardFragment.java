@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -42,7 +43,7 @@ public class DashboardFragment extends Fragment {
     HashMap<String, String> getLogin;
     ImageView iv_photo;
     ProgressBar pb_loading;
-    RelativeLayout rv_ppmkk,rv_kes_kapal,rv_pelaut,rv_ppk,rv_stb,rv_p3;
+    LinearLayout ll_ppmkk,ll_kes_kapal,ll_pelaut,ll_ppk,ll_stb,ll_p3;
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
 
@@ -55,12 +56,12 @@ public class DashboardFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view            = inflater.inflate(R.layout.fragment_dashboard, container, false);
-        rv_ppmkk        = view.findViewById(R.id.rv_ppmkk);
-        rv_kes_kapal    = view.findViewById(R.id.rv_kes_kapal);
-        rv_pelaut       = view.findViewById(R.id.rv_pelaut);
-        rv_ppk          = view.findViewById(R.id.rv_ppk);
-        rv_stb          = view.findViewById(R.id.rv_stb);
-        rv_p3           = view.findViewById(R.id.rv_p3);
+        ll_ppmkk        = view.findViewById(R.id.ll_ppmkk);
+        ll_kes_kapal    = view.findViewById(R.id.ll_kes_kapal);
+        ll_pelaut       = view.findViewById(R.id.ll_pelaut);
+        ll_ppk          = view.findViewById(R.id.ll_ppk);
+        ll_stb          = view.findViewById(R.id.ll_stb);
+        ll_p3           = view.findViewById(R.id.ll_p3);
         tv_nama         = view.findViewById(R.id.tv_nama);
         tv_email        = view.findViewById(R.id.tv_email);
         iv_photo        = view.findViewById(R.id.iv_photo);
@@ -72,7 +73,7 @@ public class DashboardFragment extends Fragment {
 
         setLayout();
 
-        rv_ppmkk.setOnClickListener(new View.OnClickListener() {
+        ll_ppmkk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 editor.putString("title","Permohonan PPMKK");
@@ -82,7 +83,7 @@ public class DashboardFragment extends Fragment {
             }
         });
 
-        rv_kes_kapal.setOnClickListener(new View.OnClickListener() {
+        ll_kes_kapal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 editor.putString("title","Permohonan Keselamatan Kapal");
@@ -92,7 +93,7 @@ public class DashboardFragment extends Fragment {
             }
         });
 
-        rv_pelaut.setOnClickListener(new View.OnClickListener() {
+        ll_pelaut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 editor.putString("title","Permohonan Kepelautan");
@@ -102,7 +103,7 @@ public class DashboardFragment extends Fragment {
             }
         });
 
-        rv_ppk.setOnClickListener(new View.OnClickListener() {
+        ll_ppk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 editor.putString("title","Permohonan PPK");
@@ -112,7 +113,7 @@ public class DashboardFragment extends Fragment {
             }
         });
 
-        rv_stb.setOnClickListener(new View.OnClickListener() {
+        ll_stb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 editor.putString("title","Permohonan STB");
@@ -122,7 +123,7 @@ public class DashboardFragment extends Fragment {
             }
         });
 
-        rv_p3.setOnClickListener(new View.OnClickListener() {
+        ll_p3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 editor.putString("title","Permohonan P3");
