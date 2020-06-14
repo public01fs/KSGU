@@ -3,6 +3,7 @@ package com.application.ksgu;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.application.ksgu.Adapter.PermohonanAdapter;
 import com.application.ksgu.Adapter.StepperAdapter;
@@ -19,6 +20,7 @@ public class PermohonanActivity extends AppCompatActivity implements StepperLayo
     private static final String CURRENT_STEP_POSITION_KEY = "position";
     private static final String DATA = "data";
     private String mData;
+    ImageView iv_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,14 @@ public class PermohonanActivity extends AppCompatActivity implements StepperLayo
 
         int startingStepPosition = savedInstanceState != null ? savedInstanceState.getInt(CURRENT_STEP_POSITION_KEY) : 0;
         stepperLayout   = findViewById(R.id.stepperLayout);
+        iv_back         = findViewById(R.id.iv_back);
+
+        iv_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         mData = savedInstanceState != null ? savedInstanceState.getString(DATA) : null;
 

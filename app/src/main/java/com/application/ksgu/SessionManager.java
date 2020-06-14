@@ -178,7 +178,7 @@ public class SessionManager {
 //            }
 //        }.execute();
 
-        Intent Jump_to_login = new Intent(_context, LoginActivity.class);
+        Intent Jump_to_login = new Intent(_context, Main3Activity.class);
 //        Jump_to_login.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         Jump_to_login.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         _context.startActivity(Jump_to_login);

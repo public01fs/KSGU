@@ -18,7 +18,10 @@
         android:theme="@style/AppTheme2"
         android:usesCleartextTraffic="true"
         tools:replace="android:icon,android:label">
-        <activity android:name=".PermohonanDetailActivity"></activity>
+        <activity android:name=".LoginActivity2"></activity>
+        <activity android:name=".Main2Activity" />
+        <activity android:name=".ListDokumenActivity" />
+        <activity android:name=".PermohonanDetailActivity" />
         <activity android:name=".DetailActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".VerificationActivity" />
@@ -27,8 +30,9 @@
         <activity android:name=".PermohonanListActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".RegisterActivity" />
+        <activity android:name=".RegisterActivity2" />
         <activity android:name=".PermohonanActivity" />
-        <activity android:name=".Main2Activity">
+        <activity android:name=".Main3Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

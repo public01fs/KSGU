@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.application.ksgu.ListDokumenActivity;
 import com.application.ksgu.MainActivity;
 import com.application.ksgu.PermohonanActivity;
 import com.application.ksgu.PermohonanListActivity;
@@ -46,6 +47,7 @@ public class DashboardFragment extends Fragment {
     LinearLayout ll_ppmkk,ll_kes_kapal,ll_pelaut,ll_ppk,ll_stb,ll_p3;
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
+    LinearLayout ll_status,ll_keselamatan,ll_jaga,ll_usaha;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,6 +64,10 @@ public class DashboardFragment extends Fragment {
         ll_ppk          = view.findViewById(R.id.ll_ppk);
         ll_stb          = view.findViewById(R.id.ll_stb);
         ll_p3           = view.findViewById(R.id.ll_p3);
+        ll_status       = view.findViewById(R.id.ll_status);
+        ll_keselamatan  = view.findViewById(R.id.ll_keselamatan);
+        ll_jaga         = view.findViewById(R.id.ll_jaga);
+        ll_usaha        = view.findViewById(R.id.ll_usaha);
         tv_nama         = view.findViewById(R.id.tv_nama);
         tv_email        = view.findViewById(R.id.tv_email);
         iv_photo        = view.findViewById(R.id.iv_photo);
@@ -130,6 +136,46 @@ public class DashboardFragment extends Fragment {
                 editor.putString("data","P3");
                 editor.commit();
                 startActivity(new Intent(getContext(),PermohonanActivity.class));
+            }
+        });
+
+        ll_status.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getContext(), ListDokumenActivity.class);
+                i.putExtra("title","STATUS HUKUM DAN SERTIFIKASI KAPAL");
+                i.putExtra("bidang_id","1");
+                startActivity(i);
+            }
+        });
+
+        ll_keselamatan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getContext(), ListDokumenActivity.class);
+                i.putExtra("title","KESELAMATAN BERLAYAR");
+                i.putExtra("bidang_id","2");
+                startActivity(i);
+            }
+        });
+
+        ll_jaga.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getContext(), ListDokumenActivity.class);
+                i.putExtra("title","PENJAGAAN,PATROLI DAN PENYIDIKAN");
+                i.putExtra("bidang_id","3");
+                startActivity(i);
+            }
+        });
+
+        ll_usaha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getContext(), ListDokumenActivity.class);
+                i.putExtra("title","TATA USAHA");
+                i.putExtra("bidang_id","4");
+                startActivity(i);
             }
         });
 

@@ -61,4 +61,6 @@
     <color name="ongoing_color">#F7CE00</color>
     <color name="finished_color">#8BC34A</color>
     <color name="canceled_color">#96989A</color>
+
+    <color name="material_Pumpkin">#d35400</color>
 </resources>

@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:aandroid="http://schemas.android.com/tools">
+    <item
+        android:id="@+id/action_home"
+        android:icon="@drawable/ic_home"
+        android:title="Beranda"
+        app:showAsAction="always|withText" />
+    <item
+        android:id="@+id/action_profile"
+        android:icon="@drawable/ic_profile2"
+        android:title="Akun"
+        aandroid:showAsAction="always|withText"/>
+</menu>

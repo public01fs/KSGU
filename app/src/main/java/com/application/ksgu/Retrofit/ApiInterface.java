@@ -7,6 +7,7 @@ import com.application.ksgu.Model.DataNota;
 import com.application.ksgu.Model.DetailSuratNew;
 import com.application.ksgu.Model.Ditkapel;
 import com.application.ksgu.Model.DitkapelService;
+import com.application.ksgu.Model.Document;
 import com.application.ksgu.Model.FileBerkas;
 import com.application.ksgu.Model.Kantor;
 import com.application.ksgu.Model.Kapal;
@@ -32,6 +33,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Url;
 
 public interface ApiInterface {
     String API = Cons.SERVER_URL;
@@ -168,4 +170,11 @@ public interface ApiInterface {
     @Multipart
     @POST(API + "surat/upload")
     Call<FileBerkas> uploadSurat(@Part MultipartBody.Part img);
+
+    @FormUrlEncoded
+    @POST(API + "list-document")
+    Call<List<Document>> getDocument(@Field("bidang_id") String bidang_id);
+
+    @GET
+    Call<ResponseBody> downloadDocument(@Url String fileUrl);
 }
