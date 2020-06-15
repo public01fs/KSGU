@@ -19,6 +19,12 @@
             android:theme="@style/ThemeOverlay.AppCompat.Light"
             >
 
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_chevron_left"/>
+
             <TextView
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
@@ -40,6 +46,7 @@
             app:tabIndicatorColor="@android:color/black"
             app:tabSelectedTextColor="@android:color/black"
             app:tabTextColor="@color/colorGray"
+            app:tabMode="scrollable"
             app:tabTextAppearance="@style/tab_text"/>
     </com.google.android.material.appbar.AppBarLayout>
 

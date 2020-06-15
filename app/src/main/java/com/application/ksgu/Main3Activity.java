@@ -13,6 +13,7 @@ import android.view.MenuItem;
 
 import com.application.ksgu.Fragment.Dashboard2Fragment;
 import com.application.ksgu.Fragment.DashboardFragment;
+import com.application.ksgu.Fragment.PermohonanFragment;
 import com.application.ksgu.Fragment.PermohonanListFragment;
 import com.application.ksgu.Fragment.ProfileFragment;
 import com.application.ksgu.Library.BottomNavigationViewHelper;
@@ -75,6 +76,9 @@ public class Main3Activity extends AppCompatActivity {
                                 } else {
                                     startActivity(new Intent(Main3Activity.this,LoginActivity2.class));
                                 }
+                                break;
+                            case R.id.action_permohonan:
+                                fragmentClass = PermohonanFragment.class;
                                 break;
                             default:
                                 fragmentClass = Dashboard2Fragment.class;

@@ -5,6 +5,8 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.application.ksgu.Adapter.PermohonanDetailAdapter;
 import com.application.ksgu.Adapter.PermohonanListAdapter;
@@ -21,6 +23,7 @@ public class PermohonanDetailActivity extends AppCompatActivity {
 
     ViewPager vp_detail;
     TabLayout tabLayout;
+    ImageView iv_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,14 @@ public class PermohonanDetailActivity extends AppCompatActivity {
 
         vp_detail   = findViewById(R.id.vp_detail);
         tabLayout   = findViewById(R.id.htab_tabs);
+        iv_back     = findViewById(R.id.iv_back);
+
+        iv_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         setupViewPager(vp_detail);
         tabLayout.setupWithViewPager(vp_detail);

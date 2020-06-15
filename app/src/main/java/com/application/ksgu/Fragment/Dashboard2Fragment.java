@@ -163,28 +163,34 @@ public class Dashboard2Fragment extends Fragment implements BaseSliderView.OnSli
     }
 
     private void getImage(){
-        HashMap<String,Integer> file_maps = new HashMap<String, Integer>();
-        file_maps.put("Gambar 1",R.drawable.gambar_1);
-        file_maps.put("Gambar 2",R.drawable.gambar_2);
-        file_maps.put("Gambar 3",R.drawable.gambar_3);
-        file_maps.put("Gambar 4", R.drawable.gambar_4);
+        int[] image = {R.drawable.gambar_1,R.drawable.gambar_2,R.drawable.gambar_3,R.drawable.gambar_4};
+        String[] title = {"Gambar 1","Gambar 2","Gambar 3","Gambar 4"};
+//        HashMap<String,Integer> file_maps = new HashMap<String, Integer>();
+//        file_maps.put("Gambar 1",R.drawable.gambar_1);
+//        file_maps.put("Gambar 2",R.drawable.gambar_2);
+//        file_maps.put("Gambar 3",R.drawable.gambar_3);
+//        file_maps.put("Gambar 4", R.drawable.gambar_4);
 
-        for(String name : file_maps.keySet()){
+        for (int i = 0; i < title.length; i++) {
             TextSliderView textSliderView = new TextSliderView(getContext());
             // initialize a SliderLayout
             textSliderView
-                    .description(name)
-                    .image(file_maps.get(name))
+                    .description(title[i])
+                    .image(image[i])
                     .setScaleType(BaseSliderView.ScaleType.Fit)
                     .setOnSliderClickListener(this);
 
             //add your extra information
             textSliderView.bundle(new Bundle());
             textSliderView.getBundle()
-                    .putString("extra",name);
+                    .putString("extra",title[i]);
 
             sliderLayout.addSlider(textSliderView);
         }
+
+//        for(String name : file_maps.keySet()){
+//
+//        }
         sliderLayout.setPresetTransformer(SliderLayout.Transformer.Accordion);
         sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
         sliderLayout.setCustomAnimation(new DescriptionAnimation());

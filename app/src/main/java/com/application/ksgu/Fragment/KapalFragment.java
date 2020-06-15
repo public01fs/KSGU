@@ -69,9 +69,24 @@ public class KapalFragment extends Fragment {
         profile3.setValue(suratListOne.getKAPALPOSISI());
         profiles.add(profile3);
 
+        String[] pemilik = suratListOne.getKAPALPEMILIK().split(" ");
+        String namapemilik = "";
+
+        if (pemilik.length > 2){
+            for (int i = 0; i < pemilik.length; i++) {
+                if (i == 3){
+                    namapemilik += "\n"+pemilik[i];
+                } else {
+                    namapemilik += pemilik[i];
+                }
+            }
+        } else {
+            namapemilik = suratListOne.getKAPALPEMILIK();
+        }
+
         Profile profile4        = new Profile();
         profile4.setTitle("Pemilik");
-        profile4.setValue(suratListOne.getKAPALPEMILIK());
+        profile4.setValue(namapemilik);
         profiles.add(profile4);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity().getBaseContext());

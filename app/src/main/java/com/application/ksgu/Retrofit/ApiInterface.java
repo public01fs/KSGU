@@ -2,6 +2,7 @@ package com.application.ksgu.Retrofit;
 
 import com.application.ksgu.Cons;
 import com.application.ksgu.Model.Checklist;
+import com.application.ksgu.Model.Count;
 import com.application.ksgu.Model.DataDaerah;
 import com.application.ksgu.Model.DataNota;
 import com.application.ksgu.Model.DetailSuratNew;
@@ -177,4 +178,7 @@ public interface ApiInterface {
 
     @GET
     Call<ResponseBody> downloadDocument(@Url String fileUrl);
+
+    @GET(API + "surat/count/all")
+    Call<Count> getCountPermohonan();
 }

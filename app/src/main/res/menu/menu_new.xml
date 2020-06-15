@@ -8,7 +8,7 @@
         app:showAsAction="always|withText" />
     <item
         android:id="@+id/action_permohonan"
-        android:icon="@drawable/ic_home"
+        android:icon="@drawable/ic_document"
         android:title="Permohonan"
         app:showAsAction="always|withText"/>
     <item
