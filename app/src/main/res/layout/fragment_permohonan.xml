@@ -86,6 +86,7 @@
                             android:layout_height="wrap_content">
 
                             <de.hdodenhof.circleimageview.CircleImageView
+                                android:visibility="gone"
                                 android:layout_width="50dip"
                                 android:layout_height="50dip"
                                 android:padding="7dp"
@@ -93,6 +94,28 @@
                                 app:civ_border_color="@android:color/black"
                                 app:civ_border_overlay="true"
                                 app:civ_border_width="2dp" />
+
+                            <RelativeLayout
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:padding="7dp"
+                                android:layout_gravity="center_horizontal">
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/circle"
+                                    android:layout_centerVertical="true"
+                                    android:layout_centerHorizontal="true" />
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_retweet"
+                                    android:layout_centerVertical="true"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_margin="5dp" />
+                            </RelativeLayout>
 
                         </RelativeLayout>
 
@@ -135,14 +158,36 @@
                             android:layout_height="wrap_content">
 
                             <de.hdodenhof.circleimageview.CircleImageView
+                                android:visibility="gone"
                                 android:layout_width="50dip"
                                 android:layout_height="50dip"
                                 android:padding="7dp"
                                 android:src="@drawable/ic_process"
-
                                 app:civ_border_color="@android:color/black"
                                 app:civ_border_overlay="true"
                                 app:civ_border_width="2dp" />
+
+                            <RelativeLayout
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:padding="7dp"
+                                android:layout_gravity="center_horizontal">
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/circle"
+                                    android:layout_centerVertical="true"
+                                    android:layout_centerHorizontal="true" />
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_process"
+                                    android:layout_centerVertical="true"
+                                    android:layout_centerHorizontal="true"
+                                    />
+                            </RelativeLayout>
 
                         </RelativeLayout>
 
@@ -185,6 +230,7 @@
                             android:layout_height="wrap_content">
 
                             <de.hdodenhof.circleimageview.CircleImageView
+                                android:visibility="gone"
                                 android:layout_width="50dip"
                                 android:layout_height="50dip"
                                 android:padding="7dp"
@@ -192,6 +238,28 @@
                                 app:civ_border_color="@android:color/black"
                                 app:civ_border_overlay="true"
                                 app:civ_border_width="2dp" />
+
+                            <RelativeLayout
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:padding="7dp"
+                                android:layout_gravity="center_horizontal">
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/circle"
+                                    android:layout_centerVertical="true"
+                                    android:layout_centerHorizontal="true" />
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_done"
+                                    android:layout_centerVertical="true"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_margin="2dp" />
+                            </RelativeLayout>
 
                         </RelativeLayout>
 
@@ -234,6 +302,7 @@
                             android:layout_height="wrap_content">
 
                             <de.hdodenhof.circleimageview.CircleImageView
+                                android:visibility="gone"
                                 android:layout_width="50dip"
                                 android:layout_height="50dip"
                                 android:padding="7dp"
@@ -241,6 +310,28 @@
                                 app:civ_border_color="@android:color/black"
                                 app:civ_border_overlay="true"
                                 app:civ_border_width="2dp" />
+
+                            <RelativeLayout
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:padding="7dp"
+                                android:layout_gravity="center_horizontal">
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/circle"
+                                    android:layout_centerVertical="true"
+                                    android:layout_centerHorizontal="true" />
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_review"
+                                    android:layout_centerVertical="true"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_margin="5dp" />
+                            </RelativeLayout>
 
                         </RelativeLayout>
 

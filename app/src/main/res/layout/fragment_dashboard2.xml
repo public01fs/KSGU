@@ -91,16 +91,14 @@
             android:layout_height="match_parent">
 
             <LinearLayout
-                android:layout_marginTop="10dp"
                 app:layout_constraintTop_toTopOf="parent"
                 android:id="@+id/ll_news"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp">
+                android:orientation="vertical">
 
                 <TextView
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Berita"
@@ -110,6 +108,7 @@
                     android:fontFamily="@font/poppins" />
 
                 <View
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/lightgrey"
@@ -455,7 +454,7 @@
                 app:layout_constraintTop_toBottomOf="@id/ll_news"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="20dp">
 
                 <TextView
                     android:layout_width="match_parent"

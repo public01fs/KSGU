@@ -39,8 +39,10 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 
@@ -172,10 +174,11 @@ public class Dashboard2Fragment extends Fragment implements BaseSliderView.OnSli
 //        file_maps.put("Gambar 4", R.drawable.gambar_4);
 
         for (int i = 0; i < title.length; i++) {
-            TextSliderView textSliderView = new TextSliderView(getContext());
+//            TextSliderView textSliderView = new TextSliderView(getContext());
+            DefaultSliderView textSliderView = new DefaultSliderView(getContext());
             // initialize a SliderLayout
             textSliderView
-                    .description(title[i])
+                    .description("")
                     .image(image[i])
                     .setScaleType(BaseSliderView.ScaleType.Fit)
                     .setOnSliderClickListener(this);
@@ -195,6 +198,7 @@ public class Dashboard2Fragment extends Fragment implements BaseSliderView.OnSli
         sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
         sliderLayout.setCustomAnimation(new DescriptionAnimation());
         sliderLayout.setDuration(4000);
+//        sliderLayout.setCustomIndicator((PagerIndicator) view.findViewById(R.id.custom_indicator));
         sliderLayout.addOnPageChangeListener(this);
     }
 
