@@ -51,6 +51,7 @@ import com.application.ksgu.Adapter.ItemCheckAdapter;
 import com.application.ksgu.Adapter.UploadFotoAdapter;
 import com.application.ksgu.DataManager;
 import com.application.ksgu.EditProfileActivity;
+import com.application.ksgu.Library.FileUtils;
 import com.application.ksgu.Main2Activity;
 import com.application.ksgu.Model.Checklist;
 import com.application.ksgu.Model.ChecklistKirim;
@@ -364,7 +365,7 @@ public class UploadDokumenFragment extends Fragment implements BlockingStep {
             if (Matisse.obtainResult(data).size()>0){
                 List<Uri> uris = new ArrayList<>();
                 uris.add(Matisse.obtainResult(data).get(0));
-                uploadSurat(Matisse.obtainResult(data).get(0),currentFile);
+                uploadSurat(Matisse.obtainResult(data).get(0),currentFile,"foto");
                 menuList.get(currentFile).setmUri(uris);
 
             }
@@ -373,6 +374,7 @@ public class UploadDokumenFragment extends Fragment implements BlockingStep {
             Uri uri = Uri.parse("android.resource://com.application.ksgu/drawable/ic_file");
             List<Uri> uris = new ArrayList<>();
             uris.add(uri);
+            uploadSurat(data.getData(),currentFile,"pdf");
             menuList.get(currentFile).setmUri(uris);
             uploadFotoAdapter.notifyDataSetChanged();
         }
@@ -635,10 +637,19 @@ public class UploadDokumenFragment extends Fragment implements BlockingStep {
         });
     }
 
-    private void uploadSurat(Uri uri, final int position){
+    private void uploadSurat(Uri uri, final int position,String kirim){
         showpDialog();
         MultipartBody.Part data         = null;
-        RequestBody foto                = getRequestBodyFromURI(uri.toString());
+        RequestBody foto                = null;
+        if (kirim.equals("pdf")){
+//            File f = new File(FileUtils.getPath(getContext(),uri));
+            File f = new File(getFilePathForN(uri,getContext()));
+//            File f = new File(uri.getPath());
+            foto                = RequestBody.create(MediaType.parse("application/pdf"), f);
+        } else {
+            foto                = getRequestBodyFromURI(uri.toString());
+        }
+
         data                            = MultipartBody.Part.createFormData("file", getFileName(uri), foto);
         ApiInterface apiInterface       = ServiceGenerator.createService(ApiInterface.class,getLogin.get(KEY_TOKEN));
         Call<FileBerkas> call           = apiInterface.uploadSurat(data);
@@ -662,6 +673,7 @@ public class UploadDokumenFragment extends Fragment implements BlockingStep {
             @Override
             public void onFailure(Call<FileBerkas> call, Throwable t) {
                 hidepDialog();
+                Log.e("error",t.getMessage());
                 Toast.makeText(getContext(), "Terjadi Kesalahan Jaringan", Toast.LENGTH_SHORT).show();
             }
         });
