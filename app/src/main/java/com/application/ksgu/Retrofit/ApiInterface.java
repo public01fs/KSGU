@@ -10,6 +10,7 @@ import com.application.ksgu.Model.Ditkapel;
 import com.application.ksgu.Model.DitkapelService;
 import com.application.ksgu.Model.Document;
 import com.application.ksgu.Model.FileBerkas;
+import com.application.ksgu.Model.Image;
 import com.application.ksgu.Model.Kantor;
 import com.application.ksgu.Model.Kapal;
 import com.application.ksgu.Model.Layanan;
@@ -181,4 +182,7 @@ public interface ApiInterface {
 
     @GET(API + "surat/count/all")
     Call<Count> getCountPermohonan();
+
+    @POST(API + "list-slider")
+    Call<List<Image>> getImage();
 }

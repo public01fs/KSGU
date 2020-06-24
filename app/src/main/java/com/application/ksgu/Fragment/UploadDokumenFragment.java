@@ -142,7 +142,23 @@ public class UploadDokumenFragment extends Fragment implements BlockingStep {
     public void onCompleteClicked(StepperLayout.OnCompleteClickedCallback callback) {
 //        getActivity().finish();
 //        savePermohonan(dataKirim);
-        getDataKantor();
+        new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("Apakah anda yakin ingin menyimpannya ?")
+                .setConfirmText("Iya")
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        sDialog.dismissWithAnimation();
+                        getDataKantor();
+                    }
+                })
+                .setCancelButton("Tidak", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        sDialog.dismissWithAnimation();
+                    }
+                })
+                .show();
     }
 
     @Override
@@ -530,6 +546,7 @@ public class UploadDokumenFragment extends Fragment implements BlockingStep {
 //    }
 
     private void savePermohonan(DataKirim dataKirim){
+        showpDialog();
         List<MultipartBody.Part> nota_id = new ArrayList<>();
         List<MultipartBody.Part> parent_id = new ArrayList<>();
 //        List<String> nota_id = new ArrayList<>();
@@ -594,6 +611,7 @@ public class UploadDokumenFragment extends Fragment implements BlockingStep {
         call.enqueue(new Callback<Save>() {
             @Override
             public void onResponse(Call<Save> call, Response<Save> response) {
+                hidepDialog();
                 if (response.body().isStatus()){
                     new SweetAlertDialog(getActivity(), SweetAlertDialog.SUCCESS_TYPE)
                             .setContentText("Permohonan Berhasil Disimpan")
@@ -606,12 +624,15 @@ public class UploadDokumenFragment extends Fragment implements BlockingStep {
                                 }
                             })
                             .show();
+                } else {
+                    Toast.makeText(getContext(), "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Save> call, Throwable t) {
-
+                hidepDialog();
+                Toast.makeText(getContext(), "Terjadi Kesalahan Jaringan", Toast.LENGTH_SHORT).show();
             }
         });
     }

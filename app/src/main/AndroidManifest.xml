@@ -3,6 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.application.ksgu">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,7 +18,7 @@
         android:theme="@style/AppTheme2"
         android:usesCleartextTraffic="true"
         tools:replace="android:icon,android:label">
-        <activity android:name=".ListPermohonanActivity"></activity>
+        <activity android:name=".ListPermohonanActivity" />
         <activity android:name=".LoginActivity2" />
         <activity android:name=".Main2Activity" />
         <activity android:name=".ListDokumenActivity" />
@@ -27,7 +33,8 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".RegisterActivity2" />
         <activity android:name=".PermohonanActivity" />
-        <activity android:name=".Main3Activity">
+        <activity android:name=".Main3Activity" />
+        <activity android:name=".SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -48,11 +55,5 @@
                 tools:replace="android:resource" />
         </provider>
     </application>
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 </manifest>

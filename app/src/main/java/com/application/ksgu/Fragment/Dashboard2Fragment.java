@@ -25,10 +25,13 @@ import com.application.ksgu.Adapter.NewsAdapter;
 import com.application.ksgu.ListDokumenActivity;
 import com.application.ksgu.LoginActivity2;
 import com.application.ksgu.Main3Activity;
+import com.application.ksgu.Model.Image;
 import com.application.ksgu.Model.Item;
 import com.application.ksgu.Model.News;
 import com.application.ksgu.PermohonanActivity;
 import com.application.ksgu.R;
+import com.application.ksgu.Retrofit.ApiInterface;
+import com.application.ksgu.Retrofit.ServiceGenerator;
 import com.application.ksgu.SessionManager;
 import com.application.ksgu.Widget.SpacesItemDecoration;
 import com.artcak.artcakbase.recycleview.GridSpacingItemDecoration;
@@ -45,10 +48,16 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.application.ksgu.Cons.KEY_EMAIL;
 import static com.application.ksgu.Cons.KEY_IMG;
@@ -68,6 +77,8 @@ public class Dashboard2Fragment extends Fragment implements BaseSliderView.OnSli
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
     SliderLayout sliderLayout;
+    List<Image> images;
+    Gson gson = new Gson();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,11 +96,13 @@ public class Dashboard2Fragment extends Fragment implements BaseSliderView.OnSli
         sliderLayout    = view.findViewById(R.id.slider);
         prefs           = getActivity().getSharedPreferences("layanan", Context.MODE_PRIVATE);
         editor          = prefs.edit();
+        images          = gson.fromJson(prefs.getString("foto",""), new TypeToken<List<Image>>(){}.getType());
 
         setBerita();
         setMenu1();
         setMenu2();
-        getImage();
+        loadImage(images);
+//        getImage();
 
         return view;
     }
@@ -123,14 +136,18 @@ public class Dashboard2Fragment extends Fragment implements BaseSliderView.OnSli
         itemListAdapter.setOnItemClickListener(new ItemListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, Item obj, int position) {
-                if (sessionManager.isLoggedIn()){
-                    Intent i = new Intent(getContext(), ListDokumenActivity.class);
-                    i.putExtra("title",obj.getJudul());
-                    i.putExtra("bidang_id",obj.getId());
-                    startActivity(i);
-                } else {
-                    startActivity(new Intent(getContext(), LoginActivity2.class));
-                }
+//                if (sessionManager.isLoggedIn()){
+//                    Intent i = new Intent(getContext(), ListDokumenActivity.class);
+//                    i.putExtra("title",obj.getJudul());
+//                    i.putExtra("bidang_id",obj.getId());
+//                    startActivity(i);
+//                } else {
+//                    startActivity(new Intent(getContext(), LoginActivity2.class));
+//                }
+                Intent i = new Intent(getContext(), ListDokumenActivity.class);
+                i.putExtra("title",obj.getJudul());
+                i.putExtra("bidang_id",obj.getId());
+                startActivity(i);
             }
         });
     }
@@ -165,41 +182,59 @@ public class Dashboard2Fragment extends Fragment implements BaseSliderView.OnSli
     }
 
     private void getImage(){
-        int[] image = {R.drawable.gambar_1,R.drawable.gambar_2,R.drawable.gambar_3,R.drawable.gambar_4};
-        String[] title = {"Gambar 1","Gambar 2","Gambar 3","Gambar 4"};
+        ApiInterface apiInterface   = ServiceGenerator.createService(ApiInterface.class);
+        Call<List<Image>> call      = apiInterface.getImage();
+        call.enqueue(new Callback<List<Image>>() {
+            @Override
+            public void onResponse(Call<List<Image>> call, Response<List<Image>> response) {
+                if (response.isSuccessful()){
+                    if (response.body().size() > 0) {
+                        loadImage(response.body());
+                    }
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Image>> call, Throwable t) {
+
+            }
+        });
+//        int[] image = {R.drawable.gambar_1,R.drawable.gambar_2,R.drawable.gambar_3,R.drawable.gambar_4};
+//        String[] title = {"Gambar 1","Gambar 2","Gambar 3","Gambar 4"};
 //        HashMap<String,Integer> file_maps = new HashMap<String, Integer>();
 //        file_maps.put("Gambar 1",R.drawable.gambar_1);
 //        file_maps.put("Gambar 2",R.drawable.gambar_2);
 //        file_maps.put("Gambar 3",R.drawable.gambar_3);
 //        file_maps.put("Gambar 4", R.drawable.gambar_4);
 
-        for (int i = 0; i < title.length; i++) {
-//            TextSliderView textSliderView = new TextSliderView(getContext());
+
+    }
+
+    private void loadImage(List<Image> images){
+        for (int i = 0; i < images.size(); i++) {
             DefaultSliderView textSliderView = new DefaultSliderView(getContext());
-            // initialize a SliderLayout
             textSliderView
                     .description("")
-                    .image(image[i])
+                    .image(images.get(i).getLinkUrl())
                     .setScaleType(BaseSliderView.ScaleType.Fit)
                     .setOnSliderClickListener(this);
-
-            //add your extra information
             textSliderView.bundle(new Bundle());
             textSliderView.getBundle()
-                    .putString("extra",title[i]);
+                    .putString("extra",images.get(i).getLinkDescription());
 
             sliderLayout.addSlider(textSliderView);
         }
-
-//        for(String name : file_maps.keySet()){
-//
-//        }
-        sliderLayout.setPresetTransformer(SliderLayout.Transformer.Accordion);
+        sliderLayout.setPresetTransformer(SliderLayout.Transformer.Default);
         sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
         sliderLayout.setCustomAnimation(new DescriptionAnimation());
         sliderLayout.setDuration(4000);
+        sliderLayout.movePrevPosition();
 //        sliderLayout.setCustomIndicator((PagerIndicator) view.findViewById(R.id.custom_indicator));
         sliderLayout.addOnPageChangeListener(this);
+
+//        sliderLayout.stopAutoCycle();
     }
 
     @Override

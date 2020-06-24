@@ -62,8 +62,8 @@ public class ListDokumenActivity extends AppCompatActivity {
         rv_dokumen          = findViewById(R.id.rv_dokumen);
         iv_back             = findViewById(R.id.iv_back);
         searchView          = findViewById(R.id.search);
-        sessionManager      = new SessionManager(this);
-        getLogin            = sessionManager.getLogin();
+//        sessionManager      = new SessionManager(this);
+//        getLogin            = sessionManager.getLogin();
         sweetAlertDialog    = new SweetAlertDialog(ListDokumenActivity.this, SweetAlertDialog.PROGRESS_TYPE);
         sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#000080"));
         sweetAlertDialog.setTitleText("Mohon Tunggu...");
@@ -147,7 +147,7 @@ public class ListDokumenActivity extends AppCompatActivity {
 
     private void getDokumen(String bidang_id){
         showpDialog();
-        ApiInterface apiInterface   = ServiceGenerator.createService(ApiInterface.class,getLogin.get(KEY_TOKEN));
+        ApiInterface apiInterface   = ServiceGenerator.createService(ApiInterface.class);
         Call<List<Document>> call   = apiInterface.getDocument(bidang_id);
         call.enqueue(new Callback<List<Document>>() {
             @Override
