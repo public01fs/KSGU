@@ -63,7 +63,7 @@ public class LampiranAdapter extends RecyclerView.Adapter<LampiranAdapter.MyView
             holder.ll_unggah.setVisibility(View.GONE);
             holder.iv_preview.setVisibility(View.VISIBLE);
         } else{
-            Glide.with(context).load(Uri.parse("android.resource://com.application.ksgu/drawable/ic_file")).fitCenter().into(holder.iv_preview);
+            Glide.with(context).load(Uri.parse("android.resource://com.application.ksgu/drawable/pdf")).fitCenter().into(holder.iv_preview);
             holder.ll_unggah.setVisibility(View.GONE);
             holder.iv_preview.setVisibility(View.VISIBLE);
         }

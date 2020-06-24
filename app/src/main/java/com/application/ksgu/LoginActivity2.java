@@ -116,10 +116,14 @@ public class LoginActivity2 extends AppCompatActivity {
 //                        Intent intent = new Intent(LoginActivity2.this, Main2Activity.class);
 //                        startActivity(intent);
 //                        finish();
-                        Intent i = getApplicationContext().getPackageManager()
-                                .getLaunchIntentForPackage(getApplicationContext().getPackageName() );
-
-                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK );
+//                        Intent i = getApplicationContext().getPackageManager()
+//                                .getLaunchIntentForPackage(getApplicationContext().getPackageName() );
+//
+//                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK );
+//                        startActivity(i);
+                        Intent i = new Intent(LoginActivity2.this, Main3Activity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);
 //                        finish();
                     }

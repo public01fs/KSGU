@@ -77,7 +77,11 @@ public class KapalFragment extends Fragment {
                 if (i == 3){
                     namapemilik += "\n"+pemilik[i];
                 } else {
-                    namapemilik += pemilik[i];
+                    if (i == pemilik.length - 1 || i == 2){
+                        namapemilik += pemilik[i];
+                    } else {
+                        namapemilik += pemilik[i]+" ";
+                    }
                 }
             }
         } else {

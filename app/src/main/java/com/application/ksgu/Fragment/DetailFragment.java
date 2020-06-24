@@ -73,14 +73,14 @@ public class DetailFragment extends Fragment {
 
         Profile profile4        = new Profile();
         profile4.setTitle("Pemohon");
-        profile4.setValue(pemohon[0].replace(" ","")+"\n"+pemohon[1].replace(" ",""));
+        profile4.setValue(pemohon[0]+"\n"+pemohon[1]);
         profiles.add(profile4);
 
         String[] kontak = suratDetail.getKontak().split("-");
 
         Profile profile5        = new Profile();
         profile5.setTitle("Kontak");
-        profile5.setValue(kontak[0].replace(" ","")+"\n"+kontak[1].replace(" ",""));
+        profile5.setValue(kontak[0]+"\n"+kontak[1]);
         profiles.add(profile5);
 
         Profile profile6        = new Profile();

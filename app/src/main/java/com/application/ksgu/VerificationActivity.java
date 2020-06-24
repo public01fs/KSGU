@@ -115,9 +115,13 @@ public class VerificationActivity extends AppCompatActivity {
                 if (response.isSuccessful()){
                     sessionManager.createLoginSession(response.body());
                     sessionManager.createOtpSession(false);
-                    Intent intent = new Intent(VerificationActivity.this, Main3Activity.class);
-                    startActivity(intent);
-                    finish();
+//                    Intent intent = new Intent(VerificationActivity.this, Main3Activity.class);
+//                    startActivity(intent);
+//                    finish();
+                    Intent i = new Intent(VerificationActivity.this, Main3Activity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(i);
                 } else if (response.code() == 422){
                     JSONObject jsonObject = null;
                     try {
