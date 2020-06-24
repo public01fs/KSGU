@@ -124,7 +124,7 @@ public class SuratListAdapter extends RecyclerView.Adapter<SuratListAdapter.View
 //            holder.status.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.shape_rectangle_ongoing));
 //        }
 //
-        holder.status.setText(b.getStatusNotaDesc());
+        holder.status.setText(b.getSTATUSNAME());
 
         holder.lyt_parent.setOnClickListener(new View.OnClickListener() {
             @Override
