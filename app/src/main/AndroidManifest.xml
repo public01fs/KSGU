@@ -49,7 +49,7 @@
             android:authorities="com.application.ksgu.provider"
             android:exported="false"
             android:grantUriPermissions="true"
-            android:readPermission="com.admin1.coin.app.fileprovider.READ"
+            android:readPermission="com.application.ksgu.app.fileprovider.READ"
             tools:replace="android:authorities">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
