@@ -58,12 +58,12 @@ public class LampiranAdapter extends RecyclerView.Adapter<LampiranAdapter.MyView
             }
         });
 
-        if (menuModel.getPATH()!=null && !menuModel.getPATH().substring(menuModel.getPATH().lastIndexOf(".")).equals("pdf")){
+        if (menuModel.getPATH()!=null && !menuModel.getFILETYPE().toLowerCase().equals("pdf")){
             Glide.with(context).load(menuModel.getSERVERFILE()+menuModel.getPATH()).fitCenter().into(holder.iv_preview);
             holder.ll_unggah.setVisibility(View.GONE);
             holder.iv_preview.setVisibility(View.VISIBLE);
         } else{
-            Glide.with(context).load(Uri.parse("android.resource://com.application.ksgu/drawable/pdf")).fitCenter().into(holder.iv_preview);
+            Glide.with(context).load(R.drawable.pdf).fitCenter().into(holder.iv_preview);
             holder.ll_unggah.setVisibility(View.GONE);
             holder.iv_preview.setVisibility(View.VISIBLE);
         }

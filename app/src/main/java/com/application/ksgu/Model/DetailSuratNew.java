@@ -18,7 +18,7 @@ public class DetailSuratNew{
 	private Billing billing;
 
 	@SerializedName("Disposisi")
-	private List<Object> disposisi;
+	private List<Disposisi> disposisi;
 
 	public void setSuratLampiran(List<SuratLampiranItem> suratLampiran){
 		this.suratLampiran = suratLampiran;
@@ -52,11 +52,11 @@ public class DetailSuratNew{
 		return billing;
 	}
 
-	public void setDisposisi(List<Object> disposisi){
+	public void setDisposisi(List<Disposisi> disposisi){
 		this.disposisi = disposisi;
 	}
 
-	public List<Object> getDisposisi(){
+	public List<Disposisi> getDisposisi(){
 		return disposisi;
 	}
 

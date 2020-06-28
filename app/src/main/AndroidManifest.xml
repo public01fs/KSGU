@@ -11,9 +11,8 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="KSU"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:icon="@drawable/logo_splash"
+        android:label="KSU Tg. Perak"
         android:supportsRtl="true"
         android:hardwareAccelerated="false"
         android:largeHeap="true"

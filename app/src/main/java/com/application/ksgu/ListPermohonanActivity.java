@@ -125,6 +125,10 @@ public class ListPermohonanActivity extends AppCompatActivity {
         Call<List<Surat>> call      = null;
         if (keterangan.equals("baru")){
             call                    = apiInterface.getSuratNew();
+        } else if (keterangan.equals("proses")){
+            call                    = apiInterface.getSuratProses();
+        } else {
+            call                    = apiInterface.getSuratFinish();
         }
         call.enqueue(new Callback<List<Surat>>() {
             @Override

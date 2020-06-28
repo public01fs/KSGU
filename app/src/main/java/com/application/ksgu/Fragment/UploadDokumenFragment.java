@@ -387,7 +387,7 @@ public class UploadDokumenFragment extends Fragment implements BlockingStep {
             }
             uploadFotoAdapter.notifyDataSetChanged();
         } else if (requestCode == 1 && resultCode == RESULT_OK){
-            Uri uri = Uri.parse("android.resource://com.application.ksgu/drawable/ic_file");
+            Uri uri = Uri.parse("android.resource://com.application.ksgu/drawable/pdf");
             List<Uri> uris = new ArrayList<>();
             uris.add(uri);
             uploadSurat(data.getData(),currentFile,"pdf");

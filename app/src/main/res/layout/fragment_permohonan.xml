@@ -143,6 +143,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_proses"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -215,6 +216,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_selesai"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -373,13 +375,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:id="@+id/tv_profile"
+                android:id="@+id/tv_pemberitahuan"
                 android:layout_below="@+id/vp1"
                 android:text="Pemberitahuan"
-
                 android:textColor="@android:color/black"
                 android:textSize="16sp"
-                android:fontFamily="@font/poppins_bold"
                 android:textStyle="bold" />
             <View
                 android:layout_marginLeft="10dp"

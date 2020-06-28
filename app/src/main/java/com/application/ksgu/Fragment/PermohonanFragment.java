@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import it.sephiroth.android.library.easing.Linear;
@@ -32,11 +33,12 @@ import static com.application.ksgu.Cons.KEY_TOKEN;
 public class PermohonanFragment extends Fragment {
 
     View view;
-    LinearLayout ll_baru;
+    LinearLayout ll_baru,ll_proses,ll_selesai;
     SessionManager sessionManager;
     HashMap<String, String> getLogin;
     SweetAlertDialog sweetAlertDialog;
     TextView tv_baru,tv_proses,tv_selesai,tv_ulasan;
+    TextView tv_pemberitahuan;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,16 +50,20 @@ public class PermohonanFragment extends Fragment {
                              Bundle savedInstanceState) {
         view                = inflater.inflate(R.layout.fragment_permohonan, container, false);
         ll_baru             = view.findViewById(R.id.ll_baru);
+        ll_proses           = view.findViewById(R.id.ll_proses);
+        ll_selesai          = view.findViewById(R.id.ll_selesai);
         tv_baru             = view.findViewById(R.id.tv_request);
         tv_proses           = view.findViewById(R.id.tv_process);
         tv_selesai          = view.findViewById(R.id.tv_selesai);
         tv_ulasan           = view.findViewById(R.id.tv_ulasan);
+        tv_pemberitahuan    = view.findViewById(R.id.tv_pemberitahuan);
         sessionManager      = new SessionManager(getContext());
         getLogin            = sessionManager.getLogin();
         sweetAlertDialog    = new SweetAlertDialog(getContext(), SweetAlertDialog.PROGRESS_TYPE);
         sweetAlertDialog.getProgressHelper().setBarColor(Color.parseColor("#000080"));
         sweetAlertDialog.setTitleText("Mohon Tunggu...");
         sweetAlertDialog.setCancelable(false);
+        tv_pemberitahuan.setTypeface(ResourcesCompat.getFont(getContext(), R.font.poppins_bold));
 
         getCount();
 
@@ -67,6 +73,26 @@ public class PermohonanFragment extends Fragment {
                 Intent i    = new Intent(getContext(), ListPermohonanActivity.class);
                 i.putExtra("judul","Permohonan Baru");
                 i.putExtra("id","baru");
+                startActivity(i);
+            }
+        });
+
+        ll_proses.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i    = new Intent(getContext(), ListPermohonanActivity.class);
+                i.putExtra("judul","Permohonan Proses");
+                i.putExtra("id","proses");
+                startActivity(i);
+            }
+        });
+
+        ll_selesai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i    = new Intent(getContext(), ListPermohonanActivity.class);
+                i.putExtra("judul","Permohonan Selesai");
+                i.putExtra("id","selesai");
                 startActivity(i);
             }
         });
@@ -99,11 +125,13 @@ public class PermohonanFragment extends Fragment {
                         tv_proses.setVisibility(View.GONE);
                     }
 
-//                    if (count.getDikembalikan() != 0){
-//                        tv
-//                    }
+                    if (count.getDikembalikan() != 0){
+                        tv_selesai.setText(""+count.getDikembalikan());
+                        tv_selesai.setVisibility(View.VISIBLE);
+                    } else {
+                        tv_selesai.setVisibility(View.GONE);
+                    }
 
-                    tv_selesai.setVisibility(View.GONE);
                     tv_ulasan.setVisibility(View.GONE);
                 } else {
                     Toast.makeText(getContext(), "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();

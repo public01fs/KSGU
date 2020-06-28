@@ -139,6 +139,12 @@ public interface ApiInterface {
     @GET(API + "surat/new")
     Call<List<Surat>> getSuratNew();
 
+    @GET(API + "surat/back")
+    Call<List<Surat>> getSuratProses();
+
+    @GET(API + "surat/finish")
+    Call<List<Surat>> getSuratFinish();
+
     @GET(API + "surat/detail/{surat_id}")
     Call<DetailSuratNew> detailSurat(@Path("surat_id") String surat);
 
@@ -185,4 +191,7 @@ public interface ApiInterface {
 
     @POST(API + "list-slider")
     Call<List<Image>> getImage();
+
+    @GET
+    Call<ResponseBody> download_pdf(@retrofit2.http.Url String fileUrl);
 }

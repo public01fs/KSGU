@@ -18,6 +18,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -89,4 +90,7 @@ dependencies {
 
     //autofittextview
     implementation 'me.grantland:autofittextview:0.2.1'
+
+    //pdf
+    implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
 }
